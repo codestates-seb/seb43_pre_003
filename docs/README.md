@@ -47,7 +47,7 @@ $ git checkout -b 자신의깃허브명
 - git commit -m 뒤에는 커밋 컨벤션에 맞게 작성한다.
 
 ```
-$ git add.
+$ git add .
 $ git commit -m "컨벤션에 맞게 작성한다."
 ```
 ![컨벤션](https://github.com/codestates-seb/seb43_pre_003/blob/main/docs/convention.md)
@@ -61,7 +61,6 @@ $ git push origin 자신의깃허브명
 
 9. 깃허브에서 PR(Pull Request)을 보낸다.
 - PR을 한번 보내면 close를 하지않아도 push한 파일들이 자동 반영된다.
-
 
 - compare: 가 자신의 브랜치명인지 확인한다.
 - 제목 작성시 아래 링크를 확인해주시고 양식에 맞게 작성하고 Create pull request 버튼을 클릭한다.
