@@ -60,6 +60,8 @@ $ git push origin 자신의깃허브명
 ```
 
 9. 깃허브에서 PR(Pull Request)을 보낸다.
+
+![img](https://github.com/codestates-seb/seb43_pre_003/blob/main/docs/pull_requ.png)
 - PR을 한번 보내면 close를 하지않아도 push한 파일들이 자동 반영된다.
 
 - compare: 가 자신의 브랜치명인지 확인한다.
@@ -67,7 +69,7 @@ $ git push origin 자신의깃허브명
 
 
 10. PR 승인 확인 후 동기화 및 브랜치 삭제
-- ** PR이 원격 저장소에서 승인되어 원격 저장소에 merge가 되었다면 작업 끝난 branch는 삭제한다. **
+- **PR이 원격 저장소에서 승인되어 원격 저장소에 merge가 되었다면 작업 끝난 branch는 삭제한다.**
 - 아래 명령어로 원격 저장소와 로컬 저장소의 코드를 동기화한다.
 
 ```
