@@ -35,7 +35,7 @@ ex) ` feat: Add App.Css`
 헤더로 표현이 가능하면 생략이 가능하며, 아닌 경우 자세한 내용을 함께 적어 본문 구성한다.
 
 참조 링크
-![커밋 메세지 컨벤션](https://beomseok95.tistory.com/328)
+[커밋 메세지 컨벤션](https://beomseok95.tistory.com/328)
 
 
 
