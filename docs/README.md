@@ -66,6 +66,7 @@ $ git push origin 자신의깃허브명
 
 - compare: 가 자신의 브랜치명인지 확인한다.
 - 제목 작성시 아래 링크를 확인해주시고 양식에 맞게 작성하고 Create pull request 버튼을 클릭한다.
+[컨벤션](https://github.com/codestates-seb/seb43_pre_003/blob/main/docs/convention.md)
 
 
 10. PR 승인 확인 후 동기화 및 브랜치 삭제
