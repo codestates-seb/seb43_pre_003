@@ -50,7 +50,7 @@ $ git checkout -b 자신의깃허브명
 $ git add.
 $ git commit -m "컨벤션에 맞게 작성한다."
 ```
-[컨벤션] 
+![컨벤션](https://github.com/codestates-seb/seb43_pre_003/edit/main/docs/convention.md)
 
 8. 자신이 생성한 브랜치에 `push` 한다.
 - 브랜치명은 main 이 아닌 PR용으로 새롭게 생성한 자신의 브랜치명으로 입력한다.
