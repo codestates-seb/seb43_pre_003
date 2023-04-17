@@ -1,10 +1,11 @@
 import GlobalStyles from "./GlobalStyles";
+import SmallBtn from "./style/Button";
 
 function App() {
   return (
     <>
       <GlobalStyles />
-      <div></div>
+      <SmallBtn>dddd </SmallBtn>
     </>
   );
 }
