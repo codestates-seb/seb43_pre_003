@@ -1,11 +1,31 @@
 import GlobalStyles from "./GlobalStyles";
-import SmallBtn from "./style/Button";
+import Button from "./style/Button";
 
 function App() {
   return (
     <>
       <GlobalStyles />
-      <SmallBtn>dddd </SmallBtn>
+      <Button variant="smallWhite" size="sm">
+        btn이름
+      </Button>
+      <Button variant="mediumBlue" size="md">
+        btn이름
+      </Button>
+      <Button variant="smallBlue" size="sm">
+        btn이름
+      </Button>
+      <Button variant="mediumWhite" size="md">
+        btn이름
+      </Button>
+      <Button variant="share" size="shareSize">
+        Share
+      </Button>
+      <Button variant="page" size="pageSize">
+        1
+      </Button>
+      <Button variant="smallWhite" size="sm" disabled>
+        1
+      </Button>
     </>
   );
 }
