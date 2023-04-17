@@ -20,6 +20,9 @@ import javax.validation.constraints.Size;
 import java.net.URI;
 import java.util.List;
 
+/**
+ * Security 적용 후 변경 예정
+ */
 @RestController
 @RequestMapping("/question")
 @Validated
