@@ -1,6 +1,7 @@
 package com.seb43.preProject.member.mapper;
 
 import com.seb43.preProject.member.dto.MemberDto;
+import com.seb43.preProject.member.dto.MemberPatchDto;
 import com.seb43.preProject.member.dto.MemberPostDto;
 import com.seb43.preProject.member.entity.Member;
 import org.mapstruct.Mapper;
@@ -11,4 +12,5 @@ import org.springframework.stereotype.Service;
 public interface MemberMapper {
     Member memberPostDtoToMember(MemberPostDto memberPostDto);
     MemberDto.response memberToMemberResponse(Member member);
+    Member memberPatchToMember(MemberPatchDto memberPatchDto);
 }
