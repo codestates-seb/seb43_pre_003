@@ -1,9 +1,9 @@
 import GlobalStyles from "./GlobalStyles";
 import Button from "./Components/style/Button";
 import Input from "./Components/style/Input";
-
+import Header from "./Components/Header";
 const onChange = (e) => {
-  console.log(e.target.value);
+  console.log(e);
 };
 
 function App() {
@@ -43,6 +43,10 @@ function App() {
         onChange={onChange}
         errorType="error"
       />
+      <Button variant="mediumBlue" size="question">
+        Ask Question
+      </Button>
+      <Header />
     </>
   );
 }

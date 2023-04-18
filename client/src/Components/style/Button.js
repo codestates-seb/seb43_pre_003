@@ -19,6 +19,11 @@ const SIZE = {
     --button-height: 22px;
     --button-padding: 3px 8px;
   `,
+  question: css`
+    --button-width: 102px;
+    --button-height: 37px;
+    --button-padding: 3px 8px;
+  `,
 };
 
 const VARIANTS = {
@@ -75,6 +80,7 @@ const VARIANTS = {
     --font-size: 14px;
     --button-hover-color: var(--black-350);
     --button-active-color: var(--black-350);
+    --margin-right: 2px;
   `,
   page: css`
     --button-color: var(--black-700);
@@ -87,10 +93,11 @@ const VARIANTS = {
     --border-hover-line: var(1px solid --black-200);
     --button-active-color: var(--white);
     --button-active-bg-color: var(--main-400);
+    --margin-right: 2px;
   `,
 };
 
-function Button({ disabled, size, variant, children }) {
+function Button({ disabled, size, variant, children, onClick, onChange }) {
   const variantStyle = VARIANTS[variant];
   const sizeStyle = SIZE[size];
 
@@ -99,6 +106,8 @@ function Button({ disabled, size, variant, children }) {
       sizeStyle={sizeStyle}
       variantStyle={variantStyle}
       disabled={disabled}
+      onClick={onClick}
+      onChange={onChange}
     >
       {children}
     </StyleButton>
@@ -119,6 +128,7 @@ export const StyleButton = styled.button`
   border: var(--border-line, 0px none var(--white));
   border-radius: 2px;
   font-weight: var(--font-weight, 500);
+  margin-right: var(--margin-right, 8px);
 
   &:hover {
     background: var(--button-hover-bg-color, #ffffff);
