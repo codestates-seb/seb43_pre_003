@@ -56,5 +56,12 @@ public class MemberController {
         return new ResponseEntity<>(
                 new SingleResponseDto<>(memberMapper.memberToMemberResponse(member)),HttpStatus.OK);
     }
+    @DeleteMapping("/{member-id}/profile/delete")// 회원탈퇴 (memberStatus 탈퇴상태로 변경 memberId는 삭제되지않음)
+    public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long memberId){
+        Member member = memberService.deleteMember(memberId);
+
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(memberMapper.memberToMemberResponse(member)),HttpStatus.OK);
+    }
 
 }
