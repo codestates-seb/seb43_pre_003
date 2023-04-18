@@ -5,11 +5,17 @@ import QuestionPage from "./Pages/QuestionPage";
 import Nav from "./Components/Nav";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
+// import Button from "./Components/style/Button";
+// import Input from "./Components/style/Input";
 
 const AppWrap = styled.div`
   width: 100%;
   height: 100vh;
 `;
+
+// const onChange = (e) => {
+//   console.log(e.target.value);
+// };
 
 function App() {
   return (

@@ -77,6 +77,11 @@ const GlobalStyles = createGlobalStyle`
     --powder-200: hsl(205,54%,88%);
     --powder-300: hsl(205,57%,81%);
     --powder-700: hsl(205,47%,42%);
+    --font-small: 12px;
+    --font-medium: 13px; 
+    --font-large: 16px;
+    --font-x-large: 22px;
+    --font-xx-large: 28px;
   }
 `;
 
