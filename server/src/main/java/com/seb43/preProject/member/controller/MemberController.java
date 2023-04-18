@@ -37,15 +37,13 @@ public class MemberController {
     public ResponseEntity postMember(@Valid @RequestBody MemberPostDto memberPostDto){
         Member member = memberService.createMember(memberMapper.memberPostDtoToMember(memberPostDto));
 
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(memberMapper.memberToMemberResponse(member)), HttpStatus.CREATED);
+        return new ResponseEntity<>((memberMapper.memberToMemberResponse(member)), HttpStatus.CREATED);
     }
     @GetMapping("/{member-id}/profile")// 프로필 조회
     public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId){
         Member member = memberService.findVerifiedMember(memberId);
 
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(memberMapper.memberToMemberResponse(member)),HttpStatus.OK);
+        return new ResponseEntity<>((memberMapper.memberToMemberResponse(member)),HttpStatus.OK);
 
     }
     @PatchMapping("/{member-id}/profile")//프로필 수정
@@ -53,15 +51,13 @@ public class MemberController {
                                       @Valid @RequestBody MemberPatchDto memberPatchDto){
         Member member = memberService.updateMember(memberPatchDto,memberId);
 
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(memberMapper.memberToMemberResponse(member)),HttpStatus.OK);
+        return new ResponseEntity<>((memberMapper.memberToMemberResponse(member)),HttpStatus.OK);
     }
     @DeleteMapping("/{member-id}/profile/delete")// 회원탈퇴 (memberStatus 탈퇴상태로 변경 memberId는 삭제되지않음)
     public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long memberId){
         Member member = memberService.deleteMember(memberId);
 
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(memberMapper.memberToMemberResponse(member)),HttpStatus.OK);
+        return new ResponseEntity<>((memberMapper.memberToMemberResponse(member)),HttpStatus.OK);
     }
 
 }
