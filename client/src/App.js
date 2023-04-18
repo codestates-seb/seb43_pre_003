@@ -1,5 +1,10 @@
 import GlobalStyles from "./GlobalStyles";
-import Button from "./style/Button";
+import Button from "./Components/style/Button";
+import Input from "./Components/style/Input";
+
+const onChange = (e) => {
+  console.log(e.target.value);
+};
 
 function App() {
   return (
@@ -26,6 +31,18 @@ function App() {
       <Button variant="smallWhite" size="sm" disabled>
         1
       </Button>
+      <Input
+        type="text"
+        placeholder="....Search"
+        onChange={onChange}
+        errorType="default"
+      />
+      <Input
+        type="password"
+        placeholder=""
+        onChange={onChange}
+        errorType="error"
+      />
     </>
   );
 }
