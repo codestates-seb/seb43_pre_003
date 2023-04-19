@@ -12,9 +12,8 @@ const AppWrap = styled.div`
   width: 100%;
   height: 100vh;
 `;
-
 // const onChange = (e) => {
-//   console.log(e.target.value);
+//   console.log(e);
 // };
 
 function App() {
@@ -33,6 +32,44 @@ function App() {
         <Footer />
       </div>
     </AppWrap>
+    //   <Button variant="smallWhite" size="sm">
+    //     btn이름
+    //   </Button>
+    //   <Button variant="mediumBlue" size="md">
+    //     btn이름
+    //   </Button>
+    //   <Button variant="smallBlue" size="sm">
+    //     btn이름
+    //   </Button>
+    //   <Button variant="mediumWhite" size="md">
+    //     btn이름
+    //   </Button>
+    //   <Button variant="share" size="shareSize">
+    //     Share
+    //   </Button>
+    //   <Button variant="page" size="pageSize">
+    //     1
+    //   </Button>
+    //   <Button variant="smallWhite" size="sm" disabled>
+    //     1
+    //   </Button>
+    //   <Input
+    //     type="text"
+    //     placeholder="....Search"
+    //     onChange={onChange}
+    //     errorType="default"
+    //   />
+    //   <Input
+    //     type="password"
+    //     placeholder=""
+    //     onChange={onChange}
+    //     errorType="error"
+    //   />
+    //   <Button variant="mediumBlue" size="question">
+    //     Ask Question
+    //   </Button>
+    //   <Header />
+    // </>
   );
 }
 
