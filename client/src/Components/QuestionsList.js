@@ -36,11 +36,7 @@ const QuestionState = styled.div`
 `;
 
 const QuestionContent = styled.div`
-  /* max-width: calc(100% - 6.75rem);
-  flex-grow: 1; */
-
-  /* width: 100%; */
-  max-width: calc(100% - 6.75rem);
+  /* max-width: calc(100% - 6.75rem); */
   height: auto;
   display: flex;
   flex-direction: column;
@@ -49,8 +45,8 @@ const QuestionContent = styled.div`
 
 const QuestionTitle = styled.h3`
   white-space: normal;
-  /* word-break: break-all; */
   overflow-wrap: anywhere;
+  /* word-break: break-all; */
   /* word-wrap: break-word; */
   /* hyphens: auto; */
   color: var(--blue-600);
@@ -60,7 +56,7 @@ const QuestionTitle = styled.h3`
   margin: 0 0 1em;
   margin-bottom: 0.3846rem;
   padding-right: 1.5rem;
-  :hover {
+  &:hover {
     cursor: pointer;
     color: var(--blue-500);
   }
