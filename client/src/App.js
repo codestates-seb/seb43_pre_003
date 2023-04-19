@@ -1,52 +1,39 @@
 import GlobalStyles from "./GlobalStyles";
-import Button from "./Components/style/Button";
-import Input from "./Components/style/Input";
-import Header from "./Components/Header";
-const onChange = (e) => {
-  console.log(e);
-};
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import Button from "./Components/style/Button";
+// import Input from "./Components/style/Input";
+// import styled from "styled-components";
+import Login from "./Pages/Login";
+import Home from "./Pages/Home";
+// import Header from "./Components/Header";
+// import Nav from "./Components/Nav";
+// import HomeAside from "./Components/Aside";
+
+// const onChange = (e) => {
+//   console.log(e);
+// };
+
+// const Container = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+// `;
 
 function App() {
   return (
     <>
-      <GlobalStyles />
-      <Button variant="smallWhite" size="sm">
-        btn이름
-      </Button>
-      <Button variant="mediumBlue" size="md">
-        btn이름
-      </Button>
-      <Button variant="smallBlue" size="sm">
-        btn이름
-      </Button>
-      <Button variant="mediumWhite" size="md">
-        btn이름
-      </Button>
-      <Button variant="share" size="shareSize">
-        Share
-      </Button>
-      <Button variant="page" size="pageSize">
-        1
-      </Button>
-      <Button variant="smallWhite" size="sm" disabled>
-        1
-      </Button>
-      <Input
-        type="text"
-        placeholder="....Search"
-        onChange={onChange}
-        errorType="default"
-      />
-      <Input
-        type="password"
-        placeholder=""
-        onChange={onChange}
-        errorType="error"
-      />
-      <Button variant="mediumBlue" size="question">
-        Ask Question
-      </Button>
-      <Header />
+      <BrowserRouter>
+        <GlobalStyles />
+        {/* <Header />
+        <Container>
+          <Nav></Nav>
+          <HomeAside />
+        </Container> */}
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/Login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
