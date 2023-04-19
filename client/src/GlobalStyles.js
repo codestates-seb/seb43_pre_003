@@ -51,6 +51,10 @@ const GlobalStyles = createGlobalStyle`
     text-decoration: none;
   }
 
+  button {
+    cursor: pointer;
+  }
+
   :root {
     --white: hsl(0,0%,100%);
     --black-025: hsl(210,8%,98%);
@@ -66,6 +70,7 @@ const GlobalStyles = createGlobalStyle`
     --black-900: hsl(210,8%,5%);
     --main-400: hsl(27,90%,55%);
     --red-400: hsl(358,68%,59%);
+    --green-700: hsl(140,41%,31%);
     --yellow-050: hsl(47,87%,94%);
     --yellow-100: hsl(47,83%,91%);
     --yellow-200: hsl(46,65%,84%);

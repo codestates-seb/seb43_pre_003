@@ -40,8 +40,8 @@ const ProductBtn = styled.button`
   text-align: center;
   height: 28px;
   width: 73px;
-  border-radius: 40%;
-  border: 0px solid none;
+  border-radius: 30%;
+  /* border: 0px solid none; */
   background: var(--black-025);
   margin-right: 12px;
   font-size: var(--font-medium);
@@ -54,7 +54,7 @@ const ProductBtn = styled.button`
 
 const Input = styled.input`
   padding: 8px 8px 8px 30px;
-  width: 875px;
+  width: 775px;
   border-radius: 2px;
   background-image: url(${Search});
   background-position: 4px center;

@@ -87,7 +87,7 @@ const VARIANTS = {
     --button-bg-color: var(--white);
     --border-line: 1px solid var(--black-200);
     --font-size: 13px;
-    --font-weightL 400;
+    --font-weight: 400;
     --button-hover-color: var(--black-700);
     --button-hover-bg-color: var(--black-100);
     --border-hover-line: var(1px solid --black-200);
@@ -126,7 +126,7 @@ export const StyleButton = styled.button`
   font-size: var(--font-size, 13px);
   text-align: center;
   border: var(--border-line, 0px none var(--white));
-  border-radius: 2px;
+  border-radius: 4px;
   font-weight: var(--font-weight, 500);
   margin-right: var(--margin-right, 8px);
 

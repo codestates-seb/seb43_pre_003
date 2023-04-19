@@ -23,13 +23,14 @@ const TextInput = styled.input`
   background-image: var(--img, url(${ErrIcon}));
   background-position: 215px center;
   background-repeat: no-repeat;
-  border: 1px solid var(--border,var(--black-200));
+  border: 1px solid var(--border, var(--black-200));
 
   &:active,
   &:focus {
     box-shadow: 0px 0px 10px 5px var(--box-shadow, var(--black-200));
     outline: none;
     border: 1px solid var(--border-hover, var(--blue-500));
+  }
 `;
 
 function Input({ type, placeholder, onChange, errorType }) {
