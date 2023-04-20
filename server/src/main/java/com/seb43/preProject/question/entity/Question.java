@@ -46,6 +46,11 @@ public class Question extends Auditable {
     @OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST)
     private List<Votes> votesList = new ArrayList<>();
 
+    public Question(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
     public enum QuestionStatus{
         QUESTION_REGISTERED("질문 등록 상태"),
         QUESTION_ANSWERED("답변 완료 상태");
