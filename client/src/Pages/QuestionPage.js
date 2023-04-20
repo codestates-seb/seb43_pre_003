@@ -3,6 +3,8 @@ import Pagination from "../Components/Pagination";
 import QuestionsList from "../Components/QuestionsList";
 import Sidebar from "../Components/Sidebar";
 import SortBtn from "../Components/SortBtn";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const QuestionWrap = styled.section`
   width: calc(100% - 18.75rem);
@@ -57,6 +59,33 @@ const AllQuestion = styled.ul`
 `;
 
 function QuestionsPage() {
+  const [data, setData] = useState([]); // 리스트에 나타낼 아이템들
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지. default 값으로 1
+  const [currentPosts, setCurrentPosts] = useState([]); // 현재 페이지에서 보여지는 아이템들
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/data")
+      .then((res) => {
+        setData(
+          res.data.sort((a, b) => b.question.questionId - a.question.questionId)
+        );
+        setCurrentPosts(res.data.slice(0, 10)); // 0 , 10
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    const firstPost = (currentPage - 1) * 10;
+    setCurrentPosts(data.slice(firstPost, firstPost + 10));
+  }, [currentPage]);
+
+  const setPage = (el) => {
+    setCurrentPage(el);
+  };
+
   return (
     <>
       <QuestionWrap>
@@ -65,15 +94,25 @@ function QuestionsPage() {
           <AskQuestionBtn>Ask Question</AskQuestionBtn>
         </QuestionTitle>
         <QuestionFilter>
-          <QuestionCount>123 questions</QuestionCount>
+          <QuestionCount>{data.length} questions</QuestionCount>
           <SortTab>
             <SortBtn />
           </SortTab>
         </QuestionFilter>
         <AllQuestion>
-          <QuestionsList />
+          {currentPosts && data.length > 0 ? (
+            currentPosts.map((el) => (
+              <QuestionsList key={el.question.questionId} data={el} />
+            ))
+          ) : (
+            <div>No Question</div>
+          )}
         </AllQuestion>
-        <Pagination />
+        <Pagination
+          currentPage={currentPage}
+          count={data.length}
+          setPage={setPage}
+        />
       </QuestionWrap>
       <Sidebar />
     </>

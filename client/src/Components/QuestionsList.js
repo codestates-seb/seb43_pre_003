@@ -1,5 +1,5 @@
 import styled from "styled-components";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { TagDiv } from "./style/Tag";
 // import img from "./style/img/ic- trophy.png";
 
@@ -36,7 +36,8 @@ const QuestionState = styled.div`
 `;
 
 const QuestionContent = styled.div`
-  /* max-width: calc(100% - 6.75rem); */
+  max-width: calc(100% - 6.75rem);
+  width: 100%;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -44,6 +45,8 @@ const QuestionContent = styled.div`
 `;
 
 const QuestionTitle = styled.h3`
+  /* width: 100%; */
+  width: calc(100%);
   white-space: normal;
   overflow-wrap: anywhere;
   /* word-break: break-all; */
@@ -61,6 +64,10 @@ const QuestionTitle = styled.h3`
     color: var(--blue-500);
   }
   > a {
+    width: calc(100%);
+    white-space: normal;
+    overflow-wrap: anywhere;
+
     color: var(--blue-500);
     cursor: pointer;
     text-decoration: none;
@@ -119,47 +126,46 @@ const UserName = styled.div`
 `;
 
 const UserAsked = styled.div`
+  font-size: 0.75rem;
   color: val(--black-600);
 `;
 
-function QuestionsList() {
+function QuestionsList({ data }) {
+  const el = data.question;
+  const elA = data.answer;
+
   return (
     <>
       <QuestionsLiContainer>
         <QuestionState>
           <div>
-            <span>0</span>
+            <span>{el.votes}</span>
             <span>votes</span>
           </div>
-          <div>
-            <span>0</span>
+          <div className={elA.length !== 0 ? "has-answer" : ""}>
+            <span>{elA.length}</span>
             <span>answers</span>
           </div>
           <div>
-            <span>0</span>
+            <span>{el.views}</span>
             <span>views</span>
           </div>
         </QuestionState>
         <QuestionContent>
           <QuestionTitle>
-            {/* <Link to={`/questions/${el.questionId}`}> */}
-            How to transfer the fund from How to transfer the fund from
-            Braintree account to paypal account using php?
-            {/* </Link> */}
+            <Link to={`/question/${el.questionId}`}>{el.title}</Link>
           </QuestionTitle>
-          <QuestionBody>
-            When you are doing a ObjectMapper.readValue on type with Generic
-            parameters, When you are doing a Object. readValue on type with
-            Generic parameters,you use this: new
-            ObjectMapper.readValuesomeSourceValue, new TypeReference...
-          </QuestionBody>
+          <QuestionBody>{el.content}</QuestionBody>
           <QuestionFooter>
             <Tags>
-              <TagDiv>Javascript</TagDiv>
+              {el.tags.map((el, index) => (
+                <TagDiv key={index}>{el}</TagDiv>
+              ))}
             </Tags>
             <UserData>
-              {/* <img width="20" src={img} /> */}
-              <UserName>mooni</UserName>asked 1 days ago<UserAsked></UserAsked>
+              {/* <img width="20" src={el.profileImg} /> */}
+              <UserName>{el.userName}</UserName>
+              <UserAsked>{el.createdAt}</UserAsked>
             </UserData>
           </QuestionFooter>
         </QuestionContent>
