@@ -4,6 +4,7 @@ import PaginationCustom from "react-js-pagination";
 
 const PaginationWrap = styled.div`
   padding: 1.5rem;
+  margin-bottom: 1.5rem;
   ul {
     display: flex;
     gap: 5px;
@@ -60,49 +61,19 @@ const PaginationWrap = styled.div`
 //   background-color: var(--white);
 // `;
 
-function Pagination({
-  activePage,
-  itemsCountPerPage,
-  totalItemsCount,
-  onChange,
-  pageRangeDisplayed = 5,
-}) {
+function Pagination({ currentPage, count, setPage }) {
   return (
     <>
       <PaginationWrap>
         <PaginationCustom
-          activePage={activePage}
-          itemsCountPerPage={itemsCountPerPage}
-          totalItemsCount={totalItemsCount}
-          onChange={onChange}
-          pageRangeDisplayed={pageRangeDisplayed}
-          prevPageText="Prev"
-          nextPageText="Next"
+          activePage={currentPage} // 현재페이지
+          itemsCountPerPage={10} //한 페이지 당 보여줄 아이템 수
+          totalItemsCount={count} //총 아이템 수
+          onChange={setPage} // 페이지 바뀔 때 핸들링 함수
+          pageRangeDisplayed={5} // paginator에서 보여줄 페이지 범위
+          prevPageText="Prev" // 이전 페이지 가기 나타내는 텍스트
+          nextPageText="Next" // 다음 페이지 가기 나타내는 텍스트
         />
-        {/* <Button variant="page" size="pageSize">
-          Prev
-        </Button>
-        <Button variant="page" size="pageSize">
-          1
-        </Button>
-        <Button variant="page" size="pageSize">
-          2
-        </Button>
-        <Button variant="page" size="pageSize">
-          3
-        </Button>
-        <Button variant="page" size="pageSize">
-          4
-        </Button>
-        <Button variant="page" size="pageSize">
-          5
-        </Button>
-        <Button variant="page" size="pageSize">
-          ...
-        </Button>
-        <Button variant="page" size="pageSize">
-          Nest
-        </Button> */}
       </PaginationWrap>
     </>
   );
