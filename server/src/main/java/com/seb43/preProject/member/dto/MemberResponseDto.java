@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,6 +16,6 @@ public class MemberResponseDto {
     private String email;
     private String userName;
     private String password;
-    private Object profileImage;
+//    private Object profileImage;
 
 }

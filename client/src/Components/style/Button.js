@@ -14,7 +14,6 @@ const SIZE = {
     --button-height: 29px;
     --button-padding: 4px 4px;
   `,
-
   pageSize: css`
     --button-width: 23px;
     --button-height: 22px;
@@ -22,11 +21,6 @@ const SIZE = {
   `,
   question: css`
     --button-width: 102px;
-    --button-height: 37px;
-    --button-padding: 3px 8px;
-  `,
-  postyouranswer: css`
-    --button-width: 120px;
     --button-height: 37px;
     --button-padding: 3px 8px;
   `,
@@ -86,22 +80,24 @@ const VARIANTS = {
     --font-size: 14px;
     --button-hover-color: var(--black-350);
     --button-active-color: var(--black-350);
+    --margin-right: 2px;
   `,
   page: css`
     --button-color: var(--black-700);
     --button-bg-color: var(--white);
     --border-line: 1px solid var(--black-200);
     --font-size: 13px;
-    --font-weightL 400;
+    --font-weight: 400;
     --button-hover-color: var(--black-700);
     --button-hover-bg-color: var(--black-100);
     --border-hover-line: var(1px solid --black-200);
     --button-active-color: var(--white);
     --button-active-bg-color: var(--main-400);
+    --margin-right: 2px;
   `,
 };
 
-function Button({ disabled, size, variant, children }) {
+function Button({ disabled, size, variant, children, onClick, onChange }) {
   const variantStyle = VARIANTS[variant];
   const sizeStyle = SIZE[size];
 
@@ -110,6 +106,8 @@ function Button({ disabled, size, variant, children }) {
       sizeStyle={sizeStyle}
       variantStyle={variantStyle}
       disabled={disabled}
+      onClick={onClick}
+      onChange={onChange}
     >
       {children}
     </StyleButton>
@@ -128,8 +126,9 @@ export const StyleButton = styled.button`
   font-size: var(--font-size, 13px);
   text-align: center;
   border: var(--border-line, 0px none var(--white));
-  border-radius: 2px;
+  border-radius: 4px;
   font-weight: var(--font-weight, 500);
+  margin-right: var(--margin-right, 8px);
 
   &:hover {
     background: var(--button-hover-bg-color, #ffffff);

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const FooterContainer = styled.footer`
-  width: 100%;
+  width: 100vw;
   background-color: #232627;
   display: flex;
   @media screen and (min-width: 500px) {
@@ -194,6 +194,7 @@ const SocialListContainer = styled.ul`
 `;
 
 const CopyrightInfoContainer = styled.p`
+  white-space: normal;
   font-size: 11px;
   font-weight: 400;
   color: #9199a1;

@@ -3,13 +3,11 @@ package com.seb43.preProject.member.entity;
 import com.seb43.preProject.question.entity.Question;
 import com.seb43.preProject.question.entity.Votes;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +37,7 @@ public class Member {
     private LocalDateTime createdAt = LocalDateTime.now();
     @Column
     private LocalDateTime modifiedAt= LocalDateTime.now();
+    @Column
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Question> questions = new ArrayList<>();
 
