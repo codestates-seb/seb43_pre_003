@@ -9,11 +9,18 @@ import Inbox from "./style/img/ic-inbox.png";
 import Trophy from "./style/img/ic- trophy.png";
 import Que from "./style/img/ic-question.png";
 
+const Container = styled.div`
+  width: 100vw;
+  border-top: 3px solid var(--main-400);
+  display: flex;
+  justify-content: center;
+`;
+
 const HeaderBox = styled.header`
   background: var(--black-025);
-  width: 100vw;
+  /* width: 100vw; */
+  min-width: 1264px;
   height: 50px;
-  border-top: 3px solid var(--main-400);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,7 +62,8 @@ const ProductBtn = styled.button`
 
 const Input = styled.input`
   padding: 8px 8px 8px 30px;
-  width: 775px;
+  min-width: 775px;
+  flex-grow: 1;
   border-radius: 2px;
   background-image: url(${Search});
   background-position: 4px center;
@@ -135,53 +143,55 @@ function Header() {
 
   return (
     <>
-      {!isLogin ? (
-        <HeaderBox>
-          <Link to="/">
-            <LogoBtn>
-              <Img src={Logo} alt="" />
-            </LogoBtn>
-          </Link>
-          <ProductBtn>Product</ProductBtn>
-          <Input />
-          <Link to="/Login">
-            <Button variant="smallWhite" size="sm">
-              Log in
-            </Button>
-          </Link>
-          <Link to="/signup">
-            <Button variant="mediumBlue" size="sm">
-              Sign up
-            </Button>
-          </Link>
-        </HeaderBox>
-      ) : (
-        <HeaderBox>
-          <Link to="/">
-            <LogoBtn>
-              <Img src={Logo} alt="" />
-            </LogoBtn>
-          </Link>
-          <ProductBtn>Product</ProductBtn>
-          <LoginInput />
-          <ProfileNumber>
-            <ProfileButton />
-            <div>22</div>
-          </ProfileNumber>
-          <IconDiv>
-            <img src={Inbox} alt="" />
-          </IconDiv>
-          <IconDiv>
-            <img src={Trophy} alt="" />
-          </IconDiv>
-          <IconDiv>
-            <img src={Que} alt="" />
-          </IconDiv>
-          <LogoutBtn onClick={onClick}>
-            <img src={Logout} alt=""></img>
-          </LogoutBtn>
-        </HeaderBox>
-      )}
+      <Container>
+        {!isLogin ? (
+          <HeaderBox>
+            <Link to="/">
+              <LogoBtn>
+                <Img src={Logo} alt="" />
+              </LogoBtn>
+            </Link>
+            <ProductBtn>Product</ProductBtn>
+            <Input />
+            <Link to="/Login">
+              <Button variant="smallWhite" size="sm">
+                Log in
+              </Button>
+            </Link>
+            <Link to="/signup">
+              <Button variant="mediumBlue" size="sm">
+                Sign up
+              </Button>
+            </Link>
+          </HeaderBox>
+        ) : (
+          <HeaderBox>
+            <Link to="/">
+              <LogoBtn>
+                <Img src={Logo} alt="" />
+              </LogoBtn>
+            </Link>
+            <ProductBtn>Product</ProductBtn>
+            <LoginInput />
+            <ProfileNumber>
+              <ProfileButton />
+              <div>22</div>
+            </ProfileNumber>
+            <IconDiv>
+              <img src={Inbox} alt="" />
+            </IconDiv>
+            <IconDiv>
+              <img src={Trophy} alt="" />
+            </IconDiv>
+            <IconDiv>
+              <img src={Que} alt="" />
+            </IconDiv>
+            <LogoutBtn onClick={onClick}>
+              <img src={Logout} alt=""></img>
+            </LogoutBtn>
+          </HeaderBox>
+        )}
+      </Container>
     </>
   );
 }
