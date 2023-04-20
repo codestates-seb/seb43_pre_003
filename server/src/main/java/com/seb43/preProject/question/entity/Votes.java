@@ -25,8 +25,7 @@ public class Votes {
     private VotesStatus votesStatus;
     public enum VotesStatus{
         VOTES_UP("추천"),
-        VOTES_DOWN("비추천"),
-        VOTES_NOT("투표전");
+        VOTES_DOWN("비추천");
 
         @Getter
         private String votes_status;

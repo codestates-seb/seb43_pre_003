@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
@@ -98,5 +99,15 @@ public class QuestionController {
                                        @Positive @PathVariable("member_id") long memberId){
         questionService.unlikeQuestion(questionId, memberId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/currentUri/{board_id}")
+    public String getCurrentUri(HttpServletRequest request){
+        String findUri = request.getRequestURI().toString();
+        if (findUri.charAt(findUri.length() - 1) == '/'){
+            findUri = findUri.substring(0, findUri.length() - 1);
+        }
+        findUri = findUri.replace("/currentUri", "");
+        return findUri;
     }
 }
