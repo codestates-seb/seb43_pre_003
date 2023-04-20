@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import Profile from "../style/img/profile.png";
 const Wrapper = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -41,7 +41,7 @@ const AuthorProfile = ({ createdAt, userName }) => {
       <Aside>
         <span>asked {formattedDate}</span>
         <div>
-          <img src="/Vector.png" alt="프로필 사진" />
+          <img src={Profile} alt="프로필 사진" />
           <span>{userName}</span>
         </div>
       </Aside>

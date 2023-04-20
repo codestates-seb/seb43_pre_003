@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Pagination from "../Components/Pagination";
 import QuestionsList from "../Components/QuestionsList";
-import Sidebar from "../Components/Sidebar";
+import Aside from "../Components/Aside";
 import SortBtn from "../Components/SortBtn";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -114,7 +114,7 @@ function QuestionsPage() {
           setPage={setPage}
         />
       </QuestionWrap>
-      <Sidebar />
+      <Aside />
     </>
   );
 }

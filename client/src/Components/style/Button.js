@@ -12,17 +12,23 @@ const SIZE = {
   shareSize: css`
     --button-width: 47px;
     --button-height: 29px;
-    --button-padding: 4px 4px;
+    --button-padding: 4px 4px 4px 4px;
   `,
   pageSize: css`
     --button-width: 23px;
     --button-height: 22px;
-    --button-padding: 3px 8px;
+    --button-padding: 3px 8px 3px 8px;
   `,
   question: css`
     --button-width: 102px;
     --button-height: 37px;
-    --button-padding: 3px 8px;
+    --button-padding: 3px 8px 3px 8px;
+  `,
+  custom: css`
+    --button-width: ${(props) => props.width || "38px"};
+    --button-height: ${(props) => props.height || "38px"};
+    --button-padding: ${(props) => props.padding || "0px 0px 0px 0px"};
+    --margin: ${(props) => props.margin || "0px 0px 0px 0px"};
   `,
 };
 
@@ -80,7 +86,7 @@ const VARIANTS = {
     --font-size: 14px;
     --button-hover-color: var(--black-350);
     --button-active-color: var(--black-350);
-    --margin-right: 2px;
+    --margin: 0px 2px 0px 0px;
   `,
   page: css`
     --button-color: var(--black-700);
@@ -93,11 +99,30 @@ const VARIANTS = {
     --border-hover-line: var(1px solid --black-200);
     --button-active-color: var(--white);
     --button-active-bg-color: var(--main-400);
-    --margin-right: 2px;
+    --margin: 0px 2px 0px 0px;
+  `,
+  Discard: css`
+    --button-bg-color: var(--red-400);
+    --button-color: var(--white);
+    --button-hover-bg-color: var(--red-700);
+    --border-hover-line: var(1px solid --black-200);
+    --button-active-color: var(--white);
+    --button-active-bg-color: var(--main-400);
   `,
 };
 
-function Button({ disabled, size, variant, children, onClick, onChange }) {
+function Button({
+  disabled,
+  size,
+  variant,
+  children,
+  onClick,
+  onChange,
+  width,
+  height,
+  padding,
+  margin,
+}) {
   const variantStyle = VARIANTS[variant];
   const sizeStyle = SIZE[size];
 
@@ -108,6 +133,10 @@ function Button({ disabled, size, variant, children, onClick, onChange }) {
       disabled={disabled}
       onClick={onClick}
       onChange={onChange}
+      width={width}
+      height={height}
+      padding={padding}
+      margin={margin}
     >
       {children}
     </StyleButton>
@@ -117,7 +146,7 @@ function Button({ disabled, size, variant, children, onClick, onChange }) {
 export const StyleButton = styled.button`
   ${(p) => p.sizeStyle}
   ${(p) => p.variantStyle}
-  padding: var(--button-padding, 8px 10px);
+  padding: var(--button-padding, 8px 10px 8px 10px);
   width: var(--button-width, 69px);
   height: var(--button-height, 40px);
   cursor: pointer;
@@ -128,7 +157,7 @@ export const StyleButton = styled.button`
   border: var(--border-line, 0px none var(--white));
   border-radius: 4px;
   font-weight: var(--font-weight, 500);
-  margin-right: var(--margin-right, 8px);
+  margin: var(--margin, 0px 0px 0px 0px);
 
   &:hover {
     background: var(--button-hover-bg-color, #ffffff);

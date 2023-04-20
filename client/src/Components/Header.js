@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Button from "./style/Button";
 import Logo from "./style/img/logo.png";
@@ -128,31 +129,39 @@ const IconDiv = styled.div`
 function Header() {
   const [isLogin, setisLogin] = useState(false);
 
+  const onClick = () => {
+    setisLogin();
+  };
+
   return (
     <>
       {!isLogin ? (
         <HeaderBox>
-          <LogoBtn>
-            <Img src={Logo} alt="" />
-          </LogoBtn>
+          <Link to="/">
+            <LogoBtn>
+              <Img src={Logo} alt="" />
+            </LogoBtn>
+          </Link>
           <ProductBtn>Product</ProductBtn>
           <Input />
-          <Button
-            variant="smallWhite"
-            size="sm"
-            onClick={() => setisLogin(true)}
-          >
-            Log in
-          </Button>
-          <Button variant="mediumBlue" size="sm">
-            Sign up
-          </Button>
+          <Link to="/Login">
+            <Button variant="smallWhite" size="sm">
+              Log in
+            </Button>
+          </Link>
+          <Link to="/signup">
+            <Button variant="mediumBlue" size="sm">
+              Sign up
+            </Button>
+          </Link>
         </HeaderBox>
       ) : (
         <HeaderBox>
-          <LogoBtn>
-            <Img src={Logo} alt="" />
-          </LogoBtn>
+          <Link to="/">
+            <LogoBtn>
+              <Img src={Logo} alt="" />
+            </LogoBtn>
+          </Link>
           <ProductBtn>Product</ProductBtn>
           <LoginInput />
           <ProfileNumber>
@@ -168,7 +177,7 @@ function Header() {
           <IconDiv>
             <img src={Que} alt="" />
           </IconDiv>
-          <LogoutBtn onClick={() => setisLogin(false)}>
+          <LogoutBtn onClick={onClick}>
             <img src={Logout} alt=""></img>
           </LogoutBtn>
         </HeaderBox>
