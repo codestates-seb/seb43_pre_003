@@ -93,13 +93,21 @@ const VARIANTS = {
     --button-bg-color: var(--white);
     --border-line: 1px solid var(--black-200);
     --font-size: 13px;
-    --font-weightL 400;
+    --font-weight: 400;
     --button-hover-color: var(--black-700);
     --button-hover-bg-color: var(--black-100);
     --border-hover-line: var(1px solid --black-200);
     --button-active-color: var(--white);
     --button-active-bg-color: var(--main-400);
     --margin: 0px 2px 0px 0px;
+  `,
+  Discard: css`
+    --button-bg-color: var(--red-400);
+    --button-color: var(--white);
+    --button-hover-bg-color: var(--red-700);
+    --border-hover-line: var(1px solid --black-200);
+    --button-active-color: var(--white);
+    --button-active-bg-color: var(--main-400);
   `,
 };
 

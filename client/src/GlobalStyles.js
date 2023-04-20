@@ -42,6 +42,7 @@ const GlobalStyles = createGlobalStyle`
     --black-900: hsl(210,8%,5%);
     --main-400: hsl(27,90%,55%);
     --red-400: hsl(358,68%,59%);
+    --red-700: hsl(358,64%,41%);
     --yellow-050: hsl(47,87%,94%);
     --yellow-100: hsl(47,83%,91%);
     --yellow-200: hsl(46,65%,84%);
