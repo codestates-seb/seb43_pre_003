@@ -1,6 +1,8 @@
 package com.seb43.preProject.question.entity;
 
+import com.seb43.preProject.answer.entity.Answer;
 import com.seb43.preProject.audit.Auditable;
+import com.seb43.preProject.comment.entity.Comment;
 import com.seb43.preProject.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,8 +34,22 @@ public class Question extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
+    @OneToMany(mappedBy = "question", cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    private List<Answer> answers = new ArrayList<>();
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    private List<Comment> comments = new ArrayList<>();
+
     @OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST)
     private List<Votes> votesList = new ArrayList<>();
+
+    public Question(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 
     public enum QuestionStatus{
         QUESTION_REGISTERED("질문 등록 상태"),

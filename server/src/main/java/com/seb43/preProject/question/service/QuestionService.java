@@ -13,8 +13,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Pageable;
-import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -117,5 +115,17 @@ public class QuestionService {
     public Question verifyQuestion(long questionId) {
         return questionRepository.findById(questionId).orElseThrow(
                 () -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+    }
+    public void answerCountPlus (Question question) {
+        int now = question.getAnswerCount();
+        question.setAnswerCount(now + 1);
+
+        questionRepository.save(question);
+    }
+    public void answerCountMinus (Question question) {
+        int count = question.getAnswerCount();
+        question.setAnswerCount(count - 1);
+
+        questionRepository.save(question);
     }
 }
