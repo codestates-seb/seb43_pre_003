@@ -5,6 +5,7 @@ import Input from "../Components/style/Input";
 import Button from "../Components/style/Button";
 import Sign from "../Components/style/img/sign.png";
 import Oauth from "../Components/OauthBtn";
+import { Link } from "react-router-dom";
 //import { useState } from "react";
 
 const Container = styled.div`
@@ -89,7 +90,9 @@ function Login() {
           <Eldiv>
             <Passworddiv>
               <EmailSpan>Password</EmailSpan>
-              <ForgetBtn>Forgot password?</ForgetBtn>
+              <Link to="/Forget">
+                <ForgetBtn>Forgot password?</ForgetBtn>
+              </Link>
             </Passworddiv>
             <Input type="Password" errorType="default"></Input>
           </Eldiv>
@@ -106,7 +109,9 @@ function Login() {
         </Emailbox>
         <Bottomdiv>
           <BottomText>Don’t have an account?</BottomText>
-          <ForgetBtn>Sign up</ForgetBtn>
+          <Link to="/Signup">
+            <ForgetBtn>Sign up</ForgetBtn>
+          </Link>
         </Bottomdiv>
         <Bottomdiv>
           <BottomText>Are you an employer?</BottomText>

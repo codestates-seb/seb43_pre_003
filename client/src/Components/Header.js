@@ -148,9 +148,11 @@ function Header() {
               Log in
             </Button>
           </Link>
-          <Button variant="mediumBlue" size="sm">
-            Sign up
-          </Button>
+          <Link to="/signup">
+            <Button variant="mediumBlue" size="sm">
+              Sign up
+            </Button>
+          </Link>
         </HeaderBox>
       ) : (
         <HeaderBox>
