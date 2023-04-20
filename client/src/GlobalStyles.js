@@ -9,8 +9,32 @@ const GlobalStyles = createGlobalStyle`
     font-family: -apple-system, "system-ui", "Segoe UI Adjusted", "Segoe UI", "Liberations Sans", sans-serif;
     font-weight: 400; 
     white-space: nowrap;
-    font-size: 11px; 
+    font-size: 16px; 
+    /* margin: 0 auto; */
   }
+  .wrap{
+    max-width: 1264px;
+    /* position: relative; */
+    margin: 0 auto;
+    /* padding-top: 3.125rem; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1 0 auto;
+    align-items: center;
+  }
+  .container {
+    /* position: relative; */
+    width: 100%;
+    height: max-content;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 0;
+    flex: 1 0 auto;
+  }
+
   body {
     width: 100vw;
     height: 100vh;
@@ -25,6 +49,10 @@ const GlobalStyles = createGlobalStyle`
 
   a {
     text-decoration: none;
+  }
+
+  button {
+    cursor: pointer;
   }
 
   :root {
@@ -43,6 +71,7 @@ const GlobalStyles = createGlobalStyle`
     --main-400: hsl(27,90%,55%);
     --red-400: hsl(358,68%,59%);
     --red-700: hsl(358,64%,41%);
+    --green-700: hsl(140,41%,31%);
     --yellow-050: hsl(47,87%,94%);
     --yellow-100: hsl(47,83%,91%);
     --yellow-200: hsl(46,65%,84%);

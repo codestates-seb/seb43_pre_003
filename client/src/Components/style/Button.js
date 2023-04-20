@@ -155,7 +155,7 @@ export const StyleButton = styled.button`
   font-size: var(--font-size, 13px);
   text-align: center;
   border: var(--border-line, 0px none var(--white));
-  border-radius: 2px;
+  border-radius: 4px;
   font-weight: var(--font-weight, 500);
   margin: var(--margin, 0px 0px 0px 0px);
 

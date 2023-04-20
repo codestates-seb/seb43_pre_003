@@ -41,8 +41,8 @@ const ProductBtn = styled.button`
   text-align: center;
   height: 28px;
   width: 73px;
-  border-radius: 40%;
-  border: 0px solid none;
+  border-radius: 30%;
+  /* border: 0px solid none; */
   background: var(--black-025);
   margin-right: 12px;
   font-size: var(--font-medium);
@@ -55,7 +55,7 @@ const ProductBtn = styled.button`
 
 const Input = styled.input`
   padding: 8px 8px 8px 30px;
-  width: 875px;
+  width: 775px;
   border-radius: 2px;
   background-image: url(${Search});
   background-position: 4px center;
@@ -65,10 +65,11 @@ const Input = styled.input`
 
   &:active,
   &:focus {
-    box-shadow: 0px 0px 10px 5px  var(--blue-050);
+    box-shadow: 0px 0px 10px 5px var(--blue-050);
     outline: none;
     border: 1px solid var(--blue-500);
-  `;
+  }
+`;
 
 const LoginInput = styled(Input)`
   width: 775px;
