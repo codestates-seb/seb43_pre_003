@@ -1,0 +1,94 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "question": {
+        "questionId": 1,
+        "title": "How can you rotate the vertical axis of an HDR loaded into a THREE.js scene?",
+        "content": "I was able to successfully load an HDR file into my THREE.js scene and set it as the background and environment for lighting. However, I need to rotate the HDR 180 degrees. It's my understanding that in order to achieve this I would need to create a rotational matrix and multiply that by the matrix of the HDR texture. However my attempt to do this is not rotating the HDR. I figured, if I can't rotate the HDR then I'll just rotate the whole scene. This also didn't work so it leads me to believe there is a fault in how I'm attempting to rotate the matrix.",
+        "tags": [
+          "javascript",
+          "reactjs",
+          "matrix",
+          "three.js",
+          "matrix-multiplication"
+        ],
+        "userId": 0,
+        "userName": "Czurch",
+        "answerCount": 1,
+        "views": 123,
+        "votes": 3,
+        "questionStatus": "QUESTION_REGISTERED",
+        "createdAt": "2023-04-08T10:54:56.870994",
+        "modifiedAt": "2023-04-08T10:54:59.3363196"
+      },
+      "answer": [
+        {
+          "content": "저야말로",
+          "questionId": 1,
+          "answerId": 0,
+          "userId": 1,
+          "userName": "Johnst33"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "question": {
+        "questionId": 2,
+        "title": "Spring Batch Admin UI still run?",
+        "content": "About my company still run spring batch admin UI but i can't role to access this.i want to demo Spring Batch Admin UI but not have many still value at now ? Do you have github repository about spring batch admin UI basic.",
+        "tags": ["spring-batch-admin"],
+        "userId": 0,
+        "userName": "Czurch",
+        "answerCount": 2,
+        "views": 3,
+        "votes": 0,
+        "questionStatus": "QUESTION_REGISTERED",
+        "createdAt": "2023-04-08T11:54:56.870994",
+        "modifiedAt": "2023-04-08T11:54:59.3363196"
+      },
+      "answer": [
+        {
+          "content": "저야말로",
+          "questionId": 2,
+          "answerId": 0,
+          "userId": 2,
+          "userName": "KUSH A BK"
+        },
+        {
+          "content": "저야말로",
+          "questionId": 2,
+          "answerId": 1,
+          "userId": 1,
+          "userName": "Johnst33"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "question": {
+        "questionId": 3,
+        "title": "How can you rotate the vertical axis of an HDR loaded into a THREE.js scene?",
+        "content": "I was able to successfully load an HDR file into my THREE.js scene and set it as the background and environment for lighting. However, I need to rotate the HDR 180 degrees. It's my understanding that in order to achieve this I would need to create a rotational matrix and multiply that by the matrix of the HDR texture. However my attempt to do this is not rotating the HDR. I figured, if I can't rotate the HDR then I'll just rotate the whole scene. This also didn't work so it leads me to believe there is a fault in how I'm attempting to rotate the matrix.",
+        "tags": [
+          "javascript",
+          "reactjs",
+          "matrix",
+          "three.js",
+          "matrix-multiplication"
+        ],
+        "userId": 0,
+        "userName": "Czurch",
+        "answerCount": 0,
+        "views": 123,
+        "votes": 3,
+        "questionStatus": "QUESTION_REGISTERED",
+        "createdAt": "2023-04-08T10:54:56.870994",
+        "modifiedAt": "2023-04-08T10:54:59.3363196"
+      },
+      "answer": []
+    }
+   
+  ]
+}
