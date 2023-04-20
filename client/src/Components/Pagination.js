@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import PaginationCustom from "react-js-pagination";
-// import Button from "../Components/style/Button";
 
 const PaginationWrap = styled.div`
   padding: 1.5rem;
