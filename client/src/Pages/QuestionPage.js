@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Pagination from "../Components/Pagination";
 import QuestionsList from "../Components/QuestionsList";
-import Sidebar from "../Components/Sidebar";
+import Aside from "../Components/Aside";
 import SortBtn from "../Components/SortBtn";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -65,7 +65,7 @@ function QuestionsPage() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/data")
+      .get("http://localhost:3001/data")
       .then((res) => {
         setData(
           res.data.sort((a, b) => b.question.questionId - a.question.questionId)
@@ -114,7 +114,7 @@ function QuestionsPage() {
           setPage={setPage}
         />
       </QuestionWrap>
-      <Sidebar />
+      <Aside />
     </>
   );
 }

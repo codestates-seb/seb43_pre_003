@@ -4,13 +4,17 @@ const VARIANTS = {
   default: css`
     --border: var(--black-200);
     --border-hover: var(--blue-500);
-    --box-shadow: var(--blue-200);
+    --box-shadow: var(--blue-050);
     --img: none;
   `,
   error: css`
     --border: var(--red-400);
     --border-hover: var(--red-400);
-    --box-shadow: #f3ced0;
+    --box-shadow: #f5d9da;
+  `,
+  login: css`
+    --box-shadow: none;
+    --img: none;
   `,
 };
 
@@ -27,7 +31,7 @@ const TextInput = styled.input`
 
   &:active,
   &:focus {
-    box-shadow: 0px 0px 10px 5px var(--box-shadow, var(--black-200));
+    box-shadow: 0px 0px 0px 3px var(--box-shadow, var(--black-200));
     outline: none;
     border: 1px solid var(--border-hover, var(--blue-500));
   }
