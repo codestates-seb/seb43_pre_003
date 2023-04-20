@@ -134,8 +134,6 @@ function QuestionsList({ data }) {
   const el = data.question;
   const elA = data.answer;
 
-  console.log(data);
-
   return (
     <>
       <QuestionsLiContainer>
