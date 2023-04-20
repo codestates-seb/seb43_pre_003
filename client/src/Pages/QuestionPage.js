@@ -8,6 +8,7 @@ import axios from "axios";
 
 const QuestionWrap = styled.section`
   width: calc(100% - 18.75rem);
+  padding-right: 1.875rem;
   /* padding: 1.5rem; */
 `;
 

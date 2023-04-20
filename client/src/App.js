@@ -22,22 +22,25 @@ function App() {
   return (
     <AppWrap>
       <GlobalStyles />
-      <Header />
-      <div className="wrap">
-        <div className="container">
-          <Nav />
-          <BrowserRouter>
+      <BrowserRouter>
+        <Header />
+        <div className="wrap">
+          <div className="container">
+            <Nav />
             <Routes>
               <Route path="/" element={<QuestionPage />} />
               {/* <Route path="/login" element={<Login />} /> */}
               {/* <Route path="/signup" element={<SignUp />} /> */}
               <Route path="/mypage" element={<MyPage />} />
-              <Route path="question/:id" element={<QuestionDetailpage />} />
+              <Route
+                path="question/:questionId"
+                element={<QuestionDetailpage />}
+              />
             </Routes>
-          </BrowserRouter>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
+      </BrowserRouter>
     </AppWrap>
   );
 }

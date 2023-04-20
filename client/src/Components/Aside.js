@@ -5,7 +5,7 @@ import SOIcon from "./style/img/ic-stackoverflow.png";
 
 const AsideContainer = styled.div`
   margin-top: 24px;
-  margin-right: 100px;
+  /* margin-right: 100px; */
 `;
 const YellowBox = styled.div`
   width: 298px;
