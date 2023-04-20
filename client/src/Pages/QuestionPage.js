@@ -65,7 +65,7 @@ function QuestionsPage() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/data")
+      .get("http://localhost:3001/data")
       .then((res) => {
         setData(
           res.data.sort((a, b) => b.question.questionId - a.question.questionId)
