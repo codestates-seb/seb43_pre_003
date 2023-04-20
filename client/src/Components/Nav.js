@@ -2,13 +2,13 @@ import styled from "styled-components";
 import Earth from "./style/img/ic-earth.png";
 import { Link } from "react-router-dom";
 const NavContainer = styled.div`
-  height: 100vw;
+  height: 100%;
   flex-direction: column;
   width: 156px;
   font-size: var(--font-medium);
   color: var(--black-600);
-  margin-left: 100px;
-  padding-top: 48px;
+  /* margin-left: 100px; */
+  padding-top: 32px;
   border-right: 1px solid var(--black-100);
 `;
 
