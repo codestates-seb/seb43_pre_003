@@ -21,13 +21,16 @@ const VARIANTS = {
 const TextInput = styled.input`
   ${(p) => p.errorStyle}
   padding: var(--padding, 8px 16px 8px 10px);
-  width: 242px;
+  /* width: 242px; */
+  width: 100%;
   border-radius: 2px;
   flex-grow: 10;
   background-image: var(--img, url(${ErrIcon}));
-  background-position: 215px center;
+  /* background-position: 215px center; */
+  background-position: right center;
   background-repeat: no-repeat;
   border: 1px solid var(--border, var(--black-200));
+  font-size: 13px;
 
   &:active,
   &:focus {

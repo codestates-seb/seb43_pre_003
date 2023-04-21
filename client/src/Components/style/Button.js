@@ -52,6 +52,7 @@ const VARIANTS = {
     --button-disable-bg-color: var(--powder-200);
     --button-active-bg-color: var(--blue-600);
     --button-active-color: var(--white);
+    box-shadow: inset 0 1px 0 0 hsla(0, 0%, 100%, 0.4);
   `,
   smallBlue: css`
     --button-color: var(--powder-700);
