@@ -1,10 +1,12 @@
 import styled from "styled-components";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 import Pagination from "../Components/Pagination";
 import QuestionsList from "../Components/QuestionsList";
 import Aside from "../Components/Aside";
 import SortBtn from "../Components/SortBtn";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import Button from "../Components/style/Button";
 
 const QuestionWrap = styled.section`
   width: calc(100% - 18.75rem);
@@ -17,23 +19,16 @@ const QuestionTitle = styled.div`
   justify-content: space-between;
   margin-bottom: 1.5rem;
   padding: 1.5rem 0 0 1.5rem;
+  > button > a {
+    color: var(--white);
+    font-size: 0.8125rem;
+  }
 `;
 
 const Title = styled.h3`
   font-size: 1.625rem;
   color: var(--black-900);
   font-weight: 600;
-`;
-
-const AskQuestionBtn = styled.button`
-  border-radius: 0.25rem;
-  font-size: 0.8125rem;
-  color: var(--white);
-  background-color: var(--blue-500);
-  padding: 0.75rem;
-  :hover {
-    background-color: var(--blue-600);
-  }
 `;
 
 const QuestionFilter = styled.div`
@@ -92,7 +87,9 @@ function QuestionsPage() {
       <QuestionWrap>
         <QuestionTitle>
           <Title>All Questions</Title>
-          <AskQuestionBtn>Ask Question</AskQuestionBtn>
+          <Button variant="mediumBlue" size="question">
+            <Link to="/question/ask">Ask Question</Link>
+          </Button>
         </QuestionTitle>
         <QuestionFilter>
           <QuestionCount>{data.length} questions</QuestionCount>
