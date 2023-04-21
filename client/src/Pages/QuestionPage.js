@@ -87,6 +87,8 @@ function QuestionsPage() {
       <QuestionWrap>
         <QuestionTitle>
           <Title>All Questions</Title>
+          {/* 비로그인인 경우 로그인 페이지로 이동 */}
+          {/* 로그인 된 경우 */}
           <Button variant="mediumBlue" size="question">
             <Link to="/question/ask">Ask Question</Link>
           </Button>
