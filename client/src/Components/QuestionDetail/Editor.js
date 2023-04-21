@@ -1,31 +1,45 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import styled from "styled-components";
 
 const EditorContainer = styled.div`
-  height: 200px;
   width: 100%;
-  font-size: 13px;
+  height: 200px;
 `;
 
 const QuillEditor = styled(ReactQuill).attrs(() => ({
-  style: { height: "80%" },
+  style: { height: "100%" },
 }))``;
 
-const Editor = () => {
-  const [content, setContent] = useState("");
+const Editor = ({ value, onChange }) => {
+  const [content, setContent] = useState(value || "");
+
+  useEffect(() => {
+    setContent(value);
+  }, [value]);
 
   const handleContentChange = (value) => {
     setContent(value);
+    onChange(stripHtmlTags(value));
+  };
+
+  const stripHtmlTags = (html) => {
+    const tmp = document.createElement("DIV");
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || "";
   };
 
   return (
-    <>
+    <div>
       <EditorContainer>
-        <QuillEditor value={content} onChange={handleContentChange} />
+        <QuillEditor
+          value={content}
+          onChange={handleContentChange}
+          className="quill-editor"
+        />
       </EditorContainer>
-    </>
+    </div>
   );
 };
 
