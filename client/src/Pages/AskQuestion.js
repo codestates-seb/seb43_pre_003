@@ -67,6 +67,9 @@ const Card = styled.div`
     font-size: 12px;
     color: var(--black-700);
   }
+  &:nth-child(2) {
+    height: 340px;
+  }
 `;
 
 const Aside = styled.div`
