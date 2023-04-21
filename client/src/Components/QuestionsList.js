@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { TagDiv } from "./style/Tag";
-// import img from "./style/img/ic- trophy.png";
+import Profile from "./style/img/ic- trophy.png";
 
 const QuestionsLiContainer = styled.li`
   display: flex;
   position: relative;
   border-bottom: 1px solid var(--black-100);
-  padding: 1rem;
+  padding: 16px;
 `;
 
 const QuestionState = styled.div`
@@ -16,19 +16,19 @@ const QuestionState = styled.div`
   flex-wrap: wrap;
   flex-direction: column;
   align-items: flex-end;
-  width: 6.75rem;
-  margin-right: 1rem;
-  gap: 0.5rem;
-  font-size: 0.8125rem;
+  width: 108px;
+  margin-right: 16px;
+  gap: 8px;
+  font-size: 13px;
   > div > span {
-    font-size: 0.8125rem;
-    margin-left: 0.25rem;
+    font-size: 13px;
+    margin-left: 4px;
   }
   .has-answer {
     border: 1px solid var(--green-700);
     color: var(--green-700);
-    border-radius: 0.125rem;
-    padding: 0.125rem 0.25rem;
+    border-radius: 2px;
+    padding: 2px 4px;
   }
   > div:nth-child(1) > span {
     color: var(--black-900);
@@ -36,7 +36,7 @@ const QuestionState = styled.div`
 `;
 
 const QuestionContent = styled.div`
-  max-width: calc(100% - 6.75rem);
+  max-width: calc(100% - 108px);
   width: 100%;
   height: auto;
   display: flex;
@@ -53,17 +53,18 @@ const QuestionTitle = styled.h3`
   /* word-wrap: break-word; */
   /* hyphens: auto; */
   color: var(--blue-600);
-  font-size: 1.125rem;
+  font-size: 18px;
   font-weight: 400;
-  line-height: 1.4rem;
+  line-height: 1.3;
   margin: 0 0 1em;
-  margin-bottom: 0.3846rem;
-  padding-right: 1.5rem;
+  margin-bottom: 6px;
+  padding-right: 24px;
   &:hover {
     cursor: pointer;
     color: var(--blue-500);
   }
   > a {
+    font-size: 18px;
     width: calc(100%);
     white-space: normal;
     overflow-wrap: anywhere;
@@ -76,11 +77,11 @@ const QuestionTitle = styled.h3`
 `;
 
 const QuestionBody = styled.p`
-  font-size: 0.875rem;
+  font-size: 14px;
   color: var(--black-700);
-  margin-bottom: 0.5rem;
-  padding-right: 1.5rem;
-  line-height: 1.3rem;
+  margin-bottom: 8px;
+  padding-right: 24px;
+  line-height: 1.5;
   max-height: 43px;
   width: calc(100%);
   display: -webkit-box;
@@ -98,21 +99,21 @@ const QuestionFooter = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding-right: 1.5rem;
+  padding-right: 24px;
 `;
 
 const Tags = styled.div`
   display: flex;
   flex-flow: row wrap;
-  row-gap: 0.125rem;
+  row-gap: 2px;
 `;
 
 const UserData = styled.div`
   display: flex;
-  margin-left: 0.375rem;
-  font-size: 0.75rem;
-  padding: 0.25rem 0 0 0.375rem;
-  gap: 0.375rem;
+  margin-left: 6px;
+  font-size: 12px;
+  padding: 4px 0 0 6px;
+  gap: 6px;
 
   img {
     border-radius: 30%;
@@ -120,13 +121,13 @@ const UserData = styled.div`
 `;
 
 const UserName = styled.div`
-  font-size: 0.75rem;
+  font-size: 12px;
   color: var(--blue-500);
   width: auto;
 `;
 
 const UserAsked = styled.div`
-  font-size: 0.75rem;
+  font-size: 12px;
   color: val(--black-600);
 `;
 
@@ -163,7 +164,7 @@ function QuestionsList({ data }) {
               ))}
             </Tags>
             <UserData>
-              {/* <img width="20" src={el.profileImg} /> */}
+              <img width="16" alt="프로필 사진" src={Profile} />
               <UserName>{el.userName}</UserName>
               <UserAsked>{el.createdAt}</UserAsked>
             </UserData>

@@ -12,7 +12,7 @@ const TagBox = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  min-height: 40px;
+  min-height: 46px;
   /* margin: 10px; */
   /* padding: 0 10px; */
   padding: 4px 8px;
@@ -37,7 +37,7 @@ const TagItem = styled.div`
 `;
 
 const Text = styled.span`
-  font-size: 0.75rem;
+  font-size: 12px;
 `;
 
 const Button = styled.button`
@@ -59,20 +59,20 @@ const TagInput = styled.input`
   background: transparent;
   border: none;
   outline: none;
-  font-size: 0.75rem;
+  font-size: 12px;
   cursor: text;
   ::placeholder {
     color: var(--black-200);
-    font-size: 0.8125rem;
+    font-size: 13px;
   }
 `;
 
 export const TagDiv = styled.a`
-  font-size: 0.75rem;
+  font-size: 12px;
   color: var(--powder-700);
   background-color: var(--powder-100);
   display: inline-block;
-  padding: 0.3125rem 0.375rem;
+  padding: 5px 6px;
   margin: 2px 2px 2px 0;
   line-height: 1;
   white-space: nowrap;
@@ -80,7 +80,7 @@ export const TagDiv = styled.a`
   text-align: center;
   /* border-width: 1px; */
   /* border-style: solid; */
-  border-radius: 0.125rem;
+  border-radius: 2px;
   cursor: pointer;
   :hover {
     color: var(--powder-700);
@@ -88,7 +88,7 @@ export const TagDiv = styled.a`
   }
 `;
 
-export const Tag = () => {
+const Tag = () => {
   const [tagItem, setTagItem] = useState("");
   const [tagList, setTagList] = useState([]);
 
@@ -135,3 +135,5 @@ export const Tag = () => {
     // </Inputbox>
   );
 };
+
+export default Tag;

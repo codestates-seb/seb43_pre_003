@@ -2,8 +2,8 @@ import styled from "styled-components";
 import PaginationCustom from "react-js-pagination";
 
 const PaginationWrap = styled.div`
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  padding: 24px;
+  margin-bottom: 24px;
   ul {
     display: flex;
     gap: 5px;
@@ -39,7 +39,7 @@ const PaginationWrap = styled.div`
     height: 30px;
     padding-top: 3px;
     border: 1px solid var(--black-100);
-    border-radius: 0.25rem;
+    border-radius: 4px;
     display: flex;
     justify-content: center;
     align-items: center;

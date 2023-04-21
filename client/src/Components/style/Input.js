@@ -2,15 +2,16 @@ import styled, { css } from "styled-components";
 import ErrIcon from "./img/ic-error.png";
 const VARIANTS = {
   default: css`
-    --border: var(--black-200);
+    /* --border: var(--black-200);
     --border-hover: var(--blue-500);
-    --box-shadow: var(--blue-050);
+    --box-shadow: var(--blue-050); */
     --img: none;
   `,
   error: css`
     --border: var(--red-400);
     --border-hover: var(--red-400);
     --box-shadow: #f5d9da;
+    --img: url(${ErrIcon});
   `,
   login: css`
     --box-shadow: none;
@@ -22,12 +23,13 @@ const TextInput = styled.input`
   ${(p) => p.errorStyle}
   padding: var(--padding, 8px 16px 8px 10px);
   /* width: 242px; */
-  width: 100%;
+  width: 100%; // 이거로 바꿈
   border-radius: 2px;
   flex-grow: 10;
-  background-image: var(--img, url(${ErrIcon}));
+  background-image: var(--img, none);
   /* background-position: 215px center; */
-  background-position: right center;
+  background-position: right center; // 이거로 바꿈
+
   background-repeat: no-repeat;
   border: 1px solid var(--border, var(--black-200));
   font-size: 13px;

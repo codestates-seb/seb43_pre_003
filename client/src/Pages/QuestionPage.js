@@ -9,24 +9,24 @@ import SortBtn from "../Components/SortBtn";
 import Button from "../Components/style/Button";
 
 const QuestionWrap = styled.section`
-  width: calc(100% - 18.75rem);
-  padding-right: 1.875rem;
-  /* padding: 1.5rem; */
+  width: calc(100% - 300px);
+  padding-right: 30px;
+  /* padding: 24px; */
 `;
 
 const QuestionTitle = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1.5rem;
-  padding: 1.5rem 0 0 1.5rem;
+  margin-bottom: 24px;
+  padding: 24px 0 0 24px;
   > button > a {
     color: var(--white);
-    font-size: 0.8125rem;
+    font-size: 13px;
   }
 `;
 
 const Title = styled.h3`
-  font-size: 1.625rem;
+  font-size: 26px;
   color: var(--black-900);
   font-weight: 600;
 `;
@@ -34,12 +34,12 @@ const Title = styled.h3`
 const QuestionFilter = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.75rem;
-  padding-left: 1.5rem;
+  margin-bottom: 12px;
+  padding-left: 24px;
 `;
 
 const QuestionCount = styled.p`
-  font-size: 1.125rem;
+  font-size: 18px;
   color: var(--black-800);
 `;
 
@@ -50,7 +50,7 @@ const SortTab = styled.div`
 const AllQuestion = styled.ul`
   display: flex;
   flex-flow: column nowrap;
-  margin-bottom: 2rem;
+  margin-bottom: 32px;
   border-top: 1px solid var(--black-100);
 `;
 
