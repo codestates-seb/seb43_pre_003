@@ -5,10 +5,12 @@ import styled from "styled-components";
 
 const EditorContainer = styled.div`
   height: 200px;
+  width: 100%;
+  font-size: 13px;
 `;
 
 const QuillEditor = styled(ReactQuill).attrs(() => ({
-  style: { height: "100%" },
+  style: { height: "80%" },
 }))``;
 
 const Editor = () => {
@@ -19,11 +21,11 @@ const Editor = () => {
   };
 
   return (
-    <div>
+    <>
       <EditorContainer>
         <QuillEditor value={content} onChange={handleContentChange} />
       </EditorContainer>
-    </div>
+    </>
   );
 };
 

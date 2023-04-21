@@ -7,6 +7,7 @@ import MyPage from "./Pages/MyPage";
 import Nav from "./Components/Nav";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
+import AskQuestion from "./Pages/AskQuestion";
 // import Button from "./Components/style/Button";
 // import Input from "./Components/style/Input";
 
@@ -36,6 +37,7 @@ function App() {
                 path="question/:questionId"
                 element={<QuestionDetailpage />}
               />
+              <Route path="/question/ask" element={<AskQuestion />} />
             </Routes>
           </div>
           <Footer />
