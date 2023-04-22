@@ -54,8 +54,8 @@ const AllQuestion = styled.ul`
   border-top: 1px solid var(--black-100);
 `;
 
-function QuestionsPage() {
-  const [data, setData] = useState([]); // 리스트에 나타낼 아이템들
+function QuestionsPage({ lists, isPending }) {
+  const [list, setList] = useState([]); // 리스트에 나타낼 아이템들
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지. default 값으로 1
   const [currentPosts, setCurrentPosts] = useState([]); // 현재 페이지에서 보여지는 아이템들
 
@@ -63,7 +63,7 @@ function QuestionsPage() {
     axios
       .get("http://localhost:3001/data")
       .then((res) => {
-        setData(
+        setList(
           res.data.sort((a, b) => b.question.questionId - a.question.questionId)
         );
         setCurrentPosts(res.data.slice(0, 10)); // 0 , 10
@@ -71,11 +71,11 @@ function QuestionsPage() {
       .catch((error) => {
         console.log("error", error);
       });
-  }, []);
+  }, [lists]);
 
   useEffect(() => {
     const firstPost = (currentPage - 1) * 10;
-    setCurrentPosts(data.slice(firstPost, firstPost + 10));
+    setCurrentPosts(list.slice(firstPost, firstPost + 10));
   }, [currentPage]);
 
   const setPage = (el) => {
@@ -84,6 +84,8 @@ function QuestionsPage() {
 
   return (
     <>
+      {isPending && <div>Loading...</div>}
+
       <QuestionWrap>
         <QuestionTitle>
           <Title>All Questions</Title>
@@ -94,13 +96,13 @@ function QuestionsPage() {
           </Button>
         </QuestionTitle>
         <QuestionFilter>
-          <QuestionCount>{data.length} questions</QuestionCount>
+          <QuestionCount>{list.length} questions</QuestionCount>
           <SortTab>
             <SortBtn />
           </SortTab>
         </QuestionFilter>
         <AllQuestion>
-          {currentPosts && data.length > 0 ? (
+          {currentPosts && list.length > 0 ? (
             currentPosts.map((el) => (
               <QuestionsList key={el.question.questionId} data={el} />
             ))
@@ -110,7 +112,7 @@ function QuestionsPage() {
         </AllQuestion>
         <Pagination
           currentPage={currentPage}
-          count={data.length}
+          count={list.length}
           setPage={setPage}
         />
       </QuestionWrap>
