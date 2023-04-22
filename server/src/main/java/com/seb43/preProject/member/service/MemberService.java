@@ -1,30 +1,58 @@
 package com.seb43.preProject.member.service;
 
 
+import com.seb43.preProject.security.SecurityConfiguration;
+import com.seb43.preProject.security.util.CustomAuthorityUtil;
 import com.seb43.preProject.exception.BusinessLogicException;
 import com.seb43.preProject.exception.ExceptionCode;
 import com.seb43.preProject.member.dto.MemberPatchDto;
 import com.seb43.preProject.member.entity.Member;
 import com.seb43.preProject.member.repository.MemberRepository;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class MemberService {
+    private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
+    private final CustomAuthorityUtil authorityUtils;
 
-    public MemberService(MemberRepository memberRepository) {
+    public MemberService(PasswordEncoder passwordEncoder,
+                         MemberRepository memberRepository,
+                         CustomAuthorityUtil authorityUtils) {
+        this.passwordEncoder = passwordEncoder;
         this.memberRepository = memberRepository;
+        this.authorityUtils = authorityUtils;
     }
 
-    public Member createMember(Member member){
-        Member creatMember = member;
+//    public Member createMember(Member member){
+//        Member creatMember = member;
+//        creatMember.setMemberStatus(Member.MemberStatus.MEMBER_ACTIVE);
+//        creatMember.setRoles(Member.Roles.ROLE_USER);
+//        return memberRepository.save(creatMember);
+//    }
+    public Member createMember(Member member) {
+    verifyMemberExists(member.getEmail());
+    String encryptedPassword = passwordEncoder.encode(member.getPassword());
+    member.setPassword(encryptedPassword);
 
-        return memberRepository.save(creatMember);
+        List<String> roles = authorityUtils.createRoles(member.getEmail());
+        member.setRoles(roles);
+
+    return memberRepository.save(member);
+}
+
+    public void verifyMemberExists(String email){
+        Optional<Member> findMember = memberRepository.findByEmail(email);
+        if(findMember.isPresent()){
+            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+        }
     }
-
     public Member findVerifiedMember(long memberId) {
         Optional<Member> findMember = memberRepository.findById(memberId);
         Member member = findMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
@@ -33,7 +61,7 @@ public class MemberService {
     public Member updateMember(MemberPatchDto member,Long memberId) {
 
         Member findMember = findVerifiedMember(memberId);
-        findMember.setPassword(member.getPassword());
+        findMember.setPassword(passwordEncoder.encode(member.getPassword()));
         findMember.setUserName(member.getUserName());
         findMember.setModifiedAt(LocalDateTime.now());
 
