@@ -8,6 +8,8 @@ import Nav from "./Components/Nav";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import AskQuestion from "./Pages/AskQuestion";
+import questionAxios from "./util/questionAxios";
+
 // import Button from "./Components/style/Button";
 // import Input from "./Components/style/Input";
 
@@ -20,16 +22,23 @@ const AppWrap = styled.div`
 // };
 
 function App() {
+  const [list, isPending, error] = questionAxios(`http://localhost:3001/data/`);
+
   return (
     <AppWrap>
       <GlobalStyles />
       <BrowserRouter>
+        {error && <div>{error}</div>}
+
         <Header />
         <div className="wrap">
           <div className="container">
             <Nav />
             <Routes>
-              <Route path="/" element={<QuestionPage />} />
+              <Route
+                path="/"
+                element={<QuestionPage list={list} isPending={isPending} />}
+              />
               {/* <Route path="/login" element={<Login />} /> */}
               {/* <Route path="/signup" element={<SignUp />} /> */}
               <Route path="/mypage" element={<MyPage />} />

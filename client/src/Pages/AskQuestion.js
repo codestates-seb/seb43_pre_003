@@ -1,20 +1,16 @@
 import styled from "styled-components";
+import { useState, useRef } from "react";
 import Button from "../Components/style/Button";
 import Editor from "../Components/QuestionDetail/Editor";
 import TitleBg from "../Components/style/img/bg-askQuestion.svg";
 import Input from "../Components/style/Input.js";
 import Tag from "../Components/style/Tag";
-import { ReactComponent as PencilImg } from "../Components/style/img/img-spotPencil.svg";
-// import Aside from "../Components/Aside";
+import { axiosCreate } from "../util/api.js";
 
-// const Container = styled.div`
-//   width: 100vw;
-//   background-color: var(--black-025);
-// `;
+import { ReactComponent as PencilImg } from "../Components/style/img/img-spotPencil.svg";
 
 const AskQuestionWrap = styled.section`
   padding: 30px;
-  /* width: calc(100% - 300px); */
   width: 100%;
   padding-bottom: 64px;
 `;
@@ -107,9 +103,41 @@ const Aside = styled.div`
 `;
 
 function AskQuestion() {
+  const [titleValue, setTitleValue] = useState("");
+  const [editorValue, setEditorValue] = useState("");
+
+  const listId = useRef(0);
+  const questionListId = useRef(0);
+
+  const handleSubmit = () => {
+    // e.preventDefault();
+    const createdAt = new Date().toLocaleString();
+
+    const newList = {
+      id: listId.current,
+      question: {
+        questionId: questionListId,
+        title: titleValue,
+        content: editorValue,
+        tags: ["kind of beauty"],
+        userid: 0,
+        userName: "mooni",
+        answerCount: 0,
+        views: 0,
+        votes: 0,
+        questionStatus: "QUESTION_REGISTERED",
+        createdAt,
+        modifiedAt: "",
+      },
+      answer: [],
+    };
+    axiosCreate("http://localhost:3001/data/", newList);
+    listId.current += 1;
+    questionListId.current += 1;
+  };
+
   return (
     <>
-      {/* <Container> */}
       <AskQuestionWrap>
         <TitleArea>
           <Title>Review your question</Title>
@@ -122,7 +150,12 @@ function AskQuestion() {
                 Be specific and imagine you’re asking a question to another
                 person.
               </p>
-              <Input />
+              <Input
+                type="text"
+                placeholder="Title"
+                value={titleValue}
+                onChange={(e) => setTitleValue(e.target.value)}
+              />
             </Card>
             <Card>
               <h5 className="title">Body</h5>
@@ -130,7 +163,7 @@ function AskQuestion() {
                 The body of your question contains your problem details and
                 results. Minimum 30 characters.
               </p>
-              <Editor />
+              <Editor value={editorValue} onChange={setEditorValue} />
             </Card>
             <Card>
               <h5 className="title">Tags</h5>
@@ -155,11 +188,15 @@ function AskQuestion() {
             </div>
           </Aside>
         </InputArea>
-        <Button variant="mediumBlue" size="custom" padding="8px 10px 8px 10px">
+        <Button
+          variant="mediumBlue"
+          size="custom"
+          padding="8px 10px 8px 10px"
+          onClick={() => handleSubmit()}
+        >
           Post your question
         </Button>
       </AskQuestionWrap>
-      {/* </Container> */}
     </>
   );
 }
