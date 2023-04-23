@@ -24,8 +24,8 @@ public class CommentController {
         this.mapper = mapper;
     }
 
-    @PostMapping("/question/{question-id}")
-    public ResponseEntity postQuestionComment (@PathVariable("question-id") @Positive long questionId,
+    @PostMapping("/question/{question_id}")
+    public ResponseEntity postQuestionComment (@PathVariable("question_id") @Positive long questionId,
                                        @RequestBody @Valid CommentDto.Post post) {
         post.setQuestionId(questionId);
         Comment create = commentService.createQuestionComment(mapper.PostDtoToComment(post));
@@ -33,17 +33,17 @@ public class CommentController {
         return new ResponseEntity(mapper.EntityToResponse(create), HttpStatus.CREATED);
     }
     // 답변 부분 댓글
-    @PostMapping("/answer/{answer-id}")
-    public ResponseEntity postAnswerComment (@PathVariable("answer-id") @Positive long answerId,
+    @PostMapping("/answer/{answer_id}")
+    public ResponseEntity postAnswerComment (@PathVariable("answer_id") @Positive long answerId,
                                              @RequestBody @Valid CommentDto.Post post) {
         post.setAnswerId(answerId);
         Comment create = commentService.createAnswerComment(mapper.PostDtoToComment(post));
 
         return new ResponseEntity(mapper.EntityToResponse(create), HttpStatus.CREATED);
     }
-    @PatchMapping("/question/{question-id}/{comment-id}")
-    public ResponseEntity patchQuestionComment (@PathVariable("question-id") @Positive long questionId,
-                                                @PathVariable("comment-id") @Positive long commentId,
+    @PatchMapping("/question/{question_id}/{comment_id}")
+    public ResponseEntity patchQuestionComment (@PathVariable("question_id") @Positive long questionId,
+                                                @PathVariable("comment_id") @Positive long commentId,
                                                 @RequestBody CommentDto.Patch patch) {
         patch.setQuestionId(questionId);
         patch.setCommentId(commentId);
@@ -51,28 +51,28 @@ public class CommentController {
 
         return new ResponseEntity(mapper.EntityToResponse(update), HttpStatus.OK);
     }
-    @PatchMapping("/answer/{answer-id}/{comment-id}")
-    public ResponseEntity patchAnswerComment (@PathVariable("answer-id") @Positive long answerId,
-                                              @PathVariable("comment-id") @Positive long commentId,
+    @PatchMapping("/answer/{answer_id}/{comment_id}")
+    public ResponseEntity patchAnswerComment (@PathVariable("answer_id") @Positive long answerId,
+                                              @PathVariable("comment_id") @Positive long commentId,
                                               @RequestBody CommentDto.Patch patch) {
         patch.setCommentId(commentId);
         patch.setAnswerId(answerId);
         Comment update = commentService.updateAnswerComment(mapper.PatchDtoToComment(patch));
         return new ResponseEntity(mapper.EntityToResponse(update), HttpStatus.OK);
     }
-    @DeleteMapping("/question/{question-id}/{member-id}/{comment-id}")
-    public ResponseEntity deleteQuestionComment (@PathVariable("question-id") @Positive long questionId,
-                                                 @PathVariable("member-id") @Positive long memberId,
-                                                 @PathVariable("comment-id") @Positive long commentId) {
+    @DeleteMapping("/question/{question_id}/{member_id}/{comment_id}")
+    public ResponseEntity deleteQuestionComment (@PathVariable("question_id") @Positive long questionId,
+                                                 @PathVariable("member_id") @Positive long memberId,
+                                                 @PathVariable("comment_id") @Positive long commentId) {
         commentService.deleteQuestionComment(questionId, memberId, commentId);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-    @DeleteMapping("/{question-id}/answer/{answer-id}/{member-id}/{comment-id}")
-    public ResponseEntity deleteAnswerComment (@PathVariable("question-id") long questionId,
-                                               @PathVariable("answer-id") @Positive long answerId,
-                                               @PathVariable("member-id") @Positive long memberId,
-                                               @PathVariable("comment-id") @Positive long commentId) {
+    @DeleteMapping("/{question_id}/answer/{answer_id}/{member_id}/{comment_id}")
+    public ResponseEntity deleteAnswerComment (@PathVariable("question_id") long questionId,
+                                               @PathVariable("answer_id") @Positive long answerId,
+                                               @PathVariable("member_id") @Positive long memberId,
+                                               @PathVariable("comment_id") @Positive long commentId) {
         commentService.deleteAnswerComment(questionId, answerId, memberId, commentId);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);

@@ -70,46 +70,34 @@ public class QuestionService {
         return questionRepository.findByTitleContaining(title, PageRequest.of(page, size));
     }
 
-    public void likeQuestion(long questionId, long memberId){
+    public Question likeQuestion(long questionId, long memberId){
         Question question = verifyQuestion(questionId);
         Member member = memberService.findVerifiedMember(memberId);
         Optional<Votes> findVotes = votesRepository.findByQuestionAndMember(question, member);
         if (findVotes.isPresent()){
-            Votes vote = findVotes.get();
-            if (vote.getVotesStatus().equals(Votes.VotesStatus.VOTES_UP)){
-                throw new BusinessLogicException(ExceptionCode.ALREADY_COMPLETED);
-            }
-            vote.setVotesStatus(Votes.VotesStatus.VOTES_UP);
-            question.setVotes(question.getVotes() + 2);
-        }else{
-            Votes votes = new Votes();
-            votes.setQuestion(question);
-            votes.setMember(member);
-            votes.setVotesStatus(Votes.VotesStatus.VOTES_UP);
-            question.setVotes(question.getVotes() + 1);
-            votesRepository.save(votes);
+            throw new BusinessLogicException(ExceptionCode.ALREADY_VOTED);
         }
+        Votes votes = new Votes();
+        votes.setQuestion(question);
+        votes.setMember(member);
+        question.setVotes(question.getVotes() + 1);
+        votesRepository.save(votes);
+        return question;
     }
 
-    public void unlikeQuestion(long questionId, long memberId){
+    public Question unlikeQuestion(long questionId, long memberId){
         Question question = verifyQuestion(questionId);
         Member member = memberService.findVerifiedMember(memberId);
         Optional<Votes> findVotes = votesRepository.findByQuestionAndMember(question, member);
         if (findVotes.isPresent()){
-            Votes vote = findVotes.get();
-            if (vote.getVotesStatus().equals(Votes.VotesStatus.VOTES_DOWN)){
-                throw new BusinessLogicException(ExceptionCode.ALREADY_COMPLETED);
-            }
-            vote.setVotesStatus(Votes.VotesStatus.VOTES_DOWN);
-            question.setVotes(question.getVotes() - 2);
-        }else{
-            Votes votes = new Votes();
-            votes.setQuestion(question);
-            votes.setMember(member);
-            votes.setVotesStatus(Votes.VotesStatus.VOTES_DOWN);
-            question.setVotes(question.getVotes() - 1);
-            votesRepository.save(votes);
+            throw new BusinessLogicException(ExceptionCode.ALREADY_VOTED);
         }
+        Votes votes = new Votes();
+        votes.setQuestion(question);
+        votes.setMember(member);
+        question.setVotes(question.getVotes() - 1);
+        votesRepository.save(votes);
+        return question;
     }
 
     public Question verifyQuestion(long questionId) {
