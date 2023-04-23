@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
@@ -43,7 +44,7 @@ public class QuestionController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PatchMapping("/{question_id}")
+    @PatchMapping("/{question_id}/edit")
     public ResponseEntity patchQuestion(@RequestBody @Valid QuestionPatchDto questionPatchDto,
                                         @PathVariable("question_id") long questionId){
         Question post = mapper.questionPatchToQuestion(questionPatchDto);
@@ -58,7 +59,6 @@ public class QuestionController {
         Question question = questionService.findQuestion(questionId);
         return new ResponseEntity(new SingleResponseDto<>(mapper.questionToResponseDto(question)), HttpStatus.OK);
     }
-
 
     @GetMapping
     public ResponseEntity getQuestions(@Positive @RequestParam(defaultValue = "1") int page,
@@ -86,17 +86,27 @@ public class QuestionController {
         return new ResponseEntity(new MultiResponseDto<>(mapper.questionsToQuestionDtos(content), questions), HttpStatus.OK);
     }
 
-    @PostMapping("/{question_id}/like/{member_id}")
+    @GetMapping("/{question_id}/{member_id}/vote/up")
     public ResponseEntity likeQuestion(@Positive @PathVariable("question_id") long questionId,
                                        @Positive @PathVariable("member_id") long memberId){
-        questionService.likeQuestion(questionId, memberId);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        Question question = questionService.likeQuestion(questionId, memberId);
+        return new ResponseEntity(new SingleResponseDto<>(mapper.questionToResponseDto(question)), HttpStatus.OK);
     }
 
-    @PostMapping("/{question_id}/unlike/{member_id}")
+    @GetMapping("/{question_id}/{member_id}/vote/down")
     public ResponseEntity unlikeQuestion(@Positive @PathVariable("question_id") long questionId,
                                        @Positive @PathVariable("member_id") long memberId){
-        questionService.unlikeQuestion(questionId, memberId);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        Question question = questionService.unlikeQuestion(questionId, memberId);
+        return new ResponseEntity(new SingleResponseDto<>(mapper.questionToResponseDto(question)), HttpStatus.OK);
+    }
+
+    @GetMapping("/currentUri/{board_id}")
+    public String getCurrentUri(HttpServletRequest request){
+        String findUri = request.getRequestURI().toString();
+        if (findUri.charAt(findUri.length() - 1) == '/'){
+            findUri = findUri.substring(0, findUri.length() - 1);
+        }
+        findUri = findUri.replace("/currentUri", "");
+        return findUri;
     }
 }

@@ -1,43 +1,56 @@
 package com.seb43.preProject.member.controller;
 
-import com.seb43.preProject.member.dto.MemberDto;
+import com.seb43.preProject.member.dto.MemberPatchDto;
 import com.seb43.preProject.member.dto.MemberPostDto;
 import com.seb43.preProject.member.entity.Member;
 import com.seb43.preProject.member.mapper.MemberMapper;
 import com.seb43.preProject.member.service.MemberService;
-import com.seb43.preProject.utils.URICreator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URI;
+import javax.validation.constraints.Positive;
 
 @RestController
 @RequestMapping("/members")
 @Validated
+@Slf4j
 public class MemberController {
-    private final static String MEMBER_DEFAULT_URL = "/members";
     private final MemberService memberService;
-    private final MemberMapper mapper;
+    private final MemberMapper memberMapper;
 
-    public MemberController(MemberService memberService, MemberMapper mapper) {
+    public MemberController(MemberService memberService, MemberMapper memberMapper) {
         this.memberService = memberService;
-        this.mapper = mapper;
+        this.memberMapper = memberMapper;
     }
     @PostMapping("/join") //회원가입
     public ResponseEntity postMember(@Valid @RequestBody MemberPostDto memberPostDto){
-        Member member = memberService.createMember(mapper.memberPostDtoToMember(memberPostDto));
+        Member member = memberService.createMember(memberMapper.memberPostDtoToMember(memberPostDto));
 
-        URI location = URICreator.createUri(MEMBER_DEFAULT_URL, member.getMemberId());
+        return new ResponseEntity<>((memberMapper.memberToMemberResponse(member)), HttpStatus.CREATED);
+    }
+    @GetMapping("/{member-id}/profile")// 프로필 조회
+    public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId){
+        Member member = memberService.findVerifiedMember(memberId);
 
-        return ResponseEntity.created(location).build();
+        return new ResponseEntity<>((memberMapper.memberToMemberResponse(member)),HttpStatus.OK);
+
+    }
+    @PatchMapping("/{member-id}/profile")//프로필 수정
+    public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,
+                                      @Valid @RequestBody MemberPatchDto memberPatchDto){
+        Member member = memberService.updateMember(memberPatchDto,memberId);
+
+        return new ResponseEntity<>((memberMapper.memberToMemberResponse(member)),HttpStatus.OK);
+    }
+    @DeleteMapping("/{member-id}/profile/delete")// 회원탈퇴 (memberStatus 탈퇴상태로 변경 memberId는 삭제되지않음)
+    public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long memberId){
+        Member member = memberService.deleteMember(memberId);
+
+        return new ResponseEntity<>((memberMapper.memberToMemberResponse(member)),HttpStatus.OK);
     }
 
 }
