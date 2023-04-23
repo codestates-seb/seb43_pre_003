@@ -54,6 +54,13 @@ const AllQuestion = styled.ul`
   border-top: 1px solid var(--black-100);
 `;
 
+const NoQuestion = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+`;
+
 function QuestionsPage({ lists, isPending }) {
   const [list, setList] = useState([]); // 리스트에 나타낼 아이템들
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지. default 값으로 1
@@ -92,6 +99,9 @@ function QuestionsPage({ lists, isPending }) {
           {/* 비로그인인 경우 로그인 페이지로 이동 */}
           {/* 로그인 된 경우 */}
           <Button variant="mediumBlue" size="question">
+            <Link to="/mypage">My Page</Link>
+          </Button>
+          <Button variant="mediumBlue" size="question">
             <Link to="/question/ask">Ask Question</Link>
           </Button>
         </QuestionTitle>
@@ -107,7 +117,7 @@ function QuestionsPage({ lists, isPending }) {
               <QuestionsList key={el.question.questionId} data={el} />
             ))
           ) : (
-            <div>No Question</div>
+            <NoQuestion>No Question</NoQuestion>
           )}
         </AllQuestion>
         <Pagination

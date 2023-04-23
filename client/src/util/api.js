@@ -1,7 +1,7 @@
 // import axios from "axios";
 
 const BASE_URL = "http://localhost:3000/";
-// const BLOG_URL = "http://localhost:3000/question/";
+// const DATA_URL = "http://localhost:3000/question/";
 
 export const axiosCreate = (url, data) => {
   fetch(url, {

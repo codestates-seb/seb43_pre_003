@@ -3,7 +3,7 @@ import GlobalStyles from "./GlobalStyles";
 import QuestionDetailpage from "./Pages/QuestionDetailpage";
 import styled from "styled-components";
 import QuestionPage from "./Pages/QuestionPage";
-import MyPage from "./Pages/MyPage";
+import MyPage from "./Pages/MyPage/MyPage";
 import Nav from "./Components/Nav";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";

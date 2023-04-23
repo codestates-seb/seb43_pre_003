@@ -116,7 +116,7 @@ function AskQuestion() {
     const newList = {
       id: listId.current,
       question: {
-        questionId: questionListId,
+        questionId: questionListId.current,
         title: titleValue,
         content: editorValue,
         tags: ["kind of beauty"],
