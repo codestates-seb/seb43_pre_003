@@ -32,6 +32,6 @@ import javax.validation.constraints.NotBlank;
             private long questionId;
             private long answerId;
             private long memberId;
-            private String memberName;
+            private String userName;
         }
     }

@@ -20,7 +20,6 @@ public class MemberDto {
         @Email
         private String email;
         @NotBlank
-
         private String userName;
         @NotBlank
         private String password;
