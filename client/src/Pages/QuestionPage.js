@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Pagination from "../Components/Pagination";
 import QuestionsList from "../Components/QuestionsList";
 import Aside from "../Components/Aside";
-import SortBtn from "../Components/SortBtn";
+import { SortBtn } from "../Components/SortBtn";
 import Button from "../Components/style/Button";
 
 const QuestionWrap = styled.section`
@@ -61,7 +61,7 @@ const NoQuestion = styled.div`
   height: 60vh;
 `;
 
-function QuestionsPage({ lists, isPending }) {
+function QuestionsPage({ lists, isPending, auth }) {
   const [list, setList] = useState([]); // 리스트에 나타낼 아이템들
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지. default 값으로 1
   const [currentPosts, setCurrentPosts] = useState([]); // 현재 페이지에서 보여지는 아이템들
@@ -101,9 +101,19 @@ function QuestionsPage({ lists, isPending }) {
           <Button variant="mediumBlue" size="question">
             <Link to="/mypage">My Page</Link>
           </Button>
-          <Button variant="mediumBlue" size="question">
-            <Link to="/question/ask">Ask Question</Link>
-          </Button>
+          {!auth ? (
+            <Link to="/question/ask">
+              <Button variant="mediumBlue" size="question">
+                Ask Question
+              </Button>
+            </Link>
+          ) : (
+            <Link to="/login">
+              <Button variant="mediumBlue" size="question">
+                Ask Question
+              </Button>
+            </Link>
+          )}
         </QuestionTitle>
         <QuestionFilter>
           <QuestionCount>{list.length} questions</QuestionCount>
