@@ -12,6 +12,7 @@ const Aside = styled.div`
   background-color: var(--powder-200);
   border-radius: 3px;
   span {
+    font-size: 13px;
     color: var(--black-500);
   }
 
