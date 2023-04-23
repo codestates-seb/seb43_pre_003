@@ -158,7 +158,9 @@ function Header({ auth, setAuth, setSide }) {
                 <Img src={Logo} alt="" />
               </LogoBtn>
             </Link>
-            <ProductBtn>Product</ProductBtn>
+            <Link to="/test">
+              <ProductBtn>Product</ProductBtn>
+            </Link>
             <Input />
             <Link to="/Login">
               <Button
