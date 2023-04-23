@@ -159,9 +159,10 @@ function QuestionsList({ data }) {
           <QuestionBody>{el.content}</QuestionBody>
           <QuestionFooter>
             <Tags>
-              {el.tags.map((el, index) => (
+              {/* {el.tags.map((el, index) => (
                 <TagDiv key={index}>{el}</TagDiv>
-              ))}
+              ))} */}
+              <TagDiv>kind of beauty</TagDiv>
             </Tags>
             <UserData>
               <img width="16" alt="프로필 사진" src={Profile} />
