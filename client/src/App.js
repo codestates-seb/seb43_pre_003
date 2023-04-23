@@ -15,7 +15,7 @@ import questionAxios from "./util/questionAxios";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/Signup";
 import Modaltest from "./Pages/ModalTest";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const AppWrap = styled.div`
   width: 100vw;
@@ -25,7 +25,10 @@ const AppWrap = styled.div`
 function App() {
   const [list, isPending, error] = questionAxios(`http://localhost:3001/data/`);
   const [auth, setAuth] = useState(false);
-  const [side, setSide] = useState(false);
+  const [side, setSide] = useState(true);
+  useEffect(() => {
+    console.log(side);
+  }, []);
 
   return (
     <AppWrap>
@@ -33,18 +36,7 @@ function App() {
       <BrowserRouter>
         {error && <div>{error}</div>}
         <Header auth={auth} setAuth={setAuth} side={side} setSide={setSide} />
-        <Routes>
-          <Route
-            path="/login"
-            element={<Login auth={auth} setAuth={setAuth} />}
-          />
-          <Route
-            path="/signup"
-            element={<SignUp auth={auth} setAuth={setAuth} />}
-          />
-        </Routes>
-
-        {!side ? (
+        {side ? (
           <div className="wrap">
             <div className="container">
               <Nav />
@@ -75,6 +67,31 @@ function App() {
             <Footer />
           </div>
         ) : null}
+
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              <Login
+                auth={auth}
+                setAuth={setAuth}
+                side={side}
+                setSide={setSide}
+              />
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <SignUp
+                auth={auth}
+                setAuth={setAuth}
+                side={side}
+                setSide={setSide}
+              />
+            }
+          />
+        </Routes>
       </BrowserRouter>
     </AppWrap>
   );

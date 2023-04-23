@@ -9,7 +9,7 @@ import Updown from "../Components/style/img/up-down.png";
 import Sign from "../Components/style/img/sign.png";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 const Container = styled.div`
   display: flex;
   width: 100vw;
@@ -137,7 +137,7 @@ const Errdiv = styled.div`
   font-size: var(--font-small);
 `;
 
-function Signup() {
+function Signup({ setSide, side }) {
   const navi = useNavigate();
   const [member, setmember] = useState({
     email: "",
@@ -148,6 +148,11 @@ function Signup() {
   const [errMessage, setErrMessage] = useState("");
   const [errpw, setErrpw] = useState("");
   const [dispErr, setDisplayErr] = useState("");
+
+  useEffect(() => {
+    console.log(side);
+    setSide();
+  }, []);
 
   const handleInputValue = (key) => (e) => {
     setmember({ ...member, [key]: e.target.value });
@@ -301,7 +306,7 @@ function Signup() {
                 height="35px"
                 padding="10px 10px 10px 10px"
                 margin="20px 0px 20px 0px"
-                onClick={funcSignup}
+                onClick={(funcSignup, () => setSide(false))}
               >
                 Log in
               </Button>
