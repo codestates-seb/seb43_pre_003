@@ -15,10 +15,11 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   background-color: var(--black-025);
+  box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.05), 0 1px 4px hsla(0, 0%, 0%, 0.05),
+    0 2px 8px hsla(0, 0%, 0%, 0.05);
 `;
 
 const HeaderBox = styled.header`
-  background: var(--black-025);
   /* width: 100vw; */
   min-width: 1264px;
   height: 50px;

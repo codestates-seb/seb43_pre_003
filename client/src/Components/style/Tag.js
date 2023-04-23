@@ -3,19 +3,20 @@ import styled from "styled-components";
 import Close from "./img/ic-tag-close.png";
 import HoverClose from "./img/ic-tag-close-hover.png";
 
-const Inputbox = styled.div`
-  padding: 10px;
-  height: 32px;
-`;
+// const Inputbox = styled.div`
+//   padding: 10px;
+//   height: 32px;
+// `;
 
 const TagBox = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  min-height: 50px;
-  margin: 10px;
-  padding: 0 10px;
-  border: 1px solid var(--powder-200);
+  min-height: 46px;
+  /* margin: 10px; */
+  /* padding: 0 10px; */
+  padding: 4px 8px;
+  border: 1px solid var(--black-200);
   border-radius: 2px;
 
   &:focus-within {
@@ -35,7 +36,9 @@ const TagItem = styled.div`
   font-size: 13px;
 `;
 
-const Text = styled.span``;
+const Text = styled.span`
+  font-size: 12px;
+`;
 
 const Button = styled.button`
   width: 15px;
@@ -56,15 +59,20 @@ const TagInput = styled.input`
   background: transparent;
   border: none;
   outline: none;
+  font-size: 12px;
   cursor: text;
+  ::placeholder {
+    color: var(--black-200);
+    font-size: 13px;
+  }
 `;
 
 export const TagDiv = styled.a`
-  font-size: 0.75rem;
+  font-size: 12px;
   color: var(--powder-700);
   background-color: var(--powder-100);
   display: inline-block;
-  padding: 0.3125rem 0.375rem;
+  padding: 5px 6px;
   margin: 2px 2px 2px 0;
   line-height: 1;
   white-space: nowrap;
@@ -72,7 +80,7 @@ export const TagDiv = styled.a`
   text-align: center;
   /* border-width: 1px; */
   /* border-style: solid; */
-  border-radius: 0.125rem;
+  border-radius: 2px;
   cursor: pointer;
   :hover {
     color: var(--powder-700);
@@ -106,25 +114,25 @@ const Tag = () => {
   };
 
   return (
-    <Inputbox>
-      <TagBox>
-        {tagList.map((tagItem, index) => {
-          return (
-            <TagItem key={index}>
-              <Text>{tagItem}</Text>
-              <Button onClick={deleteTagItem}></Button>
-            </TagItem>
-          );
-        })}
-        <TagInput
-          type="text"
-          placeholder="Press enter to add tags"
-          onChange={(e) => setTagItem(e.target.value)}
-          value={tagItem}
-          onKeyPress={onKeyPress}
-        />
-      </TagBox>
-    </Inputbox>
+    // <Inputbox>
+    <TagBox>
+      {tagList.map((tagItem, index) => {
+        return (
+          <TagItem key={index}>
+            <Text>{tagItem}</Text>
+            <Button onClick={deleteTagItem}></Button>
+          </TagItem>
+        );
+      })}
+      <TagInput
+        type="text"
+        placeholder="Press enter to add tags"
+        onChange={(e) => setTagItem(e.target.value)}
+        value={tagItem}
+        onKeyPress={onKeyPress}
+      />
+    </TagBox>
+    // </Inputbox>
   );
 };
 

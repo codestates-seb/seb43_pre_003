@@ -10,13 +10,13 @@ const Container = styled.div`
   }
 
   button {
-    height: 2.1875rem;
-    padding: 0.625rem;
+    height: 36px;
+    padding: 10px;
     color: var(--black-600);
     background-color: var(--white);
     border: 1px solid var(--black-350);
     border-right: 0;
-    font-size: 0.8125rem;
+    font-size: 13px;
     cursor: pointer;
   }
   &:hover {
@@ -24,12 +24,12 @@ const Container = styled.div`
   }
 
   & > button:first-child {
-    border-radius: 0.25rem 0 0 0.25rem;
+    border-radius: 4px 0 0 4px;
     background-color: var(--black-070);
   }
   & > button:last-child {
     border-right: 1px solid var(--black-350);
-    border-radius: 0 0.25rem 0.25rem 0;
+    border-radius: 0 4px 4px 0;
   }
 `;
 

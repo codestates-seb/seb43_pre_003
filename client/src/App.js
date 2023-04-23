@@ -3,22 +3,27 @@ import GlobalStyles from "./GlobalStyles";
 import QuestionDetailpage from "./Pages/QuestionDetailpage";
 import styled from "styled-components";
 import QuestionPage from "./Pages/QuestionPage";
-import MyPage from "./Pages/MyPage";
+import QuestionEditpage from "./Pages/QuestionEditpage";
+import AnswerEditpage from "./Pages/AnswerEditpage";
+import MyPage from "./Pages/MyPage/MyPage";
 import Nav from "./Components/Nav";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
-import HomeAside from "./Components/Aside";
+import AskQuestion from "./Pages/AskQuestion";
+import questionAxios from "./util/questionAxios";
+// import HomeAside from "./Components/Aside";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/Signup";
-// import Button from "./Components/style/Button";
-// import Input from "./Components/style/Input";
 import Modaltest from "./Pages/ModalTest";
 import { useState } from "react";
+
 const AppWrap = styled.div`
   width: 100vw;
   height: 100%;
 `;
+
 function App() {
+  const [list, isPending, error] = questionAxios(`http://localhost:3001/data/`);
   const [auth, setAuth] = useState(false);
   const [side, setSide] = useState(false);
 
@@ -26,6 +31,7 @@ function App() {
     <AppWrap>
       <GlobalStyles />
       <BrowserRouter>
+        {error && <div>{error}</div>}
         <Header auth={auth} setAuth={setAuth} side={side} setSide={setSide} />
         <Routes>
           <Route
@@ -43,15 +49,28 @@ function App() {
             <div className="container">
               <Nav />
               <Routes>
-                <Route path="/" element={<QuestionPage />} />
+                <Route
+                  path="/"
+                  element={<QuestionPage list={list} isPending={isPending} />}
+                />
                 <Route path="/test" element={<Modaltest />} />
                 <Route path="/mypage" element={<MyPage />} />
+                <Route path="/ask" element></Route>
+                <Route path="/question/ask" element={<AskQuestion />} />
                 <Route
                   path="question/:questionId"
                   element={<QuestionDetailpage />}
                 />
+                <Route
+                  path="/question/:questionId/:answerId/edit"
+                  element={<AnswerEditpage />}
+                />
+                <Route
+                  path="/question/:questionId/edit"
+                  element={<QuestionEditpage />}
+                />
               </Routes>
-              <HomeAside />
+              {/* <HomeAside /> */}
             </div>
             <Footer />
           </div>

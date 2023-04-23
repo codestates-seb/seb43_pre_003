@@ -1,50 +1,45 @@
 import styled from "styled-components";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 import Pagination from "../Components/Pagination";
 import QuestionsList from "../Components/QuestionsList";
 import Aside from "../Components/Aside";
 import SortBtn from "../Components/SortBtn";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import Button from "../Components/style/Button";
 
 const QuestionWrap = styled.section`
-  width: calc(100% - 18.75rem);
-  padding-right: 1.875rem;
-  /* padding: 1.5rem; */
+  width: calc(100% - 300px);
+  padding-right: 30px;
+  /* padding: 24px; */
 `;
 
 const QuestionTitle = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1.5rem;
-  padding: 1.5rem 0 0 1.5rem;
+  margin-bottom: 24px;
+  padding: 24px 0 0 24px;
+  > button > a {
+    color: var(--white);
+    font-size: 13px;
+  }
 `;
 
 const Title = styled.h3`
-  font-size: 1.625rem;
+  font-size: 26px;
   color: var(--black-900);
   font-weight: 600;
-`;
-
-const AskQuestionBtn = styled.button`
-  border-radius: 0.25rem;
-  font-size: 0.8125rem;
-  color: var(--white);
-  background-color: var(--blue-500);
-  padding: 0.75rem;
-  :hover {
-    background-color: var(--blue-600);
-  }
 `;
 
 const QuestionFilter = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.75rem;
-  padding-left: 1.5rem;
+  margin-bottom: 12px;
+  padding-left: 24px;
 `;
 
 const QuestionCount = styled.p`
-  font-size: 1.125rem;
+  font-size: 18px;
   color: var(--black-800);
 `;
 
@@ -55,12 +50,19 @@ const SortTab = styled.div`
 const AllQuestion = styled.ul`
   display: flex;
   flex-flow: column nowrap;
-  margin-bottom: 2rem;
+  margin-bottom: 32px;
   border-top: 1px solid var(--black-100);
 `;
 
-function QuestionsPage() {
-  const [data, setData] = useState([]); // 리스트에 나타낼 아이템들
+const NoQuestion = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+`;
+
+function QuestionsPage({ lists, isPending }) {
+  const [list, setList] = useState([]); // 리스트에 나타낼 아이템들
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지. default 값으로 1
   const [currentPosts, setCurrentPosts] = useState([]); // 현재 페이지에서 보여지는 아이템들
 
@@ -68,7 +70,7 @@ function QuestionsPage() {
     axios
       .get("http://localhost:3001/data")
       .then((res) => {
-        setData(
+        setList(
           res.data.sort((a, b) => b.question.questionId - a.question.questionId)
         );
         setCurrentPosts(res.data.slice(0, 10)); // 0 , 10
@@ -76,11 +78,11 @@ function QuestionsPage() {
       .catch((error) => {
         console.log("error", error);
       });
-  }, []);
+  }, [lists]);
 
   useEffect(() => {
     const firstPost = (currentPage - 1) * 10;
-    setCurrentPosts(data.slice(firstPost, firstPost + 10));
+    setCurrentPosts(list.slice(firstPost, firstPost + 10));
   }, [currentPage]);
 
   const setPage = (el) => {
@@ -89,29 +91,38 @@ function QuestionsPage() {
 
   return (
     <>
+      {isPending && <div>Loading...</div>}
+
       <QuestionWrap>
         <QuestionTitle>
           <Title>All Questions</Title>
-          <AskQuestionBtn>Ask Question</AskQuestionBtn>
+          {/* 비로그인인 경우 로그인 페이지로 이동 */}
+          {/* 로그인 된 경우 */}
+          <Button variant="mediumBlue" size="question">
+            <Link to="/mypage">My Page</Link>
+          </Button>
+          <Button variant="mediumBlue" size="question">
+            <Link to="/question/ask">Ask Question</Link>
+          </Button>
         </QuestionTitle>
         <QuestionFilter>
-          <QuestionCount>{data.length} questions</QuestionCount>
+          <QuestionCount>{list.length} questions</QuestionCount>
           <SortTab>
             <SortBtn />
           </SortTab>
         </QuestionFilter>
         <AllQuestion>
-          {currentPosts && data.length > 0 ? (
+          {currentPosts && list.length > 0 ? (
             currentPosts.map((el) => (
               <QuestionsList key={el.question.questionId} data={el} />
             ))
           ) : (
-            <div>No Question</div>
+            <NoQuestion>No Question</NoQuestion>
           )}
         </AllQuestion>
         <Pagination
           currentPage={currentPage}
-          count={data.length}
+          count={list.length}
           setPage={setPage}
         />
       </QuestionWrap>

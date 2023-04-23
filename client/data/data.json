@@ -38,9 +38,7 @@
         "questionId": 2,
         "title": "Spring Batch Admin UI still run?",
         "content": "About my company still run spring batch admin UI but i can't role to access this.i want to demo Spring Batch Admin UI but not have many still value at now ? Do you have github repository about spring batch admin UI basic.",
-        "tags": [
-          "spring-batch-admin"
-        ],
+        "tags": ["spring-batch-admin"],
         "userId": 0,
         "userName": "Czurch",
         "answerCount": 2,
@@ -73,11 +71,7 @@
         "questionId": 3,
         "title": "passing parameters list in Dynamic SQL Query",
         "content": "I have written a Oracle query in Javascript file which will return the last_name,first_name,ID,Dept of employee based on the parameters it receives. Here is the Query:",
-        "tags": [
-          "javascript",
-          "sql",
-          "oracle"
-        ],
+        "tags": ["javascript", "sql", "oracle"],
         "userId": 1,
         "userName": "Johnst33",
         "answerCount": 0,
@@ -95,12 +89,7 @@
         "questionId": 4,
         "title": "Is there any bulk translate or bulk translate import possibility for Polylang+Hyyan? (WooCommerce)",
         "content": "I am using Polylang+Hyyan for Woocommmerce translation. I have 1.700 products to translate. Is there any way for a bulk translation or an easy way?I tried to import translated products by Product CSV Import Suite and I used same ID for",
-        "tags": [
-          "wordpress",
-          "woocommerce",
-          "multilingual",
-          "polylang"
-        ],
+        "tags": ["wordpress", "woocommerce", "multilingual", "polylang"],
         "userId": 2,
         "userName": "KUSH A BK",
         "answerCount": 0,
@@ -118,12 +107,7 @@
         "questionId": 5,
         "title": "function call by function call with object in c++",
         "content": "I want to call the function show() by calling the function folder() with the help of an object. obj.folder() -> show(); Here, the function show() is not doing its job.",
-        "tags": [
-          "c++",
-          "function",
-          "object",
-          "methods"
-        ],
+        "tags": ["c++", "function", "object", "methods"],
         "userId": 0,
         "userName": "Czurch",
         "answerCount": 0,
@@ -141,12 +125,7 @@
         "questionId": 6,
         "title": "Visitor pattern without double dispatch",
         "content": "Recently I ran across a code snippet that demonstrated a modified visitor pattern without double dispatch.They used the run time class to compose the visit function name, which allowed them to move the accept function to the base class of the data classes, and then later to replace it completely by adding a generic visit function in the visitor.",
-        "tags": [
-          "phython",
-          "design-patterns",
-          "reflection",
-          "visitor-pattern"
-        ],
+        "tags": ["phython", "design-patterns", "reflection", "visitor-pattern"],
         "userId": 0,
         "userName": "Czurch",
         "answerCount": 0,
@@ -164,10 +143,7 @@
         "questionId": 7,
         "title": "Functions Query string parameter on custom post type hides my wordpress nav menu",
         "content": "I have the following code in my functions.php file which allows me to query posts in my custom post type named 'jobs' and filter them where an ACF field named 'bracket' matches a certain value. It works fine, ",
-        "tags": [
-          "wordpress",
-          "custom-post-type"
-        ],
+        "tags": ["wordpress", "custom-post-type"],
         "userId": 0,
         "userName": "Czurch",
         "answerCount": 0,
@@ -185,13 +161,7 @@
         "questionId": 8,
         "title": "CS50 C loop incrementation with if condition produce wrong outcome",
         "content": "I'm trying to learn coding from beginning by CS50. Currently i'm writing program called runoff. Here's the description in short: Program is an algorithm for determining the winner of an election. There is max 9 candidates and max 100 voters. Each voter submit their candidates in order for example: Voter 1: Rank 1: Charlie Rank 2: Alice Rank 3",
-        "tags": [
-          "c",
-          "loops",
-          "if0statement",
-          "increment",
-          "cs50"
-        ],
+        "tags": ["c", "loops", "if0statement", "increment", "cs50"],
         "userId": 0,
         "userName": "Czurch",
         "answerCount": 0,
@@ -209,10 +179,7 @@
         "questionId": 9,
         "title": "How to convert the SQL Row to Column with dynamic rows and column",
         "content": "I am stuck in creation of one report which is basically a TAT report.We have a Table A which has all the data where we have case no., username, queuename, How much minute user has keep opened the case in the given queue. Below might be the combination:Case 1 might have passed from queue1, queue2 Case 2 might have passed from queue1, queue3 User1 can open Case1 multiple time in the same queue User 2 can open Case 1 multiple time in the same queue I already have the calculation for how much time duration (in minutes) did the given user opened the case on the specific queue. Below is the sample data:",
-        "tags": [
-          "sql-server",
-          "database"
-        ],
+        "tags": ["sql-server", "database"],
         "userId": 0,
         "userName": "Czurch",
         "answerCount": 0,
@@ -230,9 +197,7 @@
         "questionId": 10,
         "title": "To Pass Id in cURL post request in PHP",
         "content": "I have post request where url is like project-user/project_id/123 so want to pass 123 as id which is dynamic",
-        "tags": [
-          "php"
-        ],
+        "tags": ["php"],
         "userId": 0,
         "userName": "Czurch",
         "answerCount": 0,
@@ -250,11 +215,7 @@
         "questionId": 11,
         "title": "SNMPv3 Net-SNMP generate_Ku() function - how does it creates the hash?",
         "content": "I'm working on my own SNMPv3 app using the Net-SNMP open source library, providing netsnmp_session with the authentication key with the following (a bit shortend) code. This works as expected, communication with the agent is fine.",
-        "tags": [
-          "authentication",
-          "snmp",
-          "net-snmp"
-        ],
+        "tags": ["authentication", "snmp", "net-snmp"],
         "userId": 0,
         "userName": "Czurch",
         "answerCount": 0,
@@ -272,9 +233,7 @@
         "questionId": 12,
         "title": "Apache Camel 3.20 support of REST DSL with YAML?",
         "content": "This page https://camel.apache.org/components/3.20.x/others/yaml-dsl.html reads:route entry point, by default from and rest are supportedThe following YAML route definitions:",
-        "tags": [
-          "apache-camel"
-        ],
+        "tags": ["apache-camel"],
         "userId": 0,
         "userName": "Czurch",
         "answerCount": 0,
@@ -292,10 +251,7 @@
         "questionId": 13,
         "title": "How to search for a text and copy/paste to next line",
         "content": "I'm trying to write a shell script to look for a SOME_WORD. If I find one, I want to copy whole line and paste to next line and replace SOME_WORD with NEW_WORLD.Thank you for the help!!current shell script",
-        "tags": [
-          "bash",
-          "shell"
-        ],
+        "tags": ["bash", "shell"],
         "userId": 0,
         "userName": "Czurch",
         "answerCount": 0,
@@ -313,11 +269,7 @@
         "questionId": 14,
         "title": "How to make some effect (not fancy) just like make the background getting darker when I click on a navbar button [closed]",
         "content": "This website is an example of what I wantI made a navbar in my landing page that slides out from the left after I click on the hamburger button (on a small screen), but I am trying to make a change when I click on the button.This is my html:",
-        "tags": [
-          "javascript",
-          "html",
-          "css"
-        ],
+        "tags": ["javascript", "html", "css"],
         "userId": 0,
         "userName": "Czurch",
         "answerCount": 0,
@@ -335,13 +287,7 @@
         "questionId": 15,
         "title": "GithubActions deploying WebGoat on ECS - Error: Invalid or corrupt jarfile webgoat.jar",
         "content": "I am using the referred files and Dockerfile of WebGoat here https://github.com/WebGoat/WebGoat to deploy on ECS. It has been working well until I changed to GithubActions deployment recentlyThe ECS task kept failing with the error Error: Invalid or corrupt jarfile webgoat.jarI checked to run locally by building the image (docker build -f Dockerfile . -t webgoat/webgoat) and run (/mvnw spring-boot:run) as shown here https://github.com/WebGoat/WebGoat#4-run-from-the-sources",
-        "tags": [
-          "java",
-          "docker",
-          "github-actions",
-          "amazon-ecs",
-          "webgoat"
-        ],
+        "tags": ["java", "docker", "github-actions", "amazon-ecs", "webgoat"],
         "userId": 0,
         "userName": "Czurch",
         "answerCount": 0,
@@ -359,12 +305,7 @@
         "questionId": 16,
         "title": "how to update a property in nested json array using ramdajs",
         "content": "I have an array[{offerId: 123,offerStatus: ACTIVATED,products: [{productId: 1}]{offerId: 456,offerStatus: NOT_ACTIVATED,products: [{productId: 2},{productId: 3}]}]",
-        "tags": [
-          "javascript",
-          "arrays",
-          "json",
-          "ramda.js"
-        ],
+        "tags": ["javascript", "arrays", "json", "ramda.js"],
         "userId": 0,
         "userName": "Czurch",
         "answerCount": 0,
@@ -382,10 +323,7 @@
         "questionId": 17,
         "title": "E/libEGL: validate_display:99 error 3008 (EGL_BAD_DISPLAY) android os 7.1 nougat",
         "content": "I am getting the following error while running my app on Android OS 7.1 Nougat. E/libEGL: validate_display:99 error 3008 (EGL_BAD_DISPLAY)[ 04-21 10:19:18.788 4410: 4622 D/ ] HostConnection::get() New Host Connection established 0x7db835ad6200, tid 4622 In build.gradle I am using vectorDrawables.useSupportLibrary = true and the following dependencies:",
-        "tags": [
-          "android",
-          "android-7.1-nougat"
-        ],
+        "tags": ["android", "android-7.1-nougat"],
         "userId": 0,
         "userName": "Czurch",
         "answerCount": 0,
