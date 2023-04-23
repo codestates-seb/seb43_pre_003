@@ -21,14 +21,14 @@ const Editor = ({ value, onChange }) => {
 
   const handleContentChange = (value) => {
     setContent(value);
-    onChange(stripHtmlTags(value));
+    onChange(value);
   };
 
-  const stripHtmlTags = (html) => {
+  /*const stripHtmlTags = (html) => {
     const tmp = document.createElement("DIV");
     tmp.innerHTML = html;
     return tmp.textContent || tmp.innerText || "";
-  };
+  };*/
 
   return (
     <div>

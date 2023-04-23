@@ -1,23 +1,18 @@
 import styled from "styled-components";
-import RecommendButton from "./RecommendButton";
 import Sharedomain from "./Sharedomain";
 import AuthorProfile from "./Authorprofile";
 
 const Main = styled.main`
   display: flex;
-  margin: 15px;
+  margin-top: 30px;
   padding-bottom: 18px;
   border-bottom: 1px solid rgb(227, 230, 232);
-`;
-
-const Aside1 = styled.aside`
-  flex: display;
 `;
 
 const Section2 = styled.section`
   flex-grow: 1;
   p {
-    margin-left: 12px;
+    margin-left: 7px;
     font-size: 15px;
     font-weight: 500;
     line-height: 22.5px;
@@ -32,25 +27,34 @@ const Section3 = styled.section`
   width: 100%;
 `;
 
-const Answer = () => {
-  return (
-    <Main>
-      <Aside1>
-        <RecommendButton />
-      </Aside1>
+const List = styled.main`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
 
-      <Section2>
-        <div>
-          <div>
-            <p>Answer입니다.</p>
-          </div>
-        </div>
-        <Section3>
-          <Sharedomain />
-          <AuthorProfile />
-        </Section3>
-      </Section2>
-    </Main>
+const Answer = ({ answers, questionId }) => {
+  return (
+    <List>
+      {answers.map((answer) => (
+        <Main key={answer.answerId}>
+          <Section2>
+            <div>
+              <div>
+                <p>{answer.content}</p>
+              </div>
+            </div>
+            <Section3>
+              <Sharedomain questionId={questionId} answerId={answer.answerId} />
+              <AuthorProfile
+                createdAt={answer.createdAt}
+                userName={answer.userName}
+              />
+            </Section3>
+          </Section2>
+        </Main>
+      ))}
+    </List>
   );
 };
 

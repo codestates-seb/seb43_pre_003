@@ -1,35 +1,69 @@
-import styled from "styled-components";
+import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
+import Button from "../style/Button";
+import Sheet from "./Sheet";
 
-const Sharebutton = styled.button`
-  font-size: 13px;
-  padding-left: 10px;
-  background-color: white;
-  color: var(--black-500);
-  cursor: pointer;
-`;
+const Sharedomain = ({ questionId, answerId }) => {
+  const navigate = useNavigate();
 
-const Editbutton = styled.button`
-  font-size: 13px;
-  padding-left: 10px;
-  background-color: white;
-  color: var(--black-500);
-  cursor: pointer;
-`;
+  const handleqDeleteClick = (id) => {
+    axios
+      .delete(`http://localhost:3001/data/${id}`)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
+  };
 
-const Deletebutton = styled.button`
-  font-size: 13px;
-  padding-left: 10px;
-  background-color: white;
-  color: var(--black-500);
-  cursor: pointer;
-`;
+  const handleaDeleteClick = (id, answerId) => {
+    axios
+      .delete(`http://localhost:3001/data/${id}/${answerId}`)
+      .then(() => {
+        navigate(`/question/${questionId}`);
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
+  };
 
-const Sharedomain = () => {
   return (
     <div>
-      <Sharebutton>Share</Sharebutton>
-      <Editbutton>Edit</Editbutton>
-      <Deletebutton>Delete</Deletebutton>
+      <Button variant="share" size="custom">
+        Share
+      </Button>
+      {answerId ? (
+        <Link to={`/question/${questionId}/${answerId}/edit`}>
+          <Button variant="share" size="custom">
+            Edit
+          </Button>
+        </Link>
+      ) : (
+        <Link to={`/question/${questionId}/edit`}>
+          <Button variant="share" size="custom">
+            Edit
+          </Button>
+        </Link>
+      )}
+      {answerId ? (
+        <Button
+          variant="share"
+          size="custom"
+          onClick={() => handleaDeleteClick(questionId, answerId)}
+        >
+          Delete
+        </Button>
+      ) : (
+        <Button
+          variant="share"
+          size="custom"
+          onClick={() => handleqDeleteClick(questionId)}
+        >
+          Delete
+        </Button>
+      )}
+      <Sheet></Sheet>
     </div>
   );
 };

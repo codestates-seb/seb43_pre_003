@@ -113,6 +113,7 @@ const VARIANTS = {
 };
 
 function Button({
+  type,
   disabled,
   size,
   variant,
@@ -129,6 +130,7 @@ function Button({
 
   return (
     <StyleButton
+      type={type}
       sizeStyle={sizeStyle}
       variantStyle={variantStyle}
       disabled={disabled}

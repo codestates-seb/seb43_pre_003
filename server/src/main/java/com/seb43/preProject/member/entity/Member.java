@@ -31,8 +31,8 @@ public class Member {
 //    @Column(length = 100, nullable = false)
 //    private Object profileImage = null;
 
-    @Column
-    private String Roles;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
     @Column
     private LocalDateTime createdAt = LocalDateTime.now();
     @Column
@@ -43,6 +43,7 @@ public class Member {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Votes> votesList = new ArrayList<>();
+    @Enumerated(value = EnumType.STRING)
     @Column
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
@@ -51,6 +52,8 @@ public class Member {
         MEMBER_SLEEP("휴면 상태"),
         MEMBER_QUIT("탈퇴 상태");
 
+
+
         @Getter
         private String status;
 
@@ -58,5 +61,9 @@ public class Member {
             this.status = status;
         }
 
+    }
+    public enum Roles {
+        ROLE_USER,
+        ROLE_ADMIN
     }
 }

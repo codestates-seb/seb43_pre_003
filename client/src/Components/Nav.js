@@ -2,7 +2,6 @@ import styled from "styled-components";
 import Earth from "./style/img/ic-earth.png";
 import { Link } from "react-router-dom";
 const NavContainer = styled.div`
-  height: 100%;
   flex-direction: column;
   width: 156px;
   font-size: var(--font-medium);

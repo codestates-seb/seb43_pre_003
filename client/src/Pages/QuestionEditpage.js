@@ -3,7 +3,7 @@ import Editor from "../Components/QuestionDetail/Editor";
 import Button from "../Components/style/Button";
 import Tag from "../Components/style/Tag";
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import questionAxios from "../util/questionAxios";
 import axios from "axios";
 
@@ -51,14 +51,12 @@ const Editbox = styled.header`
   }
 `;
 const Input = styled.input`
-  padding: var(--padding, 8px 16px 8px 10px);
+  padding: 8px 16px 8px 10px;
 
   border-radius: 2px;
-  flex-grow: 10;
   background-position: 215px center;
   background-repeat: no-repeat;
   border: 1px solid var(--border, var(--black-200));
-
   &:active,
   &:focus {
     box-shadow: 0px 0px 5px 5px var(--box-shadow, hsl(205, 46%, 92%));
@@ -148,9 +146,11 @@ const QuestionEditpage = () => {
               >
                 Save Edits
               </Button>
-              <Button variant="mediumWhite" size="question">
-                Cancel
-              </Button>
+              <Link to={`/question/${questionId}`}>
+                <Button variant="mediumWhite" size="question">
+                  Cancel
+                </Button>
+              </Link>
             </Position>
           </Contain>
         )}

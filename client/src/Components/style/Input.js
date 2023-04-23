@@ -22,13 +22,11 @@ const VARIANTS = {
 const TextInput = styled.input`
   ${(p) => p.errorStyle}
   padding: var(--padding, 8px 16px 8px 10px);
-  /* width: 242px; */
-  width: 100%; // 이거로 바꿈
+  width: 100%;
   border-radius: 2px;
   flex-grow: 10;
   background-image: var(--img, none);
-  /* background-position: 215px center; */
-  background-position: right center; // 이거로 바꿈
+  background-position: right center;
 
   background-repeat: no-repeat;
   border: 1px solid var(--border, var(--black-200));
@@ -42,7 +40,7 @@ const TextInput = styled.input`
   }
 `;
 
-function Input({ type, placeholder, onChange, errorType }) {
+function Input({ type, placeholder, onChange, id, errorType }) {
   const errorStyle = VARIANTS[errorType];
 
   return (
@@ -50,6 +48,7 @@ function Input({ type, placeholder, onChange, errorType }) {
       type={type}
       placeholder={placeholder}
       onChange={onChange}
+      id={id}
       errorStyle={errorStyle}
     ></TextInput>
   );

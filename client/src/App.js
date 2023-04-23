@@ -3,54 +3,78 @@ import GlobalStyles from "./GlobalStyles";
 import QuestionDetailpage from "./Pages/QuestionDetailpage";
 import styled from "styled-components";
 import QuestionPage from "./Pages/QuestionPage";
+import QuestionEditpage from "./Pages/QuestionEditpage";
+import AnswerEditpage from "./Pages/AnswerEditpage";
 import MyPage from "./Pages/MyPage/MyPage";
 import Nav from "./Components/Nav";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import AskQuestion from "./Pages/AskQuestion";
 import questionAxios from "./util/questionAxios";
-
-// import Button from "./Components/style/Button";
-// import Input from "./Components/style/Input";
+// import HomeAside from "./Components/Aside";
+import Login from "./Pages/Login";
+import SignUp from "./Pages/Signup";
+import Modaltest from "./Pages/ModalTest";
+import { useState } from "react";
 
 const AppWrap = styled.div`
-  width: 100%;
-  height: 100vh;
+  width: 100vw;
+  height: 100%;
 `;
-// const onChange = (e) => {
-//   console.log(e);
-// };
 
 function App() {
   const [list, isPending, error] = questionAxios(`http://localhost:3001/data/`);
+  const [auth, setAuth] = useState(false);
+  const [side, setSide] = useState(false);
 
   return (
     <AppWrap>
       <GlobalStyles />
       <BrowserRouter>
         {error && <div>{error}</div>}
+        <Header auth={auth} setAuth={setAuth} side={side} setSide={setSide} />
+        <Routes>
+          <Route
+            path="/login"
+            element={<Login auth={auth} setAuth={setAuth} />}
+          />
+          <Route
+            path="/signup"
+            element={<SignUp auth={auth} setAuth={setAuth} />}
+          />
+        </Routes>
 
-        <Header />
-        <div className="wrap">
-          <div className="container">
-            <Nav />
-            <Routes>
-              <Route
-                path="/"
-                element={<QuestionPage list={list} isPending={isPending} />}
-              />
-              {/* <Route path="/login" element={<Login />} /> */}
-              {/* <Route path="/signup" element={<SignUp />} /> */}
-              <Route path="/mypage" element={<MyPage />} />
-              <Route
-                path="question/:questionId"
-                element={<QuestionDetailpage />}
-              />
-              <Route path="/question/ask" element={<AskQuestion />} />
-            </Routes>
+        {!side ? (
+          <div className="wrap">
+            <div className="container">
+              <Nav />
+              <Routes>
+                <Route
+                  path="/"
+                  element={<QuestionPage list={list} isPending={isPending} />}
+                />
+                <Route path="/test" element={<Modaltest />} />
+                <Route path="/mypage" element={<MyPage />} />
+                <Route path="/ask" element></Route>
+                <Route path="/question/ask" element={<AskQuestion />} />
+                <Route
+                  path="question/:questionId"
+                  element={<QuestionDetailpage />}
+                />
+                <Route
+                  path="/question/:questionId/:answerId/edit"
+                  element={<AnswerEditpage />}
+                />
+                <Route
+                  path="/question/:questionId/edit"
+                  element={<QuestionEditpage />}
+                />
+              </Routes>
+              {/* <HomeAside /> */}
+            </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
+        ) : null}
       </BrowserRouter>
     </AppWrap>
   );

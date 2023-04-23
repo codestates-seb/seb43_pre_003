@@ -27,8 +27,8 @@ public class AnswerController {
         this.mapper = mapper;
     }
 
-    @PostMapping("/{question-id}")
-    public ResponseEntity postAnswer (@PathVariable("question-id") @Positive long questionId,
+    @PostMapping("/{question_id}")
+    public ResponseEntity postAnswer (@PathVariable("question_id") @Positive long questionId,
                                       @RequestBody AnswerDto.Post post) {
 
         post.setQuestionId(questionId);
@@ -37,9 +37,9 @@ public class AnswerController {
         Answer result = service.createAnswer(create);
         return new ResponseEntity(mapper.AnswerToResponse(result), HttpStatus.CREATED);
     }
-    @PatchMapping("/{question-id}/{answer-id}")
-    public ResponseEntity patchAnswer (@PathVariable("question-id") @Positive long questionId,
-                                       @PathVariable("answer-id") @Positive long answerId,
+    @PatchMapping("/{question_id}/{answer_id}/edit")
+    public ResponseEntity patchAnswer (@PathVariable("question_id") @Positive long questionId,
+                                       @PathVariable("answer_id") @Positive long answerId,
                                        @RequestBody @Valid AnswerDto.Patch patch) {
         patch.setAnswerId(answerId);
         patch.setQuestionId(questionId);
@@ -48,17 +48,17 @@ public class AnswerController {
         Answer result = service.updateAnswer(update);
         return new ResponseEntity(mapper.AnswerToResponse(result), HttpStatus.OK);
     }
-    @GetMapping("/{question-id}/answers")
-    public ResponseEntity getAnswers (@PathVariable("question-id") @Positive long questionId) {
+    @GetMapping("/{question_id}/answers")
+    public ResponseEntity getAnswers (@PathVariable("question_id") @Positive long questionId) {
 
         return new ResponseEntity(
                 mapper.AnswerToListResponse(service.AllAnswer(questionId)), HttpStatus.OK
         );
     }
-    @DeleteMapping("/{question-id}/answer/{answer-id}/{member-id}")
-    public ResponseEntity deleteAnswer (@PathVariable("question-id") @Positive long questionId,
-                                        @PathVariable("answer-id") @Positive long answerId,
-                                        @PathVariable("member-id") @Positive long memberId) {
+    @DeleteMapping("/{question_id}/answer/{answer_id}/{member_id}")
+    public ResponseEntity deleteAnswer (@PathVariable("question_id") @Positive long questionId,
+                                        @PathVariable("answer_id") @Positive long answerId,
+                                        @PathVariable("member_id") @Positive long memberId) {
         service.deleteAnswer(questionId, answerId, memberId);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);

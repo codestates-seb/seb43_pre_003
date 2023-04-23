@@ -4,10 +4,10 @@ import Button from "./style/Button";
 import Logo from "./style/img/logo.png";
 import Search from "./style/img/ic-search.png";
 import Logout from "./style/img/ic-menu.png";
-import { useState } from "react";
 import Inbox from "./style/img/ic-inbox.png";
 import Trophy from "./style/img/ic- trophy.png";
 import Que from "./style/img/ic-question.png";
+import { useEffect } from "react";
 
 const Container = styled.div`
   width: 100%;
@@ -136,19 +136,27 @@ const IconDiv = styled.div`
   }
 `;
 
-function Header() {
-  const [isLogin, setisLogin] = useState(false);
-
+function Header({ auth, setAuth, setSide }) {
   const onClick = () => {
-    setisLogin();
+    setAuth();
   };
+  const sidefunc = () => {
+    setSide(true);
+  };
+  const sideFalse = () => {
+    setSide(false);
+  };
+
+  useEffect(() => {
+    sideFalse();
+  });
 
   return (
     <>
       <Container>
-        {!isLogin ? (
+        {!auth ? (
           <HeaderBox>
-            <Link to="/">
+            <Link to="/test">
               <LogoBtn>
                 <Img src={Logo} alt="" />
               </LogoBtn>
@@ -156,18 +164,27 @@ function Header() {
             <ProductBtn>Product</ProductBtn>
             <Input />
             <Link to="/Login">
-              <Button variant="smallWhite" size="sm">
+              <Button
+                variant="smallWhite"
+                size="sm"
+                onClick={(sidefunc, onClick)}
+              >
                 Log in
               </Button>
             </Link>
             <Link to="/signup">
-              <Button variant="mediumBlue" size="sm">
+              <Button
+                variant="mediumBlue"
+                size="sm"
+                onClick={(sidefunc, onClick)}
+              >
                 Sign up
               </Button>
             </Link>
           </HeaderBox>
         ) : (
           <HeaderBox>
+            {setSide(false)}
             <Link to="/">
               <LogoBtn>
                 <Img src={Logo} alt="" />
@@ -188,7 +205,7 @@ function Header() {
             <IconDiv>
               <img src={Que} alt="" />
             </IconDiv>
-            <LogoutBtn onClick={onClick}>
+            <LogoutBtn onClick={(sideFalse, () => setAuth(false))}>
               <img src={Logout} alt=""></img>
             </LogoutBtn>
           </HeaderBox>
