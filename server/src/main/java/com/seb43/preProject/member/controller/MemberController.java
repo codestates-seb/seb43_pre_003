@@ -39,22 +39,22 @@ public class MemberController {
 
         return new ResponseEntity<>((memberMapper.memberToMemberResponse(member)), HttpStatus.CREATED);
     }
-    @GetMapping("/{member_id}/profile")// 프로필 조회
-    public ResponseEntity getMember(@PathVariable("member_id") @Positive long memberId){
+    @GetMapping("/{member-id}/profile")// 프로필 조회
+    public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId){
         Member member = memberService.findVerifiedMember(memberId);
 
         return new ResponseEntity<>((memberMapper.memberToMemberResponse(member)),HttpStatus.OK);
 
     }
-    @PatchMapping("/{member_id}/profile")//프로필 수정
-    public ResponseEntity patchMember(@PathVariable("member_id") @Positive long memberId,
+    @PatchMapping("/{member-id}/profile")//프로필 수정
+    public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,
                                       @Valid @RequestBody MemberPatchDto memberPatchDto){
         Member member = memberService.updateMember(memberPatchDto,memberId);
 
         return new ResponseEntity<>((memberMapper.memberToMemberResponse(member)),HttpStatus.OK);
     }
-    @DeleteMapping("/{member_id}/profile/delete")// 회원탈퇴 (memberStatus 탈퇴상태로 변경 memberId는 삭제되지않음)
-    public ResponseEntity deleteMember(@PathVariable("member_id") @Positive long memberId){
+    @DeleteMapping("/{member-id}/profile/delete")// 회원탈퇴 (memberStatus 탈퇴상태로 변경 memberId는 삭제되지않음)
+    public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long memberId){
         Member member = memberService.deleteMember(memberId);
 
         return new ResponseEntity<>((memberMapper.memberToMemberResponse(member)),HttpStatus.OK);
