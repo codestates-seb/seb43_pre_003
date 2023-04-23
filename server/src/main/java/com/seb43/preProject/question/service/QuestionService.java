@@ -10,9 +10,11 @@ import com.seb43.preProject.question.repository.QuestionRepository;
 import com.seb43.preProject.question.repository.VotesRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Transactional
