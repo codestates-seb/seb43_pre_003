@@ -25,7 +25,7 @@ const SIZE = {
     --button-padding: 3px 8px 3px 8px;
   `,
   custom: css`
-    --button-width: ${(props) => props.width || "38px"};
+    --button-width: ${(props) => props.width || "auto"};
     --button-height: ${(props) => props.height || "38px"};
     --button-padding: ${(props) => props.padding || "0px 0px 0px 0px"};
     --margin: ${(props) => props.margin || "0px 0px 0px 0px"};
@@ -112,6 +112,7 @@ const VARIANTS = {
 };
 
 function Button({
+  type,
   disabled,
   size,
   variant,
@@ -128,6 +129,7 @@ function Button({
 
   return (
     <StyleButton
+      type={type}
       sizeStyle={sizeStyle}
       variantStyle={variantStyle}
       disabled={disabled}
