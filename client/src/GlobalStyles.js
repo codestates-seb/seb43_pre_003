@@ -9,14 +9,15 @@ const GlobalStyles = createGlobalStyle`
     font-family: -apple-system, "system-ui", "Segoe UI Adjusted", "Segoe UI", "Liberations Sans", sans-serif;
     font-weight: 400; 
     white-space: nowrap;
-    font-size: 16px; 
+    font-size: 13px; 
+    /* font-size: 16px;  */
     /* margin: 0 auto; */
   }
   .wrap{
     max-width: 1264px;
     /* position: relative; */
     margin: 0 auto;
-    /* padding-top: 3.125rem; */
+    /* padding-top: 50px; */
     width: 100%;
     height: 100%;
     display: flex;

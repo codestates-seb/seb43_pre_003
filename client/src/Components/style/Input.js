@@ -2,9 +2,9 @@ import styled, { css } from "styled-components";
 import ErrIcon from "./img/ic-error.png";
 const VARIANTS = {
   default: css`
-    --border: var(--black-200);
+    /* --border: var(--black-200);
     --border-hover: var(--blue-500);
-    --box-shadow: var(--blue-050);
+    --box-shadow: var(--blue-050); */
     --img: none;
   `,
   error: css`
@@ -27,8 +27,10 @@ const TextInput = styled.input`
   flex-grow: 10;
   background-image: var(--img, none);
   background-position: right center;
+
   background-repeat: no-repeat;
   border: 1px solid var(--border, var(--black-200));
+  font-size: 13px;
 
   &:active,
   &:focus {
