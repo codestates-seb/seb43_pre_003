@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import Editor from "../Components/QuestionDetail/Editor";
 import Button from "../Components/style/Button";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import questionAxios from "../util/questionAxios";
 
 const Container = styled.div`
   max-width: 1100px;
@@ -41,34 +45,84 @@ const Editbox = styled.header`
 `;
 
 const AnswerEditpage = () => {
+  const { questionId, answerId } = useParams();
+  const navigate = useNavigate();
+  console.log(questionId);
+  console.log(answerId);
+  const [list, isPending, error] = questionAxios(
+    `http://localhost:3001/data/${questionId}`
+  );
+  console.log(questionId);
+
+  useEffect(() => {
+    if (list && list.answer && list.answer[answerId]) {
+      setAEditorValue(list.answer[answerId].content);
+    }
+  }, [answerId]);
+
+  const [aeditorValue, setAEditorValue] = useState("");
+  console.log(aeditorValue);
+  const answerEditClick = async (questionId) => {
+    try {
+      await axios.patch(
+        `http://localhost:3001/data/${questionId}/${answerId}`,
+        {
+          question: {
+            answer: {
+              memberId: list.answer[answerId].memberId,
+              content: aeditorValue,
+            },
+          },
+        }
+      );
+
+      console.log("Edit successfully saved!");
+
+      setAEditorValue(aeditorValue);
+      navigate(`/question/${questionId}`);
+    } catch (error) {
+      console.error("Failed to save edit:", error);
+    }
+  };
+
   return (
     <>
       <Container>
-        <Contain>
-          <Editbox>
-            <p>
-              Your edit will be placed in a queue until it is peer reviewed.
-            </p>
-            <br></br>
-            <p>
-              We welcome edits that make the post easier to understand and more
-              valuable for readers. Because community members review edits,
-              please try to make the post substantially better than how you
-              found it, for example, by fixing grammar or adding additional
-              resources and hyperlinks.
-            </p>
-          </Editbox>
-          <h2>Answer</h2>
-          <Editor />
-          <Position>
-            <Button variant="mediumBlue" size="question">
-              Save Edits
-            </Button>
-            <Button variant="mediumWhite" size="question">
-              Cancel
-            </Button>
-          </Position>
-        </Contain>
+        {error && <div>{error}</div>}
+        {isPending && <div>Loading...</div>}
+        {list && (
+          <Contain>
+            <Editbox>
+              <p>
+                Your edit will be placed in a queue until it is peer reviewed.
+              </p>
+              <br></br>
+              <p>
+                We welcome edits that make the post easier to understand and
+                more valuable for readers. Because community members review
+                edits, please try to make the post substantially better than how
+                you found it, for example, by fixing grammar or adding
+                additional resources and hyperlinks.
+              </p>
+            </Editbox>
+            <h2>Answer</h2>
+            <Editor value={aeditorValue} onChange={setAEditorValue} />
+            <Position>
+              <Button
+                variant="mediumBlue"
+                size="question"
+                onClick={() => answerEditClick(questionId)}
+              >
+                Save Edits
+              </Button>
+              <Link to={`/question/${questionId}`}>
+                <Button variant="mediumWhite" size="question">
+                  Cancel
+                </Button>
+              </Link>
+            </Position>
+          </Contain>
+        )}
       </Container>
     </>
   );

@@ -3,6 +3,8 @@ import GlobalStyles from "./GlobalStyles";
 import QuestionDetailpage from "./Pages/QuestionDetailpage";
 import styled from "styled-components";
 import QuestionPage from "./Pages/QuestionPage";
+import QuestionEditpage from "./Pages/QuestionEditpage";
+import AnswerEditpage from "./Pages/AnswerEditpage";
 import MyPage from "./Pages/MyPage";
 import Nav from "./Components/Nav";
 import Header from "./Components/Header";
