@@ -5,7 +5,7 @@ import Button from "../Components/style/Button";
 import Sign from "../Components/style/img/sign.png";
 import Oauth from "../Components/OauthBtn";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const Container = styled.div`
@@ -81,7 +81,7 @@ const Errdiv = styled.div`
   font-size: var(--font-small);
 `;
 
-function Login({ setAuth }) {
+function Login({ setAuth, side, setSide }) {
   const navi = useNavigate();
   const [check, setCheck] = useState(true);
   const [loginInfo, setLoginInfo] = useState({
@@ -91,6 +91,11 @@ function Login({ setAuth }) {
   const [errMessage, setErrMessage] = useState("");
   const [errpw, setErrpw] = useState("");
   const [count, setCount] = useState(true);
+
+  useEffect(() => {
+    setSide();
+    console.log(side);
+  }, []);
 
   const handleInputValue = (key) => (e) => {
     console.log({ ...loginInfo, [key]: e.target.value });
@@ -199,7 +204,7 @@ function Login({ setAuth }) {
               height="35px"
               padding="10px 10px 10px 10px"
               margin="20px 0px 20px 0px"
-              onClick={funcLogin}
+              onClick={(funcLogin, () => setSide(false))}
             >
               Log in
             </Button>

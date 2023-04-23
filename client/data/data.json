@@ -335,5 +335,16 @@
       },
       "answer": []
     }
-  ]
+  ],
+  "member": {
+    "header": {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json"
+    },
+    "member": {
+      "email": "wjekdnkjshd",
+      "userName": "djnajksdnkj",
+      "password": "1231241"
+    }
+  }
 }

@@ -7,7 +7,7 @@ import Logout from "./style/img/ic-menu.png";
 import Inbox from "./style/img/ic-inbox.png";
 import Trophy from "./style/img/ic- trophy.png";
 import Que from "./style/img/ic-question.png";
-import { useEffect } from "react";
+//import { useEffect } from "react";
 
 const Container = styled.div`
   width: 100%;
@@ -15,10 +15,11 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   background-color: var(--black-025);
+  box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.05), 0 1px 4px hsla(0, 0%, 0%, 0.05),
+    0 2px 8px hsla(0, 0%, 0%, 0.05);
 `;
 
 const HeaderBox = styled.header`
-  background: var(--black-025);
   /* width: 100vw; */
   min-width: 1264px;
   height: 50px;
@@ -139,24 +140,21 @@ function Header({ auth, setAuth, setSide }) {
   const onClick = () => {
     setAuth();
   };
-  const sidefunc = () => {
-    setSide(true);
-  };
-  const sideFalse = () => {
-    setSide(false);
-  };
+  // const sidefunc = () => {
+  //   setSide(!side);
+  // };
 
-  useEffect(() => {
-    sideFalse();
-  });
+  // useEffect(() => {
+  //   setSide();
+  // }, []);
 
   return (
     <>
       <Container>
         {!auth ? (
           <HeaderBox>
-            <Link to="/test">
-              <LogoBtn>
+            <Link to="/">
+              <LogoBtn onClick={() => setSide(true)}>
                 <Img src={Logo} alt="" />
               </LogoBtn>
             </Link>
@@ -166,7 +164,7 @@ function Header({ auth, setAuth, setSide }) {
               <Button
                 variant="smallWhite"
                 size="sm"
-                onClick={(sidefunc, onClick)}
+                onClick={(() => setSide(false), onClick)}
               >
                 Log in
               </Button>
@@ -175,7 +173,7 @@ function Header({ auth, setAuth, setSide }) {
               <Button
                 variant="mediumBlue"
                 size="sm"
-                onClick={(sidefunc, onClick)}
+                onClick={(() => setSide(false), onClick)}
               >
                 Sign up
               </Button>
@@ -183,7 +181,6 @@ function Header({ auth, setAuth, setSide }) {
           </HeaderBox>
         ) : (
           <HeaderBox>
-            {setSide(false)}
             <Link to="/">
               <LogoBtn>
                 <Img src={Logo} alt="" />
@@ -204,7 +201,7 @@ function Header({ auth, setAuth, setSide }) {
             <IconDiv>
               <img src={Que} alt="" />
             </IconDiv>
-            <LogoutBtn onClick={(sideFalse, () => setAuth(false))}>
+            <LogoutBtn onClick={(() => setSide(true), () => setAuth(false))}>
               <img src={Logout} alt=""></img>
             </LogoutBtn>
           </HeaderBox>
