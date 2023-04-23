@@ -28,27 +28,30 @@ public class GlobalExceptionResponse {
 
     @ExceptionHandler
     public ResponseEntity handleBusinessLogicException(BusinessLogicException e){
+        log.error(String.valueOf(e));
         final ErrorResponse response = ErrorResponse.of(e.getExceptionCode());
-        return new ResponseEntity(response, HttpStatus.valueOf(e.getExceptionCode().getStatus()));
+        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getExceptionCode().getStatus()));
     }
 
     // 지원하지 않는 method 호출 시
     @ExceptionHandler
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public ErrorResponse handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        final ErrorResponse response = ErrorResponse.of(HttpStatus.METHOD_NOT_ALLOWED);
-        return response;
+        log.error(String.valueOf(e));
+        return ErrorResponse.of(HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        log.error(String.valueOf(e));
         final ErrorResponse response = ErrorResponse.of(HttpStatus.BAD_REQUEST, "요청 본문을 다시 확인해주세요.");
         return response;
     }
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.error(String.valueOf(e));
         final ErrorResponse response = ErrorResponse.of(e.getBindingResult());
         return response;
     }
@@ -56,6 +59,7 @@ public class GlobalExceptionResponse {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
+        log.error(String.valueOf(e));
         final ErrorResponse response = ErrorResponse.of(HttpStatus.BAD_REQUEST, e.getMessage());
         return response;
     }
@@ -64,7 +68,7 @@ public class GlobalExceptionResponse {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleException(Exception e) {
-        log.error("# handle Exception", e);
+        log.error(String.valueOf(e));
         final ErrorResponse response = ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR);
         return response;
     }

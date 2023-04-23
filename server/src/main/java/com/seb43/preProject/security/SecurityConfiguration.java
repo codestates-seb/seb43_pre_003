@@ -1,45 +1,81 @@
 package com.seb43.preProject.security;
 
+import com.seb43.preProject.security.filter.JwtAuthenticationFilter;
+import com.seb43.preProject.security.jwt.JwtTokenizer;
+import com.seb43.preProject.security.util.CustomAuthorityUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
-@EnableWebSecurity(debug = true)
 public class SecurityConfiguration {
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .headers().frameOptions().sameOrigin()
-                .and()
-                .csrf().disable()
-                .formLogin()
-                .loginPage("/auths/login")
-                .loginProcessingUrl("/process_login")
-                .failureUrl("/auths/login-form?error")
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
-                .and()
-                .exceptionHandling().accessDeniedPage("/auths/access-denied")
-                .and()
-                .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers("/**").permitAll()
-                );
-        return http.build();
-    }
+    public class SecurityConfig {
+        private final JwtTokenizer jwtTokenizer;
+        private final CustomAuthorityUtil authorityUtil;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        public SecurityConfig(CustomAuthorityUtil authorityUtil, JwtTokenizer jwtTokenizer) {
+            this.jwtTokenizer = jwtTokenizer;
+            this.authorityUtil = authorityUtil;
+        }
+
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+            http
+                    .headers().frameOptions().sameOrigin()
+                    .and()
+                    .csrf().disable()
+                    .cors(withDefaults())
+                    .formLogin().disable()
+                    .httpBasic().disable()
+                    .apply(new CustomFilterConfigurer())
+                    .and()
+                    .authorizeHttpRequests(authorize -> authorize
+                            .anyRequest().permitAll()
+                    );
+            return http.build();
+        }
+
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+            return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        }
+
+        @Bean
+        CorsConfigurationSource corsConfigurationSource() {
+            CorsConfiguration configuration = new CorsConfiguration();
+            configuration.setAllowedOrigins(Arrays.asList("*"));
+            configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
+
+            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+            source.registerCorsConfiguration("/**", configuration);
+            return source;
+        }
+
+        public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
+            @Override
+            public void configure(HttpSecurity builder) throws Exception {
+                AuthenticationManager authenticationManager =
+                        builder.getSharedObject(AuthenticationManager.class);
+
+                JwtAuthenticationFilter jwtAuthenticationFilter =
+                        new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
+
+                jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login");
+
+                builder.addFilter(jwtAuthenticationFilter);
+            }
+        }
     }
 }

@@ -38,6 +38,7 @@ public class MemberService {
 //    }
     public Member createMember(Member member) {
     verifyMemberExists(member.getEmail());
+
     String encryptedPassword = passwordEncoder.encode(member.getPassword());
     member.setPassword(encryptedPassword);
 

@@ -15,10 +15,12 @@ public interface AnswerMapper {
     @Mapping(source = "memberId", target = "member.memberId")
     @Mapping(source = "questionId", target = "question.questionId")
     Answer PatchDtoToAnswer (AnswerDto.Patch patch);
-    @Mapping(source = "userName", target = "memberName")
+    @Mapping(source = "userName", target = "userName")
     @Mapping(source = "question.questionId", target = "questionId")
     @Mapping(source = "member.memberId", target = "memberId")
     AnswerDto.Response AnswerToResponse (Answer answer);
-    @Mapping(source = "userName", target = "memberName")
+    @Mapping(source = "userName", target = "userName")
+    @Mapping(source = "question.questionId", target = "questionId")
+    @Mapping(source = "member.memberId", target = "memberId")
     List<AnswerDto.Response> AnswerToListResponse (List<Answer> answer);
 }

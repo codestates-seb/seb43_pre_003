@@ -8,15 +8,13 @@ import com.seb43.preProject.member.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
-//@RestController
-@Controller
+@RestController
 @RequestMapping("/members")
 @Validated
 @Slf4j
@@ -28,31 +26,12 @@ public class MemberController {
         this.memberService = memberService;
         this.memberMapper = memberMapper;
     }
-
-
-
-    @GetMapping("/join")
-    public String registerMemberForm() {
-        return "member-join";
-    }
     @PostMapping("/join") //회원가입
-    public String postMember1(@Valid MemberPostDto memberPostDto) {
+    public ResponseEntity postMember(@Valid @RequestBody MemberPostDto memberPostDto){
         Member member = memberService.createMember(memberMapper.memberPostDtoToMember(memberPostDto));
 
-        System.out.println("Member Registration Successfully");
-        return "login";
+        return new ResponseEntity<>((memberMapper.memberToMemberResponse(member)), HttpStatus.CREATED);
     }
-
-//    @PostMapping("/join") // 회원가입
-//    public ResponseEntity postMember(@Valid @RequestBody MemberPostDto memberPostDto) {
-//        Member member = memberService.createMember(memberMapper.memberPostDtoToMember(memberPostDto));
-//
-//        return new ResponseEntity<>(
-//                (memberMapper.memberToMemberResponse(member)), HttpStatus.CREATED);
-//    }
-
-
-
     @GetMapping("/{member-id}/profile")// 프로필 조회
     public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId){
         Member member = memberService.findVerifiedMember(memberId);
