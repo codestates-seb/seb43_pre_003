@@ -31,25 +31,25 @@ public class MemberController {
 
 
 
-    @GetMapping("/join")
-    public String registerMemberForm() {
-        return "member-join";
-    }
-    @PostMapping("/join") //회원가입
-    public String postMember1(@Valid MemberPostDto memberPostDto) {
-        Member member = memberService.createMember(memberMapper.memberPostDtoToMember(memberPostDto));
-
-        System.out.println("Member Registration Successfully");
-        return "login";
-    }
-
-//    @PostMapping("/join") // 회원가입
-//    public ResponseEntity postMember(@Valid @RequestBody MemberPostDto memberPostDto) {
+//    @GetMapping("/join")
+//    public String registerMemberForm() {
+//        return "member-join";
+//    }
+//    @PostMapping("/join") //회원가입
+//    public String postMember1(@Valid MemberPostDto memberPostDto) {
 //        Member member = memberService.createMember(memberMapper.memberPostDtoToMember(memberPostDto));
 //
-//        return new ResponseEntity<>(
-//                (memberMapper.memberToMemberResponse(member)), HttpStatus.CREATED);
+//        System.out.println("Member Registration Successfully");
+//        return "login";
 //    }
+
+    @PostMapping("/join") // 회원가입
+    public ResponseEntity postMember(@Valid @RequestBody MemberPostDto memberPostDto) {
+        Member member = memberService.createMember(memberMapper.memberPostDtoToMember(memberPostDto));
+
+        return new ResponseEntity<>(
+                (memberMapper.memberToMemberResponse(member)), HttpStatus.CREATED);
+    }
 
 
 
