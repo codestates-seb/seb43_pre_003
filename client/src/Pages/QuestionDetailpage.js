@@ -12,7 +12,7 @@ import axios from "axios";
 import dateCalculate from "../util/dateCalculate";
 import questionAxios from "../util/questionAxios";
 import Aside from "../Components/Aside";
-import { TagDiv } from "../Components/style/Tag";
+// import { TagDiv } from "../Components/style/Tag";
 
 const Container = styled.div`
   max-width: 1100px;
@@ -122,12 +122,12 @@ const Header2 = styled.header`
 const Position = styled.div`
   margin-top: 70px;
 `;
-const Tags = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  margin-top: 25px;
-  row-gap: 2px;
-`;
+// const Tags = styled.div`
+//   display: flex;
+//   flex-flow: row wrap;
+//   margin-top: 25px;
+//   row-gap: 2px;
+// `;
 
 const QuestionDetailpage = ({ auth }) => {
   const { questionId } = useParams();
@@ -206,11 +206,11 @@ const QuestionDetailpage = ({ auth }) => {
                       />
                     </div>
                   </div>
-                  <Tags>
+                  {/* <Tags>
                     {list.question.tags.map((el, index) => (
                       <TagDiv key={index}>{el}</TagDiv>
                     ))}
-                  </Tags>
+                  </Tags> */}
                   <Section3>
                     <Sharedomain questionId={questionId} auth={auth} />
                     <AuthorProfile

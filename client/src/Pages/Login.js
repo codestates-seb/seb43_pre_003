@@ -128,10 +128,10 @@ function Login({ setAuth, setSide }) {
           email: loginInfo.email,
           password: loginInfo.password,
         },
-        {}
+        { withCredentials: true }
       )
       .then((res) => {
-        console.log(res.data);
+        console.log(res.headers.get("Authorization"));
         setAuth(true);
         setSide(true);
         setErrMessage("");
