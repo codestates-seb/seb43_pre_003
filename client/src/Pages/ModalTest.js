@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Button from "../Components/style/Button";
-import Discard from "./Modal/Discard";
+import ImgDrag from "./Modal/ImgDrag";
 import { useState } from "react";
 const Container = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ function Home() {
           ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
         </Button>
       </Container>
-      <div>{modal ? <Discard showModal={showModal} /> : null}</div>
+      <div>{modal ? <ImgDrag showModal={showModal} /> : null}</div>
     </>
   );
 }
