@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Button from "../style/Button";
@@ -5,6 +6,7 @@ import Sheet from "./Sheet";
 
 const Sharedomain = ({ questionId, answerId }) => {
   const navigate = useNavigate();
+  const [showSheet, setShowSheet] = useState(false);
 
   const handleqDeleteClick = (id) => {
     axios
@@ -28,20 +30,29 @@ const Sharedomain = ({ questionId, answerId }) => {
       });
   };
 
+  const handleShareClick = () => {
+    setShowSheet(!showSheet);
+  };
+
   return (
     <div>
-      <Button variant="share" size="custom">
+      <Button
+        variant="share"
+        size="custom"
+        padding="0px 3px 0px 3px"
+        onClick={handleShareClick}
+      >
         Share
       </Button>
       {answerId ? (
         <Link to={`/question/${questionId}/${answerId}/edit`}>
-          <Button variant="share" size="custom">
+          <Button variant="share" size="custom" padding="0px 3px 0px 3px">
             Edit
           </Button>
         </Link>
       ) : (
         <Link to={`/question/${questionId}/edit`}>
-          <Button variant="share" size="custom">
+          <Button variant="share" size="custom" padding="0px 3px 0px 3px">
             Edit
           </Button>
         </Link>
@@ -51,6 +62,7 @@ const Sharedomain = ({ questionId, answerId }) => {
           variant="share"
           size="custom"
           onClick={() => handleaDeleteClick(questionId, answerId)}
+          padding="0px 3px 0px 3px"
         >
           Delete
         </Button>
@@ -59,11 +71,12 @@ const Sharedomain = ({ questionId, answerId }) => {
           variant="share"
           size="custom"
           onClick={() => handleqDeleteClick(questionId)}
+          padding="0px 3px 0px 3px"
         >
           Delete
         </Button>
       )}
-      <Sheet></Sheet>
+      {showSheet && <Sheet />}
     </div>
   );
 };
