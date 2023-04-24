@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { TagDiv } from "./style/Tag";
 import Profile from "./style/img/ic- trophy.png";
+import { useEffect, useRef, useState } from "react";
 
 const QuestionsLiContainer = styled.li`
   display: flex;
@@ -135,6 +136,13 @@ function QuestionsList({ data }) {
   const el = data.question;
   const elA = data.answer;
 
+  const [test, setTest] = useState("");
+  const htmlTxt = useRef();
+
+  useEffect(() => {
+    setTest(htmlTxt.current.textContent);
+  }, []);
+
   return (
     <>
       <QuestionsLiContainer>
@@ -156,7 +164,16 @@ function QuestionsList({ data }) {
           <QuestionTitle>
             <Link to={`/question/${el.questionId}`}>{el.title}</Link>
           </QuestionTitle>
-          <QuestionBody>{el.content}</QuestionBody>
+          <QuestionBody>
+            {test}
+            <p
+              style={{ display: "none" }}
+              dangerouslySetInnerHTML={{
+                __html: el.content,
+              }}
+              ref={htmlTxt}
+            />
+          </QuestionBody>
           <QuestionFooter>
             <Tags>
               {/* {el.tags.map((el, index) => (

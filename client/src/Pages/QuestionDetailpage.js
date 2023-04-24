@@ -192,7 +192,11 @@ const QuestionDetailpage = () => {
                 <Section2>
                   <div>
                     <div>
-                      <p>{list.question.content}</p>
+                      <p
+                        dangerouslySetInnerHTML={{
+                          __html: list.question.content,
+                        }}
+                      />
                     </div>
                   </div>
                   <Section3>
