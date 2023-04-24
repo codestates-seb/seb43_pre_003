@@ -10,7 +10,7 @@ import axios from "axios";
 
 const Container = styled.div`
   display: flex;
-  width: 1264px;
+  width: 100%;
   height: 100vh;
   flex-direction: column;
   padding: 24px 16px;
@@ -123,7 +123,7 @@ function Login({ setAuth, setSide }) {
 
     return axios
       .post(
-        `http://ec2-54-180-100-255.ap-northeast-2.compute.amazonaws.com:8080/auth/login`,
+        `${process.env.REACT_APP_API_URL}/member`,
         {
           email: loginInfo.email,
           password: loginInfo.password,

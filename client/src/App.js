@@ -23,7 +23,7 @@ const AppWrap = styled.div`
 
 function App() {
   const [list, isPending, error] = questionAxios(
-    `http://ec2-54-180-100-255.ap-northeast-2.compute.amazonaws.com:8080/`
+    `${process.env.REACT_APP_API_URL}`
   );
   const [auth, setAuth] = useState(false);
   const [side, setSide] = useState(true);
