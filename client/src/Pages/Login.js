@@ -28,7 +28,7 @@ const Emailbox = styled.div`
   flex-direction: column;
   background: var(--white);
   width: 288px;
-  height: height: ${(p) => p.height || "250px"};
+  height: ${(p) => p.height || "250px"};
   padding: 24px;
   margin: 24px 0;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.05),

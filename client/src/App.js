@@ -19,7 +19,6 @@ import { useState, useEffect } from "react";
 
 const AppWrap = styled.div`
   width: 100vw;
-  height: 100%;
 `;
 
 function App() {
@@ -43,10 +42,20 @@ function App() {
               <Routes>
                 <Route
                   path="/"
-                  element={<QuestionPage list={list} isPending={isPending} />}
+                  element={
+                    <QuestionPage
+                      list={list}
+                      isPending={isPending}
+                      auth={auth}
+                      setAuth={setAuth}
+                    />
+                  }
                 />
                 <Route path="/test" element={<Modaltest />} />
-                <Route path="/mypage" element={<MyPage />} />
+                <Route
+                  path="/mypage"
+                  element={<MyPage auth={auth} setAuth={setAuth} />}
+                />
                 <Route path="/ask" element></Route>
                 <Route path="/question/ask" element={<AskQuestion />} />
                 <Route
@@ -62,9 +71,7 @@ function App() {
                   element={<QuestionEditpage />}
                 />
               </Routes>
-              {/* <HomeAside /> */}
             </div>
-            <Footer />
           </div>
         ) : null}
 
@@ -92,6 +99,7 @@ function App() {
             }
           />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </AppWrap>
   );
