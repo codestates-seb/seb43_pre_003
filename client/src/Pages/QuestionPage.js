@@ -70,9 +70,7 @@ function QuestionsPage({ lists, isPending, auth }) {
     axios
       .get("http://localhost:3001/data")
       .then((res) => {
-        setList(
-          res.data.sort((a, b) => b.question.questionId - a.question.questionId)
-        );
+        setList(res.data.sort((a, b) => b.id - a.id));
         setCurrentPosts(res.data.slice(0, 10)); // 0 , 10
       })
       .catch((error) => {
