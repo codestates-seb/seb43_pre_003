@@ -1,13 +1,15 @@
 import styled from "styled-components";
-import Button from "../../Components/style/Button";
+
 import XImg from "../../Components/style/img/tabler_x.png";
+import Drag from "../../Components/style/img/drag.png";
+import { useState, useRef, useEffect } from "react";
 
 const Container = styled.div`
-  width: 570px;
-  height: 190px;
+  width: 680px;
+  height: 500px;
   z-index: 999;
   position: absolute;
-  top: 30%;
+  top: 10%;
   left: 30%;
   transfrom: translate(-50%, -50%);
   background-color: #ffffff;
@@ -29,25 +31,6 @@ const ModalContainer = styled.div`
   opacity: 50%;
 `;
 
-const H1 = styled.span`
-  font-size: var(--font-xx-large);
-  font-weight: 700;
-  text-alignt: center;
-  color: var(--red-400);
-`;
-
-const Textdiv = styled.div`
-  width: 20px;
-  margin: 20px 0px;
-  height: 10px;
-`;
-const Buttondiv = styled.div`
-  display: flex;
-  margin-top: 40px;
-`;
-const Span = styled.span`
-  font-size: var(--font-large);
-`;
 const XBtn = styled.button`
   width: 30px;
   height: 30px;
@@ -67,52 +50,83 @@ const Ximg = styled.img`
 
 const HeaderDiv = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+  height: 260px;
+  border-radius: 2px;
+  border: 3px dashed var(--black-200);
 `;
 
-function Discard({ showModal }) {
+const Img = styled.img`
+  width: ${(prop) => prop.width || "auto"};
+  height: ${(prop) => prop.height || "auto"};
+`;
+
+function ImgDrag({ showModal }) {
+  const [imgFile, setImgFile] = useState("");
+  const imgRef = useRef();
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const saveImgFile = () => {
+    const file = imgRef.current.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      console.log(reader);
+      setImgFile(reader.result);
+    };
+  };
+  const dragImgFile = (e) => {
+    e.preventDefault();
+    setImgFile(e.dataTransfer.files);
+    const file = e.dataTransfer.files[0];
+    const reader = new FileReader();
+
+    console.log(reader.readAsDataURL(file));
+    reader.onloadend = () => {
+      console.log(reader);
+      setImgFile(reader.result);
+    };
+  };
+
+  useEffect(() => {
+    console.log(imgFile);
+  }, []);
   return (
     <>
       <ModalContainer />
       <Container>
-        <HeaderDiv>
-          <H1>Discard Question</H1>
-          <XBtn>
+        <HeaderDiv onDragOver={handleDragOver} onDrop={dragImgFile}>
+          {!imgFile ? (
+            <Img src={Drag} alt="" width="100%" height="100%" />
+          ) : (
+            <Img src={imgFile} alt="" />
+          )}
+          <input
+            type="file"
+            accept="image/*"
+            id="profileImg"
+            onChange={(e) => dragImgFile(e)}
+            ref={imgRef}
+            hidden
+          />
+        </HeaderDiv>
+        <input
+          type="file"
+          accept="image/*"
+          id="profileImg"
+          onChange={((e) => setImgFile(e.target.files), saveImgFile)}
+          ref={imgRef}
+        />
+        <div>
+          <XBtn onClick={showModal}>
             <Ximg src={XImg} alt="" />
           </XBtn>
-        </HeaderDiv>
-
-        <Textdiv>
-          <Span>
-            Are you sure you want to discard this question? This cannot be
-            undone.
-          </Span>
-        </Textdiv>
-        <Buttondiv>
-          <Button
-            size="custom"
-            variant="Discard"
-            width="120px"
-            height="40px"
-            padding="3px 3px 3px 3px"
-            margin="0px 3px 0px 0px"
-          >
-            Discard Question
-          </Button>
-          <Button
-            size="custom"
-            variant="share"
-            width="120px"
-            height="40px"
-            onClick={showModal}
-          >
-            Cansel
-          </Button>
-        </Buttondiv>
+        </div>
       </Container>
     </>
   );
 }
 
-export default Discard;
+export default ImgDrag;
