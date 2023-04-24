@@ -27,6 +27,7 @@ const TextInput = styled.input`
   flex-grow: 10;
   background-image: var(--img, none);
   background-position: right center;
+  background-position-x: 98%;
 
   background-repeat: no-repeat;
   border: 1px solid var(--border, var(--black-200));
