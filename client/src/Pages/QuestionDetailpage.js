@@ -12,6 +12,7 @@ import axios from "axios";
 import dateCalculate from "../util/dateCalculate";
 import questionAxios from "../util/questionAxios";
 import Aside from "../Components/Aside";
+import { TagDiv } from "../Components/style/Tag";
 
 const Container = styled.div`
   max-width: 1100px;
@@ -121,8 +122,14 @@ const Header2 = styled.header`
 const Position = styled.div`
   margin-top: 70px;
 `;
+const Tags = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 25px;
+  row-gap: 2px;
+`;
 
-const QuestionDetailpage = () => {
+const QuestionDetailpage = ({ auth }) => {
   const { questionId } = useParams();
   console.log(questionId);
   const navigate = useNavigate();
@@ -199,8 +206,13 @@ const QuestionDetailpage = () => {
                       />
                     </div>
                   </div>
+                  <Tags>
+                    {list.question.tags.map((el, index) => (
+                      <TagDiv key={index}>{el}</TagDiv>
+                    ))}
+                  </Tags>
                   <Section3>
-                    <Sharedomain questionId={questionId} />
+                    <Sharedomain questionId={questionId} auth={auth} />
                     <AuthorProfile
                       createdAt={list.question.createdAt}
                       userName={list.question.userName}
@@ -211,7 +223,11 @@ const QuestionDetailpage = () => {
               <Header2>
                 <h1>{list.question.answerCount} Answers</h1>
               </Header2>
-              <Answer answers={list.answer} questionId={questionId} />
+              <Answer
+                answers={list.answer}
+                questionId={questionId}
+                auth={auth}
+              />
               <h2>Your Answer</h2>
               <div>
                 <Editor value={answerValue} onChange={setAnswerValue} />

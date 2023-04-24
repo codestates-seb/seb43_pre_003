@@ -4,7 +4,7 @@ import Input from "../Components/style/Input";
 import Button from "../Components/style/Button";
 import Sign from "../Components/style/img/sign.png";
 import Oauth from "../Components/OauthBtn";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -81,7 +81,7 @@ const Errdiv = styled.div`
   font-size: var(--font-small);
 `;
 
-function Login({ setAuth, side, setSide }) {
+function Login({ setAuth, setSide }) {
   const navi = useNavigate();
   const [check, setCheck] = useState(true);
   const [loginInfo, setLoginInfo] = useState({
@@ -94,7 +94,6 @@ function Login({ setAuth, side, setSide }) {
 
   useEffect(() => {
     setSide();
-    console.log(side);
   }, []);
 
   const handleInputValue = (key) => (e) => {
@@ -110,33 +109,41 @@ function Login({ setAuth, side, setSide }) {
     //   "Content-Type": "application/json",
     // };
 
-    if (!loginInfo.email) {
+    if (loginInfo.email.length < 1) {
       setErrMessage("아이디를 입력하세요.");
       setCheck(false);
       return;
     }
 
-    if (!loginInfo.password) {
+    if (loginInfo.password < 1) {
       setErrpw("비밀번호를 입력하세요.");
       setCheck(false);
       return;
     }
 
     return axios
-      .post("http://localhost:3001/member", { loginInfo }, {})
+      .post(
+        `http://ec2-54-180-100-255.ap-northeast-2.compute.amazonaws.com:8080/auth/login`,
+        {
+          email: loginInfo.email,
+          password: loginInfo.password,
+        },
+        {}
+      )
       .then((res) => {
         console.log(res.data);
-        if (res.data.loginInfo.email === loginInfo.email) {
-          setAuth(true);
-          setErrMessage("");
-          setErrpw("");
-          navi("/");
-          setCount(true);
-        }
+        setAuth(true);
+        setSide(true);
+        setErrMessage("");
+        setErrpw("");
+        navi("/");
+        setCount(true);
       })
       .catch((err) => {
         console.log(err);
         setCount(false);
+        setSide(false);
+        setAuth(false);
         setErrMessage("이메일 또는 패스워드가 올바르지 않습니다.");
       });
   };
@@ -151,7 +158,7 @@ function Login({ setAuth, side, setSide }) {
             <EmailSpan>Email</EmailSpan>
           </Eldiv>
           <form onSubmit={(e) => e.preventDefault()}>
-            {loginInfo.email.length === 0 && count ? (
+            {count || check ? (
               <Input
                 type="text"
                 id="email"
@@ -173,11 +180,10 @@ function Login({ setAuth, side, setSide }) {
             <Eldiv>
               <Passworddiv>
                 <EmailSpan>Password</EmailSpan>
-                <Link to="/Forget">
-                  <ForgetBtn>Forgot password?</ForgetBtn>
-                </Link>
+
+                <ForgetBtn href="/Forget">Forgot password?</ForgetBtn>
               </Passworddiv>
-              {loginInfo.password.length === 0 && count ? (
+              {count || check ? (
                 <Input
                   type="password"
                   id="password"
@@ -204,7 +210,7 @@ function Login({ setAuth, side, setSide }) {
               height="35px"
               padding="10px 10px 10px 10px"
               margin="20px 0px 20px 0px"
-              onClick={(funcLogin, () => setSide(false))}
+              onClick={funcLogin}
             >
               Log in
             </Button>
@@ -212,9 +218,8 @@ function Login({ setAuth, side, setSide }) {
         </Emailbox>
         <Bottomdiv>
           <BottomText>Don’t have an account?</BottomText>
-          <Link to="/Signup">
-            <ForgetBtn>Sign up</ForgetBtn>
-          </Link>
+
+          <ForgetBtn href="/Signup">Sign up</ForgetBtn>
         </Bottomdiv>
         <Bottomdiv>
           <BottomText>Are you an employer?</BottomText>

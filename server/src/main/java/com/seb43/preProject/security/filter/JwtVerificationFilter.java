@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +59,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
     public Map<String, Object> verifyJws(HttpServletRequest request){
         String jws = request.getHeader("Authorization").replace("Bearer ", "");
-        Map<String, Object> claims = jwtTokenizer.getClaims(jws, jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey()));
+        Map<String, Object> claims = jwtTokenizer.getClaims(jws, jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey())).getBody();
 
         return claims;
     }
@@ -66,10 +67,15 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
     public void setSecurityContext(Map<String , Object> claims){
         String username = (String) claims.get("username");
+        Long memberId = Long.valueOf(String.valueOf(claims.get("memberId")));
+        Map<String, Object> map = new HashMap<>();
+        map.put("username", username);
+        map.put("memberId", memberId);
+
         List<GrantedAuthority> authorities =
                 authorityUtil.createAuthorities((List) claims.get("roles"));
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(map, null, authorities);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }

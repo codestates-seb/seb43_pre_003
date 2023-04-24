@@ -72,6 +72,10 @@ const HeaderDiv = styled.div`
 `;
 
 function Discard({ showModal }) {
+  const Navigate = (e) => {
+    e.preventDefault();
+    window.location.replace("/test");
+  };
   return (
     <>
       <ModalContainer />
@@ -97,6 +101,7 @@ function Discard({ showModal }) {
             height="40px"
             padding="3px 3px 3px 3px"
             margin="0px 3px 0px 0px"
+            onClick={(showModal, (e) => Navigate(e))}
           >
             Discard Question
           </Button>

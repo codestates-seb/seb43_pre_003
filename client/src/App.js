@@ -15,19 +15,18 @@ import questionAxios from "./util/questionAxios";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/Signup";
 import Modaltest from "./Pages/ModalTest";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const AppWrap = styled.div`
   width: 100vw;
 `;
 
 function App() {
-  const [list, isPending, error] = questionAxios(`http://localhost:3001/data/`);
+  const [list, isPending, error] = questionAxios(
+    `http://ec2-54-180-100-255.ap-northeast-2.compute.amazonaws.com:8080/`
+  );
   const [auth, setAuth] = useState(false);
   const [side, setSide] = useState(true);
-  useEffect(() => {
-    console.log(side);
-  }, []);
 
   return (
     <AppWrap>
@@ -60,7 +59,7 @@ function App() {
                 <Route path="/question/ask" element={<AskQuestion />} />
                 <Route
                   path="question/:questionId"
-                  element={<QuestionDetailpage />}
+                  element={<QuestionDetailpage auth={auth} />}
                 />
                 <Route
                   path="/question/:questionId/:answerId/edit"
@@ -84,20 +83,11 @@ function App() {
                 setAuth={setAuth}
                 side={side}
                 setSide={setSide}
+                index
               />
             }
           />
-          <Route
-            path="/signup"
-            element={
-              <SignUp
-                auth={auth}
-                setAuth={setAuth}
-                side={side}
-                setSide={setSide}
-              />
-            }
-          />
+          <Route path="/signup" element={<SignUp setSide={setSide} />} index />
         </Routes>
         <Footer />
       </BrowserRouter>

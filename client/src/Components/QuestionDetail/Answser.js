@@ -33,7 +33,7 @@ const List = styled.main`
   width: 100%;
 `;
 
-const Answer = ({ answers, questionId }) => {
+const Answer = ({ answers, questionId, auth }) => {
   return (
     <List>
       {answers.map((answer) => (
@@ -45,7 +45,11 @@ const Answer = ({ answers, questionId }) => {
               </div>
             </div>
             <Section3>
-              <Sharedomain questionId={questionId} answerId={answer.answerId} />
+              <Sharedomain
+                questionId={questionId}
+                answerId={answer.answerId}
+                auth={auth}
+              />
               <AuthorProfile
                 createdAt={answer.createdAt}
                 userName={answer.userName}

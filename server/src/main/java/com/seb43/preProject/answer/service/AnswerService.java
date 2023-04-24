@@ -32,7 +32,9 @@ public class AnswerService {
     }
 
     public Answer createAnswer (Answer answer) {
-        Member findMemberId = memberService.findVerifiedMember(answer.getMember().getMemberId());
+        Long memberId = memberService.findSecurityContextHolderMemberId();
+        Member findMemberId = memberService.findVerifiedMember(memberId);
+        answer.setMember(findMemberId);
         answer.setUserName(findMemberId.getUserName());
 
         Question questionId = questionService.verifyQuestion(answer.getQuestion().getQuestionId());
@@ -43,12 +45,13 @@ public class AnswerService {
 
     public Answer updateAnswer (Answer answer) {
         Question question = questionService.verifyQuestion(answer.getQuestion().getQuestionId());
+        Long memberId = memberService.findSecurityContextHolderMemberId();
         verifyQuestionAnswer(answer.getAnswerId(), question);
 
         Answer find = existsAnswer(answer.getAnswerId());
         answer.setUserName(find.getUserName());
 
-        if (answer.getMember().getMemberId().equals(find.getMember().getMemberId())) {
+        if (memberId.equals(find.getMember().getMemberId())) {
             Optional.ofNullable(answer.getContent()).ifPresent(content -> answer.setContent(content));
             return repository.save(answer);
         }
@@ -77,8 +80,9 @@ public class AnswerService {
         return result;
     }
 
-    public void deleteAnswer (long questionId, long answerId, long memberId) {
+    public void deleteAnswer (long questionId, long answerId) {
         Question question = questionService.verifyQuestion(questionId);
+        Long memberId = memberService.findSecurityContextHolderMemberId();
         questionService.answerCountMinus(question);
 
         Optional<Answer> answer = repository.findById(answerId);
