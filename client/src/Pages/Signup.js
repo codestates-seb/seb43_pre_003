@@ -12,8 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 const Container = styled.div`
   display: flex;
-  width: 100vw;
-  height: 100%;
+  width: 1264px;
+  height: 100vh;
   justify-content: center;
   align-items: center;
   background: #f1f2f3;
@@ -174,14 +174,11 @@ function Signup({ setSide }) {
     }
 
     return axios
-      .post(
-        `http://ec2-54-180-100-255.ap-northeast-2.compute.amazonaws.com:8080/members/join`,
-        {
-          email: member.email,
-          userName: member.userName,
-          password: member.password,
-        }
-      )
+      .post(`${process.env.REACT_APP_API_URL}members/join`, {
+        email: member.email,
+        userName: member.userName,
+        password: member.password,
+      })
       .then((res) => {
         console.log(res.data);
         setErrMessage("");

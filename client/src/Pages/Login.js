@@ -10,7 +10,7 @@ import axios from "axios";
 
 const Container = styled.div`
   display: flex;
-  width: 100vw;
+  width: 1264px;
   height: 100vh;
   flex-direction: column;
   padding: 24px 16px;
