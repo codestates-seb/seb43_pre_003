@@ -1,6 +1,11 @@
 import styled from "styled-components";
+import Facebook from "../style/img/vaadin_facebook.png";
 
 const Box = styled.div`
+  p {
+    font-size: 10px;
+    font-weight: 600;
+  }
   z-index: 1;
   display: flex;
   flex-direction: column;
@@ -10,16 +15,11 @@ const Box = styled.div`
   width: 280px;
   padding: 12px;
   background: rgb(255, 255, 255);
-  border-radius: 7px;
+  border-radius: 5px;
   border: var(--black-100) solid 2px;
 
-  box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 3px, rgba(0, 0, 0, 0.06) 0px 2px 6px,
-    rgba(0, 0, 0, 0.09) 0px 3px 8px;
-  .p {
-    margin-left: 2px;
-    font-size: 10px;
-    font-weight: 600;
-  }
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px, rgba(0, 0, 0, 0.1) 0px 3px 5px,
+    rgba(0, 0, 0, 0.1) 0px 3px 8px;
 `;
 
 const Input = styled.div`
@@ -68,24 +68,51 @@ const Div = styled.div`
     left: 10px;
   }
 `;
-const Contain = styled.div``;
+const Img = styled.img`
+  width: 12px;
+  height: 12px;
+`;
+const FButton = styled.button`
+  width: 23px;
+  height: 23px;
+  border-radius: 5px;
+  background-color: var(---white);
+  &:hover {
+    background-color: var(--blue-050);
+  }
+`;
 
 const Sheet = () => {
+  const copyLink = () => {
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => {
+        console.log("Copied to clipboard:", window.location.href);
+      })
+      .catch((err) => {
+        console.error("Failed to copy to clipboard:", err);
+      });
+  };
+
   return (
-    <Contain>
+    <div>
       <Div />
       <Box>
         <p>Share a link to this question</p>
-        <Input type="text" readOnly value="https//:stackoverflow.com"></Input>
+        <Input type="text" readOnly value={window.location.href}></Input>
         <Inner>
-          <Button type="button">copy link</Button>
+          <Button type="button" onClick={copyLink}>
+            copy link
+          </Button>
+
           <div>
-            <src></src>
-            <src></src>
+            <FButton>
+              <Img src={Facebook} alt="프로필 사진" />
+            </FButton>
           </div>
         </Inner>
       </Box>
-    </Contain>
+    </div>
   );
 };
 
