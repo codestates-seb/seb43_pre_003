@@ -133,8 +133,8 @@ const UserAsked = styled.div`
 `;
 
 function QuestionsList({ data }) {
-  const el = data.question;
-  const elA = data.answer;
+  const el = data;
+  const elA = data.answers;
 
   const [test, setTest] = useState("");
   const htmlTxt = useRef();
