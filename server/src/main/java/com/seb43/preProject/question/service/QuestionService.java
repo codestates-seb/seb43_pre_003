@@ -32,15 +32,18 @@ public class QuestionService {
     }
 
     public Question createQuestion(Question question){
-        Member member = memberService.findVerifiedMember(question.getMember().getMemberId());
+        Long memberId = memberService.findSecurityContextHolderMemberId();
+        Member member = memberService.findVerifiedMember(memberId);
         question.setUserName(member.getUserName());
+        question.setMember(member);
         question.setQuestionStatus(Question.QuestionStatus.QUESTION_REGISTERED);
         return questionRepository.save(question);
     }
 
     public Question updateQuestion(Question question) {
         Question findQuestion = verifyQuestion(question.getQuestionId());
-        if (question.getMember().getMemberId() == findQuestion.getMember().getMemberId()) {
+        Long memberId = memberService.findSecurityContextHolderMemberId();
+        if (memberId == findQuestion.getMember().getMemberId()) {
             Optional.ofNullable(question.getTitle()).ifPresent(title -> findQuestion.setTitle(title));
             Optional.ofNullable(question.getContent()).ifPresent(content -> findQuestion.setContent(content));
             return questionRepository.save(findQuestion);
@@ -50,7 +53,6 @@ public class QuestionService {
     }
 
     public Question findQuestion(long questionId){
-        System.out.println(memberService.findSecurityContextHolderMemberId());
         Question question = verifyQuestion(questionId);
         question.setViews(question.getViews() + 1);
         return question;
@@ -59,8 +61,9 @@ public class QuestionService {
         return questionRepository.findAll(PageRequest.of(page, size));
     }
 
-    public void removeQuestion(long questionId, long memberId){
+    public void removeQuestion(long questionId){
         Question question = verifyQuestion(questionId);
+        Long memberId = memberService.findSecurityContextHolderMemberId();
         if (question.getMember().getMemberId() == memberId){
             questionRepository.delete(verifyQuestion(questionId));
         }else{
@@ -73,8 +76,9 @@ public class QuestionService {
         return questionRepository.findByTitleContaining(title, PageRequest.of(page, size));
     }
 
-    public Question likeQuestion(long questionId, long memberId){
+    public Question likeQuestion(long questionId){
         Question question = verifyQuestion(questionId);
+        Long memberId = memberService.findSecurityContextHolderMemberId();
         Member member = memberService.findVerifiedMember(memberId);
         Optional<Votes> findVotes = votesRepository.findByQuestionAndMember(question, member);
         if (findVotes.isPresent()){
@@ -88,8 +92,9 @@ public class QuestionService {
         return question;
     }
 
-    public Question unlikeQuestion(long questionId, long memberId){
+    public Question unlikeQuestion(long questionId){
         Question question = verifyQuestion(questionId);
+        Long memberId = memberService.findSecurityContextHolderMemberId();
         Member member = memberService.findVerifiedMember(memberId);
         Optional<Votes> findVotes = votesRepository.findByQuestionAndMember(question, member);
         if (findVotes.isPresent()){

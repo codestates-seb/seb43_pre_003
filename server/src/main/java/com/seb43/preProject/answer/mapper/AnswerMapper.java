@@ -9,10 +9,10 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface AnswerMapper {
-    @Mapping(source = "memberId", target = "member.memberId")
+
     @Mapping(source = "questionId", target = "question.questionId")
     Answer PostDtoToAnswer (AnswerDto.Post post);
-    @Mapping(source = "memberId", target = "member.memberId")
+
     @Mapping(source = "questionId", target = "question.questionId")
     Answer PatchDtoToAnswer (AnswerDto.Patch patch);
     @Mapping(source = "userName", target = "userName")

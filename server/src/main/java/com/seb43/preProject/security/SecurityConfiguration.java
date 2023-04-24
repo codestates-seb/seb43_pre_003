@@ -38,7 +38,8 @@ public class SecurityConfiguration {
                     .headers().frameOptions().sameOrigin()
                     .and()
                     .csrf().disable()
-                    .cors(withDefaults())
+                    .cors().configurationSource(corsConfigurationSource())
+                    .and()
                     .formLogin().disable()
                     .httpBasic().disable()
                     .apply(new CustomFilterConfigurer())
@@ -57,9 +58,17 @@ public class SecurityConfiguration {
         @Bean
         CorsConfigurationSource corsConfigurationSource() {
             CorsConfiguration configuration = new CorsConfiguration();
-            configuration.setAllowedOrigins(Arrays.asList("*"));
-            configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
+            configuration.addAllowedOriginPattern("*");
+            configuration.addAllowedOrigin("http://localhost:3000");
+            configuration.addAllowedOrigin("http://localhost:8080");
+            configuration.addAllowedOrigin("http://pre-project43.s3-website.ap-northeast-2.amazonaws.com/");
+            configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
+            configuration.setAllowedHeaders(Arrays.asList("*"));
+            configuration.setAllowCredentials(true);
+            configuration.addAllowedHeader("*");
+            configuration.addExposedHeader("*");
 
+            configuration.validateAllowCredentials();
             UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
             source.registerCorsConfiguration("/**", configuration);
             return source;

@@ -8,8 +8,6 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 @Getter
 public class QuestionPatchDto {
-    @Positive
-    private long memberId;
     private String title;
     private String content;
 }

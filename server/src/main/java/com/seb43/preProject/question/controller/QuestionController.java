@@ -71,10 +71,9 @@ public class QuestionController {
         return new ResponseEntity(new MultiResponseDto<>(mapper.questionsToQuestionDtos(content), questions), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{question_id}/{member_id}")
-    public ResponseEntity deleteQuestion(@Positive @PathVariable("question_id") long questionId,
-                                         @Positive @PathVariable("member_id") long memberId){
-        questionService.removeQuestion(questionId,memberId);
+    @DeleteMapping("/{question_id}")
+    public ResponseEntity deleteQuestion(@Positive @PathVariable("question_id") long questionId){
+        questionService.removeQuestion(questionId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
@@ -88,17 +87,15 @@ public class QuestionController {
         return new ResponseEntity(new MultiResponseDto<>(mapper.questionsToQuestionDtos(content), questions), HttpStatus.OK);
     }
 
-    @GetMapping("/{question_id}/{member_id}/vote/up")
-    public ResponseEntity likeQuestion(@Positive @PathVariable("question_id") long questionId,
-                                       @Positive @PathVariable("member_id") long memberId){
-        Question question = questionService.likeQuestion(questionId, memberId);
+    @GetMapping("/{question_id}/vote/up")
+    public ResponseEntity likeQuestion(@Positive @PathVariable("question_id") long questionId){
+        Question question = questionService.likeQuestion(questionId);
         return new ResponseEntity(new SingleResponseDto<>(mapper.questionToResponseDto(question)), HttpStatus.OK);
     }
 
-    @GetMapping("/{question_id}/{member_id}/vote/down")
-    public ResponseEntity unlikeQuestion(@Positive @PathVariable("question_id") long questionId,
-                                       @Positive @PathVariable("member_id") long memberId){
-        Question question = questionService.unlikeQuestion(questionId, memberId);
+    @GetMapping("/{question_id}/vote/down")
+    public ResponseEntity unlikeQuestion(@Positive @PathVariable("question_id") long questionId){
+        Question question = questionService.unlikeQuestion(questionId);
         return new ResponseEntity(new SingleResponseDto<>(mapper.questionToResponseDto(question)), HttpStatus.OK);
     }
 
