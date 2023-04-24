@@ -103,7 +103,7 @@ public class SecurityConfiguration {
             configuration.setAllowedHeaders(Arrays.asList("*"));
             configuration.setAllowCredentials(true);
             configuration.addAllowedHeader("*");
-            configuration.addExposedHeader("*");
+            configuration.addExposedHeader("*, Authorization");
 
             configuration.validateAllowCredentials();
             UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
