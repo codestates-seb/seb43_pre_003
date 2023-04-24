@@ -10,15 +10,13 @@ const Container = styled.div`
   }
 
   button {
-    height: 36px;
-    padding: 10px;
     color: var(--black-600);
     background-color: var(--white);
     border: 1px solid var(--black-350);
     border-right: 0;
-    font-size: 13px;
     cursor: pointer;
   }
+
   &:hover {
     background-color: var(--black-050);
   }
@@ -33,16 +31,38 @@ const Container = styled.div`
   }
 `;
 
-function SortBtn() {
+const Btn = styled.button`
+  height: 36px;
+  padding: 10px;
+  font-size: 13px;
+`;
+
+const SmallBtn = styled.button`
+  height: auto;
+  padding: 6px;
+  font-size: 11px;
+`;
+
+export function SortBtn() {
   return (
     <>
       <Container>
-        <button>Newest</button>
-        <button>Active</button>
-        <button>Unanswered</button>
+        <Btn>Newest</Btn>
+        <Btn>Active</Btn>
+        <Btn>Unanswered</Btn>
       </Container>
     </>
   );
 }
 
-export default SortBtn;
+export function SmallSortBtn() {
+  return (
+    <>
+      <Container>
+        <SmallBtn>Sort</SmallBtn>
+        <SmallBtn>Active</SmallBtn>
+        <SmallBtn>Newest</SmallBtn>
+      </Container>
+    </>
+  );
+}

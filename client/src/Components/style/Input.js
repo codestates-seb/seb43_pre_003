@@ -27,6 +27,7 @@ const TextInput = styled.input`
   flex-grow: 10;
   background-image: var(--img, none);
   background-position: right center;
+  background-position-x: 98%;
 
   background-repeat: no-repeat;
   border: 1px solid var(--border, var(--black-200));
@@ -34,13 +35,13 @@ const TextInput = styled.input`
 
   &:active,
   &:focus {
-    box-shadow: 0px 0px 0px 3px var(--box-shadow, var(--black-200));
+    box-shadow: 0px 0px 0px 3px var(--box-shadow, var(--blue-050));
     outline: none;
     border: 1px solid var(--border-hover, var(--blue-500));
   }
 `;
 
-function Input({ type, placeholder, onChange, id, errorType }) {
+function Input({ type, placeholder, onChange, value, id, errorType }) {
   const errorStyle = VARIANTS[errorType];
 
   return (
@@ -50,6 +51,7 @@ function Input({ type, placeholder, onChange, id, errorType }) {
       onChange={onChange}
       id={id}
       errorStyle={errorStyle}
+      value={value}
     ></TextInput>
   );
 }

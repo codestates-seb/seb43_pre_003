@@ -199,7 +199,11 @@ const QuestionDetailpage = ({ auth }) => {
                 <Section2>
                   <div>
                     <div>
-                      <p>{list.question.content}</p>
+                      <p
+                        dangerouslySetInnerHTML={{
+                          __html: list.question.content,
+                        }}
+                      />
                     </div>
                   </div>
                   <Tags>

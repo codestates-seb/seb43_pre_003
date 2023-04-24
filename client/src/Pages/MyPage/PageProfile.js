@@ -106,9 +106,6 @@ function PageProfile() {
               </StatContent>
             </Content>
           </Items>
-          <Items>
-            <Title>Settings</Title>
-          </Items>
         </Nav>
         <Main>
           <Items>

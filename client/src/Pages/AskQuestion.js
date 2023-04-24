@@ -12,6 +12,8 @@ import { ReactComponent as PencilImg } from "../Components/style/img/img-spotPen
 const AskQuestionWrap = styled.section`
   padding: 30px;
   width: 100%;
+  /* min-height: 1050px; */
+  min-height: 100%;
   padding-bottom: 64px;
 `;
 
@@ -32,7 +34,7 @@ const Title = styled.h2`
   margin: 24px 0;
 `;
 
-const InputArea = styled.div`
+const InputArea = styled.form`
   width: 100%;
   margin-bottom: 12px;
   display: flex;
@@ -68,6 +70,11 @@ const Card = styled.div`
   }
 `;
 
+const ErrTxt = styled.div`
+  color: var(--red-400);
+  font-size: var(--font-small);
+`;
+
 const Aside = styled.div`
   max-width: 298px;
   width: 30%;
@@ -101,6 +108,11 @@ const Aside = styled.div`
     }
   }
 `;
+const BtnArea = styled.div`
+  margin-top: 24px;
+  display: flex;
+  gap: 12px;
+`;
 
 function AskQuestion() {
   const [titleValue, setTitleValue] = useState("");
@@ -109,8 +121,18 @@ function AskQuestion() {
   const listId = useRef(0);
   const questionListId = useRef(0);
 
+  const handleChange = (e) => {
+    setTitleValue(e.target.value);
+  };
+
+  const handleReset = () => {
+    setTitleValue("");
+    setEditorValue("");
+    console.log(titleValue);
+    console.log(editorValue);
+  };
+
   const handleSubmit = () => {
-    // e.preventDefault();
     const createdAt = new Date().toLocaleString();
 
     const newList = {
@@ -131,9 +153,12 @@ function AskQuestion() {
       },
       answer: [],
     };
-    axiosCreate("http://localhost:3001/data/", newList);
-    listId.current += 1;
-    questionListId.current += 1;
+
+    if (titleValue.length > 14 && editorValue.length > 29) {
+      axiosCreate("http://localhost:3001/data/", newList);
+      listId.current += 1;
+      questionListId.current += 1;
+    }
   };
 
   return (
@@ -142,7 +167,7 @@ function AskQuestion() {
         <TitleArea>
           <Title>Review your question</Title>
         </TitleArea>
-        <InputArea>
+        <InputArea onSubmit={(e) => e.preventDefault()}>
           <CardArea>
             <Card>
               <h5 className="title">Title</h5>
@@ -150,12 +175,25 @@ function AskQuestion() {
                 Be specific and imagine you’re asking a question to another
                 person.
               </p>
-              <Input
-                type="text"
-                placeholder="Title"
-                value={titleValue}
-                onChange={(e) => setTitleValue(e.target.value)}
-              />
+              {titleValue.length < 15 ? (
+                <>
+                  <Input
+                    type="text"
+                    placeholder="e.g. Is there an R function for finding the index of an element in a vector"
+                    value={titleValue}
+                    onChange={handleChange}
+                    errorType="error"
+                  />
+                  <ErrTxt>Title must be at least 15 characters.</ErrTxt>
+                </>
+              ) : (
+                <Input
+                  type="text"
+                  placeholder="e.g. Is there an R function for finding the index of an element in a vector"
+                  value={titleValue}
+                  onChange={handleChange}
+                />
+              )}
             </Card>
             <Card>
               <h5 className="title">Body</h5>
@@ -163,7 +201,14 @@ function AskQuestion() {
                 The body of your question contains your problem details and
                 results. Minimum 30 characters.
               </p>
-              <Editor value={editorValue} onChange={setEditorValue} />
+              {editorValue.length < 30 ? (
+                <>
+                  <Editor value={editorValue} onChange={setEditorValue} />
+                  <ErrTxt>Body must be at least 30 characters.</ErrTxt>
+                </>
+              ) : (
+                <Editor value={editorValue} onChange={setEditorValue} />
+              )}
             </Card>
             <Card>
               <h5 className="title">Tags</h5>
@@ -188,14 +233,24 @@ function AskQuestion() {
             </div>
           </Aside>
         </InputArea>
-        <Button
-          variant="mediumBlue"
-          size="custom"
-          padding="8px 10px 8px 10px"
-          onClick={() => handleSubmit()}
-        >
-          Post your question
-        </Button>
+        <BtnArea>
+          <Button
+            variant="mediumBlue"
+            size="custom"
+            padding="8px 10px 8px 10px"
+            onClick={() => handleSubmit()}
+          >
+            Post your question
+          </Button>
+          <Button
+            variant="Discard"
+            size="custom"
+            padding="8px 10px 8px 10px"
+            onClick={() => handleReset()}
+          >
+            Discard
+          </Button>
+        </BtnArea>
       </AskQuestionWrap>
     </>
   );
