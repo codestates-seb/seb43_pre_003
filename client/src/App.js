@@ -22,9 +22,7 @@ const AppWrap = styled.div`
 `;
 
 function App() {
-  const [list, isPending, error] = questionAxios(
-    `${process.env.REACT_APP_API_URL}`
-  );
+  const [list, isPending] = questionAxios(`${process.env.REACT_APP_API_URL}`);
   const [auth, setAuth] = useState(false);
   const [side, setSide] = useState(true);
 
@@ -32,7 +30,7 @@ function App() {
     <AppWrap>
       <GlobalStyles />
       <BrowserRouter>
-        {error && <div>{error}</div>}
+        {/* {error && <div>{error}</div>} */}
         <Header auth={auth} setAuth={setAuth} side={side} setSide={setSide} />
         {side ? (
           <div className="wrap">
@@ -83,11 +81,10 @@ function App() {
                 setAuth={setAuth}
                 side={side}
                 setSide={setSide}
-                index
               />
             }
           />
-          <Route path="/signup" element={<SignUp setSide={setSide} />} index />
+          <Route path="/signup" element={<SignUp setSide={setSide} />} />
         </Routes>
         <Footer />
       </BrowserRouter>

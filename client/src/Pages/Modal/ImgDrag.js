@@ -3,6 +3,7 @@ import styled from "styled-components";
 import XImg from "../../Components/style/img/tabler_x.png";
 import Drag from "../../Components/style/img/drag.png";
 import { useState, useRef, useEffect } from "react";
+import GlobalStyles from "../../GlobalStyles";
 
 const Container = styled.div`
   width: 680px;
@@ -95,6 +96,7 @@ function ImgDrag({ showModal }) {
   }, []);
   return (
     <>
+      <GlobalStyles posi="fixed" />
       <ModalContainer />
       <Container>
         <HeaderDiv onDragOver={handleDragOver} onDrop={dragImgFile}>

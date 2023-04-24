@@ -158,14 +158,6 @@ const IconDiv = styled.div`
 `;
 
 function Header({ auth, setAuth, setSide }) {
-  const onClick = () => {
-    setAuth(!auth);
-    setSide(false);
-  };
-  // const sidefunc = () => {
-  //   setSide(!side);
-  // };
-
   return (
     <>
       <Container>
@@ -221,7 +213,7 @@ function Header({ auth, setAuth, setSide }) {
             <IconDiv>
               <img src={Que} alt="" />
             </IconDiv>
-            <LogoutBtn onClick={onClick}>
+            <LogoutBtn onClick={() => setAuth(!auth)}>
               <img src={Logout} alt=""></img>
             </LogoutBtn>
           </HeaderBox>

@@ -123,21 +123,21 @@ function Login({ setAuth, setSide }) {
 
     return axios
       .post(
-        `${process.env.REACT_APP_API_URL}/member`,
+        `${process.env.REACT_APP_API_URL}auth/login`,
         {
           email: loginInfo.email,
           password: loginInfo.password,
         },
-        {}
+        { withCredentials: true }
       )
       .then((res) => {
-        console.log(res.data);
+        localStorage.setItem("token", res.data.jwt);
+        setCount(true);
         setAuth(true);
         setSide(true);
         setErrMessage("");
         setErrpw("");
         navi("/");
-        setCount(true);
       })
       .catch((err) => {
         console.log(err);
@@ -147,6 +147,12 @@ function Login({ setAuth, setSide }) {
         setErrMessage("이메일 또는 패스워드가 올바르지 않습니다.");
       });
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navi("/");
+    }
+  }, []);
 
   return (
     <>
