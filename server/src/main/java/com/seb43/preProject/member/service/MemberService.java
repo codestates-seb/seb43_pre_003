@@ -9,11 +9,13 @@ import com.seb43.preProject.member.dto.MemberPatchDto;
 import com.seb43.preProject.member.entity.Member;
 import com.seb43.preProject.member.repository.MemberRepository;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -74,5 +76,10 @@ public class MemberService {
         deletMember.setModifiedAt(LocalDateTime.now());
 
         return memberRepository.save(deletMember);
+    }
+
+    public Long findSecurityContextHolderMemberId() {
+        Map principal = (Map) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return (Long) principal.get("memberId");
     }
 }

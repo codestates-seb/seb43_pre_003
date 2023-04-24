@@ -142,8 +142,8 @@ public class QuestionCRUDTest {
     @Test
     @DisplayName("질문 삭제 테스트")
     void deleteQuestionTest() throws Exception{
-        Mockito.doNothing().when(questionService).removeQuestion(Mockito.anyLong(), Mockito.anyLong());
-        mockMvc.perform(delete("/question/1/1"))
+        Mockito.doNothing().when(questionService).removeQuestion(Mockito.anyLong());
+        mockMvc.perform(delete("/question/1"))
                 .andExpect(status().isNoContent());
     }
 }

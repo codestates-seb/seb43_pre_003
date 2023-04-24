@@ -12,7 +12,7 @@ const Container = styled.div`
   transfrom: translate(-50%, -50%);
   background-color: #ffffff;
   border-radius: 10px;
-  border 1px solid var(--black-100);
+  border: 1px solid var(--black-100);
   padding: 24px;
 `;
 
@@ -55,7 +55,7 @@ const XBtn = styled.button`
   color: var(--black-500);
   text-align: center;
 
-  &: hover {
+  &:hover {
     background: var(--black-100);
   }
 `;
