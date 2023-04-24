@@ -20,8 +20,8 @@ config:
 
 mail:
   address:
-    admin: admin@gmail.com
+    admin:
 jwt:
   key: ${JWT_SECRET_KEY}
   access-token-expiration-minutes: 300
-  refresh-token-expiration-minutes: 4200
+  refresh-token-expiration-minutes: 4200 #

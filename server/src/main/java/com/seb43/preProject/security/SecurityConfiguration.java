@@ -1,6 +1,7 @@
 package com.seb43.preProject.security;
 
 import com.seb43.preProject.security.filter.JwtAuthenticationFilter;
+import com.seb43.preProject.security.filter.JwtVerificationFilter;
 import com.seb43.preProject.security.jwt.JwtTokenizer;
 import com.seb43.preProject.security.util.CustomAuthorityUtil;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,7 +27,7 @@ public class SecurityConfiguration {
         private final JwtTokenizer jwtTokenizer;
         private final CustomAuthorityUtil authorityUtil;
 
-        public SecurityConfig(CustomAuthorityUtil authorityUtil, JwtTokenizer jwtTokenizer) {
+        public SecurityConfig(JwtTokenizer jwtTokenizer, CustomAuthorityUtil authorityUtil) {
             this.jwtTokenizer = jwtTokenizer;
             this.authorityUtil = authorityUtil;
         }
@@ -74,7 +76,10 @@ public class SecurityConfiguration {
 
                 jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login");
 
-                builder.addFilter(jwtAuthenticationFilter);
+                JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtil);
+                builder
+                        .addFilter(jwtAuthenticationFilter)
+                        .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
             }
         }
     }

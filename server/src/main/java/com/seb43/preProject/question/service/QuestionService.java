@@ -50,6 +50,7 @@ public class QuestionService {
     }
 
     public Question findQuestion(long questionId){
+        System.out.println(memberService.findSecurityContextHolderMemberId());
         Question question = verifyQuestion(questionId);
         question.setViews(question.getViews() + 1);
         return question;

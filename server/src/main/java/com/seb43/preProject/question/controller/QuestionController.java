@@ -1,5 +1,6 @@
 package com.seb43.preProject.question.controller;
 
+import com.seb43.preProject.member.service.MemberService;
 import com.seb43.preProject.question.dto.QuestionPatchDto;
 import com.seb43.preProject.question.dto.QuestionPostDto;
 import com.seb43.preProject.question.entity.Question;
@@ -31,6 +32,7 @@ public class QuestionController {
     private final static String QUESTION_DEFAULT_URL = "/question";
     private final QuestionService questionService;
     private final QuestionMapper mapper;
+
     public QuestionController(QuestionService questionService, QuestionMapper mapper) {
         this.questionService = questionService;
         this.mapper = mapper;
