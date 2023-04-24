@@ -9,8 +9,6 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 @Getter
 public class QuestionPostDto {
-    @Positive
-    private long memberId;
     @NotBlank(message = "제목을 입력해주세요.")
     private String title;
     @NotBlank(message = "내용을 작성하세요.")

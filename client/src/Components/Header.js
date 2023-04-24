@@ -7,7 +7,7 @@ import Logout from "./style/img/ic-menu.png";
 import Inbox from "./style/img/ic-inbox.png";
 import Trophy from "./style/img/ic- trophy.png";
 import Que from "./style/img/ic-question.png";
-//import { useEffect } from "react";
+// import { useEffect } from "react";
 
 const Container = styled.div`
   width: 100%;
@@ -138,15 +138,12 @@ const IconDiv = styled.div`
 
 function Header({ auth, setAuth, setSide }) {
   const onClick = () => {
-    setAuth();
+    setAuth(!auth);
+    setSide(false);
   };
   // const sidefunc = () => {
   //   setSide(!side);
   // };
-
-  // useEffect(() => {
-  //   setSide();
-  // }, []);
 
   return (
     <>
@@ -158,13 +155,15 @@ function Header({ auth, setAuth, setSide }) {
                 <Img src={Logo} alt="" />
               </LogoBtn>
             </Link>
-            <ProductBtn>Product</ProductBtn>
+            <Link to="/test">
+              <ProductBtn onClick={() => setSide(true)}>Product</ProductBtn>
+            </Link>
             <Input />
             <Link to="/Login">
               <Button
                 variant="smallWhite"
                 size="sm"
-                onClick={(() => setSide(false), onClick)}
+                onClick={() => setSide(false)}
               >
                 Log in
               </Button>
@@ -173,7 +172,7 @@ function Header({ auth, setAuth, setSide }) {
               <Button
                 variant="mediumBlue"
                 size="sm"
-                onClick={(() => setSide(false), onClick)}
+                onClick={() => setSide(false)}
               >
                 Sign up
               </Button>
@@ -201,7 +200,7 @@ function Header({ auth, setAuth, setSide }) {
             <IconDiv>
               <img src={Que} alt="" />
             </IconDiv>
-            <LogoutBtn onClick={(() => setSide(true), () => setAuth(false))}>
+            <LogoutBtn onClick={onClick}>
               <img src={Logout} alt=""></img>
             </LogoutBtn>
           </HeaderBox>

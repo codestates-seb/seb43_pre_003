@@ -12,7 +12,6 @@ import javax.validation.constraints.NotBlank;
         public static class Post {
             @NotBlank
             private String content;
-            private long memberId;
             private long questionId;
         }
         @Getter
@@ -20,7 +19,6 @@ import javax.validation.constraints.NotBlank;
         public static class Patch {
             @NotBlank
             private String content;
-            private long memberId;
             private long answerId;
             private long questionId;
         }

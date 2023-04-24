@@ -336,15 +336,22 @@
       "answer": []
     }
   ],
-  "member": {
-    "header": {
-      "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json"
+  "member": [
+    {
+      "id": 1,
+      "member": {
+        "email": "test@gmail.com",
+        "userName": "test_name",
+        "password": "1234"
+      }
     },
-    "member": {
-      "email": "wjekdnkjshd",
-      "userName": "djnajksdnkj",
-      "password": "1231241`2"
+    {
+      "member": {
+        "email": "dddd",
+        "userName": "dddd",
+        "password": "dddddddd"
+      },
+      "id": 2
     }
-  }
+  ]
 }

@@ -1,5 +1,7 @@
 package com.seb43.preProject.security.jwt;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.io.Encoders;
@@ -56,14 +58,13 @@ public class JwtTokenizer {
                 .compact();
     }
 
-    public Map<String, Object> getClaims(String jws, String base64EncodedKey){
+    public Jws<Claims> getClaims(String jws, String base64EncodedKey){
         Key key = getKeyFromBase64EncodedSecretKey(base64EncodedKey);
 
         return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
-                .parseClaimsJws(jws)
-                .getBody();
+                .parseClaimsJws(jws);
     }
 
     public Date getTokenExpiration(int expirationMinute){

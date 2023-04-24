@@ -124,6 +124,7 @@ function Button({
   height,
   padding,
   margin,
+  onMouseDown,
 }) {
   const variantStyle = VARIANTS[variant];
   const sizeStyle = SIZE[size];
@@ -140,6 +141,7 @@ function Button({
       height={height}
       padding={padding}
       margin={margin}
+      onMouseDown={onMouseDown}
     >
       {children}
     </StyleButton>
