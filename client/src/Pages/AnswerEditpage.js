@@ -43,6 +43,12 @@ const Editbox = styled.header`
     white-space: pre-line;
   }
 `;
+const WarningText = styled.div`
+  margin-left: 5px;
+  margin-top: 10px;
+  color: red;
+  font-size: 12px;
+`;
 
 const AnswerEditpage = () => {
   const { questionId, answerId } = useParams();
@@ -50,26 +56,48 @@ const AnswerEditpage = () => {
   console.log(questionId);
   console.log(answerId);
   const [list, isPending, error] = questionAxios(
-    `http://localhost:3001/data/${questionId}`
+    `${process.env.REACT_APP_API_URL}/${questionId}`
   );
-  console.log(questionId);
+  useEffect(() => {
+    if (list && list.answer) {
+      // list가 null 또는 undefined인 경우 접근하지 않음
+      console.log(list.answer); // list.answer에 접근
+    }
+  }, [list]);
 
   useEffect(() => {
-    if (list && list.answer && list.answer[answerId]) {
-      setAEditorValue(list.answer[answerId].content);
+    if (list && list.answer && list.answer[answerId - 1]) {
+      setAEditorValue(list.answer[answerId - 1].content);
     }
-  }, [answerId]);
+  }, [list, answerId - 1, questionId]);
 
   const [aeditorValue, setAEditorValue] = useState("");
+  const [zeroeditorError, setzeroEditorError] = useState(false);
+  const [thirtyeditorError, setthirtyEditorError] = useState(false);
   console.log(aeditorValue);
+  const handlezeroEditorError = () => {
+    aeditorValue.length <= 0
+      ? setzeroEditorError(true)
+      : setzeroEditorError(false);
+  };
+  const handlethirtyEditorError = () => {
+    if (aeditorValue.length > 0 && aeditorValue.length < 30) {
+      setthirtyEditorError(true);
+    } else {
+      setthirtyEditorError(false);
+    }
+  };
+
   const answerEditClick = async (questionId) => {
+    handlezeroEditorError();
+    handlethirtyEditorError();
     try {
       await axios.patch(
-        `http://localhost:3001/data/${questionId}/${answerId}`,
+        `${process.env.REACT_APP_API_URL}/${questionId}/${answerId}`,
         {
           question: {
             answer: {
-              memberId: list.answer[answerId].memberId,
+              memberId: list.answer[answerId - 1].memberId,
               content: aeditorValue,
             },
           },
@@ -107,6 +135,7 @@ const AnswerEditpage = () => {
             </Editbox>
             <h2>Answer</h2>
             <Editor value={aeditorValue} onChange={setAEditorValue} />
+
             <Position>
               <Button
                 variant="mediumBlue"
@@ -115,11 +144,16 @@ const AnswerEditpage = () => {
               >
                 Save Edits
               </Button>
+
               <Link to={`/question/${questionId}`}>
                 <Button variant="mediumWhite" size="question">
                   Cancel
                 </Button>
               </Link>
+              {zeroeditorError && <WarningText>Answer is missing</WarningText>}
+              {thirtyeditorError && (
+                <WarningText>Minimum 30 characters required</WarningText>
+              )}
             </Position>
           </Contain>
         )}

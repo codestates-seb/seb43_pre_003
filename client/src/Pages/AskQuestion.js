@@ -118,6 +118,9 @@ function AskQuestion() {
   const [titleValue, setTitleValue] = useState("");
   const [editorValue, setEditorValue] = useState("");
 
+  const [titleError, setTitleError] = useState(false);
+  const [editorError, setEditorError] = useState(false);
+
   const listId = useRef(0);
   const questionListId = useRef(0);
 
@@ -125,14 +128,22 @@ function AskQuestion() {
     setTitleValue(e.target.value);
   };
 
+  const handleTitleError = () => {
+    titleValue.length < 15 ? setTitleError(true) : setTitleError(false);
+  };
+
+  const handleEditorError = () => {
+    editorValue.length < 30 ? setEditorError(true) : setEditorError(false);
+  };
+
   const handleReset = () => {
     setTitleValue("");
     setEditorValue("");
-    console.log(titleValue);
-    console.log(editorValue);
   };
 
   const handleSubmit = () => {
+    handleTitleError();
+    handleEditorError();
     const createdAt = new Date().toLocaleString();
 
     const newList = {
@@ -154,8 +165,14 @@ function AskQuestion() {
       answer: [],
     };
 
+    // const newList = {
+    //   title: question.title,
+    //   content: question.content,
+    // };
+
     if (titleValue.length > 14 && editorValue.length > 29) {
-      axiosCreate("http://localhost:3001/data/", newList);
+      axiosCreate("${process.env.REACT_APP_API_URL}/", newList);
+      // axiosCreate(`${process.env.REACT_APP_API_URL}`, newList);
       listId.current += 1;
       questionListId.current += 1;
     }
@@ -175,24 +192,14 @@ function AskQuestion() {
                 Be specific and imagine you’re asking a question to another
                 person.
               </p>
-              {titleValue.length < 15 ? (
-                <>
-                  <Input
-                    type="text"
-                    placeholder="e.g. Is there an R function for finding the index of an element in a vector"
-                    value={titleValue}
-                    onChange={handleChange}
-                    errorType="error"
-                  />
-                  <ErrTxt>Title must be at least 15 characters.</ErrTxt>
-                </>
-              ) : (
-                <Input
-                  type="text"
-                  placeholder="e.g. Is there an R function for finding the index of an element in a vector"
-                  value={titleValue}
-                  onChange={handleChange}
-                />
+              <Input
+                type="text"
+                placeholder="e.g. Is there an R function for finding the index of an element in a vector"
+                value={titleValue}
+                onChange={handleChange}
+              />
+              {titleError && (
+                <ErrTxt>Title must be at least 15 characters.</ErrTxt>
               )}
             </Card>
             <Card>
@@ -201,13 +208,9 @@ function AskQuestion() {
                 The body of your question contains your problem details and
                 results. Minimum 30 characters.
               </p>
-              {editorValue.length < 30 ? (
-                <>
-                  <Editor value={editorValue} onChange={setEditorValue} />
-                  <ErrTxt>Body must be at least 30 characters.</ErrTxt>
-                </>
-              ) : (
-                <Editor value={editorValue} onChange={setEditorValue} />
+              <Editor value={editorValue} onChange={setEditorValue} />
+              {editorError && (
+                <ErrTxt>Body must be at least 30 characters.</ErrTxt>
               )}
             </Card>
             <Card>

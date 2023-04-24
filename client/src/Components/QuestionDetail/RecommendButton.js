@@ -60,7 +60,7 @@ const RecommendButton = ({ votes, questionId, memberId }) => {
       setDownButtonDisabled(true);
 
       const response = await axios.get(
-        `http://localhost:3001/data/${questionId}/${memberId}/vote/up`
+        `${process.env.REACT_APP_API_URL}/${questionId}/${memberId}/vote/up`
       );
       const newVoteCount = response.data.voteCount;
       setVoteCount(newVoteCount);
@@ -76,7 +76,7 @@ const RecommendButton = ({ votes, questionId, memberId }) => {
       setDownButtonDisabled(true);
 
       const response = await axios.get(
-        `http://localhost:3001/data/${questionId}/${memberId}/vote/down`
+        `${process.env.REACT_APP_API_URL}/${questionId}/${memberId}/vote/down`
       );
       const newVoteCount = response.data.voteCount;
       setVoteCount(newVoteCount);

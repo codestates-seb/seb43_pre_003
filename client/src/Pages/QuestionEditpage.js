@@ -65,12 +65,19 @@ const Input = styled.input`
   }
 `;
 
+const WarningText = styled.div`
+  margin-left: 5px;
+  margin-top: 10px;
+  color: red;
+  font-size: 12px;
+`;
+
 const QuestionEditpage = () => {
   const { questionId } = useParams();
   const navigate = useNavigate();
 
   const [list, isPending, error] = questionAxios(
-    `http://localhost:3001/data/${questionId}`
+    `${process.env.REACT_APP_API_URL}/${questionId}`
   );
 
   useEffect(() => {
@@ -82,22 +89,37 @@ const QuestionEditpage = () => {
 
   const [editorValue, setEditorValue] = useState("");
   const [titleValue, setTitleValue] = useState("");
+
+  const [titleError, setTitleError] = useState(false);
+  const [editorError, setEditorError] = useState(false);
   console.log(editorValue);
+  const handleTitleError = () => {
+    titleValue.length < 15 ? setTitleError(true) : setTitleError(false);
+  };
 
+  const handleEditorError = () => {
+    editorValue.length < 30 ? setEditorError(true) : setEditorError(false);
+  };
   const handleEditClick = async (questionId) => {
+    handleTitleError();
+    handleEditorError();
+
     try {
-      await axios.patch(`http://localhost:3001/data/${questionId}`, {
-        question: {
-          memberId: list.question.memberId,
-          title: titleValue,
-          content: editorValue,
-        },
-      });
+      if (titleValue.length > 14 && editorValue.length > 29) {
+        await axios.patch(`${process.env.REACT_APP_API_URL}/${questionId}`, {
+          //axiosCreate(`${process.env.REACT_APP_API_URL}`, newList);
+          question: {
+            memberId: list.question.memberId,
+            title: titleValue,
+            content: editorValue,
+          },
+        });
 
-      console.log("Edit successfully saved!");
+        console.log("Edit successfully saved!");
 
-      setEditorValue(editorValue);
-      navigate(`/question/${questionId}`);
+        setEditorValue(editorValue);
+        navigate(`/question/${questionId}`);
+      }
     } catch (error) {
       console.error("Failed to save edit:", error);
     }
@@ -134,8 +156,14 @@ const QuestionEditpage = () => {
               value={titleValue}
               onChange={(e) => setTitleValue(e.target.value)}
             />
+            {titleError && (
+              <WarningText>Title must be at least 15 characters.</WarningText>
+            )}
             <h2>Body</h2>
             <Editor value={editorValue} onChange={setEditorValue} />
+            {editorError && (
+              <WarningText>Body must be at least 30 characters.</WarningText>
+            )}
             <h3>Tags</h3>
             <Tag />
             <Position>

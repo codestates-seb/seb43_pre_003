@@ -12,7 +12,6 @@ import axios from "axios";
 import dateCalculate from "../util/dateCalculate";
 import questionAxios from "../util/questionAxios";
 import Aside from "../Components/Aside";
-import { TagDiv } from "../Components/style/Tag";
 
 const Container = styled.div`
   max-width: 1100px;
@@ -122,11 +121,10 @@ const Header2 = styled.header`
 const Position = styled.div`
   margin-top: 70px;
 `;
-const Tags = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  margin-top: 25px;
-  row-gap: 2px;
+const WarningText = styled.div`
+  margin: 10px 5px 20px 0px;
+  color: red;
+  font-size: 12px;
 `;
 
 const QuestionDetailpage = ({ auth }) => {
@@ -135,14 +133,31 @@ const QuestionDetailpage = ({ auth }) => {
   const navigate = useNavigate();
 
   const [list, isPending, error] = questionAxios(
-    `http://localhost:3001/data/${questionId}`
+    `${process.env.REACT_APP_API_URL}/${questionId}`
   );
 
   const [answerValue, setAnswerValue] = useState("");
+  const [zeroeditorError, setzeroEditorError] = useState(false);
+  const [thirtyeditorError, setthirtyEditorError] = useState(false);
+
+  const handlezeroEditorError = () => {
+    answerValue.length <= 0
+      ? setzeroEditorError(true)
+      : setzeroEditorError(false);
+  };
+  const handlethirtyEditorError = () => {
+    if (answerValue.length > 0 && answerValue.length < 30) {
+      setthirtyEditorError(true);
+    } else {
+      setthirtyEditorError(false);
+    }
+  };
   console.log(answerValue);
   const AnswerCreateClick = async (questionId) => {
+    handlezeroEditorError();
+    handlethirtyEditorError();
     try {
-      await axios.post(`http://localhost:3001/data/${questionId}`, {
+      await axios.post(`/${questionId}`, {
         question: {
           answer: [
             {
@@ -169,7 +184,7 @@ const QuestionDetailpage = ({ auth }) => {
           <Header1>
             <H1>{list.question.title}</H1>
 
-            <Link to="../question">
+            <Link to="/question/ask">
               <Button variant="mediumBlue" size="question">
                 Ask Question
               </Button>
@@ -206,11 +221,7 @@ const QuestionDetailpage = ({ auth }) => {
                       />
                     </div>
                   </div>
-                  <Tags>
-                    {list.question.tags.map((el, index) => (
-                      <TagDiv key={index}>{el}</TagDiv>
-                    ))}
-                  </Tags>
+
                   <Section3>
                     <Sharedomain questionId={questionId} auth={auth} />
                     <AuthorProfile
@@ -233,6 +244,12 @@ const QuestionDetailpage = ({ auth }) => {
                 <Editor value={answerValue} onChange={setAnswerValue} />
 
                 <Position>
+                  {zeroeditorError && (
+                    <WarningText>Answer is missing</WarningText>
+                  )}
+                  {thirtyeditorError > 0 && answerValue.length < 30 && (
+                    <WarningText>Minimum 30 characters required</WarningText>
+                  )}
                   <Button
                     variant="mediumBlue"
                     size="custom"
@@ -241,6 +258,12 @@ const QuestionDetailpage = ({ auth }) => {
                   >
                     Post your Answer
                   </Button>
+                  {(zeroeditorError || thirtyeditorError) && (
+                    <WarningText>
+                      your answer couldn’t be submitted. Please see the error
+                      above.
+                    </WarningText>
+                  )}
                 </Position>
               </div>
             </Section4>

@@ -21,7 +21,7 @@ const Sharedomain = ({ questionId, answerId }) => {
 
   const handleaDeleteClick = (id, answerId) => {
     axios
-      .delete(`http://localhost:3001/data/${id}/${answerId}`)
+      .delete(`${process.env.REACT_APP_API_URL}/${answerId}`)
       .then(() => {
         navigate(`/question/${questionId}`);
       })

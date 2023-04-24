@@ -174,7 +174,7 @@ function Signup({ setSide }) {
     }
 
     return axios
-      .post(`${process.env.REACT_APP_API_URL}members/join`, {
+      .post(`${process.env.REACT_APP_API_URL}/members/join`, {
         email: member.email,
         userName: member.userName,
         password: member.password,
