@@ -3,6 +3,8 @@ import Input from "../../Components/style/Input";
 import Button from "../../Components/style/Button";
 import Discard from "../Modal/Discard";
 import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as ProfileImg } from "../../Components/style/img/img-profile.svg";
 
@@ -88,6 +90,9 @@ const Content = styled.div`
 const InputArea = styled.div`
   display: flex;
   gap: 8px;
+  > div {
+    width: 100%;
+  }
 `;
 
 const DeleteCon = styled.div`
@@ -117,10 +122,63 @@ const DeleteCon = styled.div`
   }
 `;
 
-function PageSetting() {
+const ErrTxt = styled.div`
+  margin-top: 4px;
+  color: var(--red-400);
+  font-size: var(--font-small);
+`;
+
+function PageSetting({ user, setUser, setAuth }) {
   const [modal, setModal] = useState(false);
+  const [name, setName] = useState(user.userName);
+
+  const navigate = useNavigate();
+
   const showModal = () => {
     setModal(!modal);
+  };
+
+  const handleChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleEdit = () => {
+    if (name.length > 0) {
+      axios
+        .patch(`${process.env.REACT_APP_API_URL}/members/profile`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
+          },
+        })
+        .then((res) => {
+          setUser((prev) => {
+            return { ...prev, userName: name };
+          });
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const handleDelete = () => {
+    axios
+      .delete(`${process.env.REACT_APP_API_URL}/members/profile/delete`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+      })
+      .then(() => {
+        setAuth(false);
+        setUser({});
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -137,20 +195,24 @@ function PageSetting() {
             <MainContent>
               <Content>
                 <ProfileImg />
-                {/* userName 가져오기 */}
-                <p className="name">User name</p>
+                <p className="name">{user.userName}</p>
               </Content>
               <Content>
                 <SubTitle>Display name</SubTitle>
                 <InputArea>
-                  <Input />
-                  {/* 버튼 클릭 시 userName 변경하기 */}
+                  <div>
+                    <Input value={name} onChange={handleChange} />
+                    {name.length === 0 && (
+                      <ErrTxt>Name must be at least 0 characters.</ErrTxt>
+                    )}
+                  </div>
                   <Button
                     variant="mediumBlue"
                     size="custom"
                     width="auto"
                     height="34px"
                     padding="3px 8px 3px 8px"
+                    onClick={handleEdit}
                   >
                     Save name
                   </Button>
@@ -201,7 +263,11 @@ function PageSetting() {
           </Items>
         </Main>
       </ProfileWrap>
-      <div>{modal ? <Discard showModal={showModal} /> : null}</div>
+      <div>
+        {modal ? (
+          <Discard showModal={showModal} handleDelete={handleDelete} />
+        ) : null}
+      </div>
     </>
   );
 }

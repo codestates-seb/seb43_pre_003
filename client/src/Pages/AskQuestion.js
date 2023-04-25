@@ -121,9 +121,6 @@ function AskQuestion() {
   const [titleError, setTitleError] = useState(false);
   const [editorError, setEditorError] = useState(false);
 
-  // const listId = useRef(0);
-  // const questionListId = useRef(0);
-
   const handleChange = (e) => {
     setTitleValue(e.target.value);
   };
@@ -144,26 +141,6 @@ function AskQuestion() {
   const handleSubmit = () => {
     handleTitleError();
     handleEditorError();
-    // const createdAt = new Date().toLocaleString();
-
-    // const newList = {
-    //   id: listId.current,
-    //   question: {
-    //     questionId: questionListId.current,
-    //     title: titleValue,
-    //     content: editorValue,
-    //     tags: ["kind of beauty"],
-    //     userid: 0,
-    //     userName: "mooni",
-    //     answerCount: 0,
-    //     views: 0,
-    //     votes: 0,
-    //     questionStatus: "QUESTION_REGISTERED",
-    //     createdAt,
-    //     modifiedAt: "",
-    //   },
-    //   answer: [],
-    // };
 
     const newList = {
       title: titleValue,
@@ -171,10 +148,7 @@ function AskQuestion() {
     };
 
     if (titleValue.length > 14 && editorValue.length > 29) {
-      // axiosCreate("http://localhost:3001/data/", newList);
       axiosCreate(`${process.env.REACT_APP_API_URL}/question`, newList);
-      // listId.current += 1;
-      // questionListId.current += 1;
     }
   };
 
