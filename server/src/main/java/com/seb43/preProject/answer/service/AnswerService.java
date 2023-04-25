@@ -8,6 +8,7 @@ import com.seb43.preProject.member.entity.Member;
 import com.seb43.preProject.member.service.MemberService;
 import com.seb43.preProject.question.entity.Question;
 import com.seb43.preProject.question.service.QuestionService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -20,16 +21,11 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @Slf4j
+@RequiredArgsConstructor
 public class AnswerService {
     private final AnswerRepository repository;
     private final QuestionService questionService;
     private final MemberService memberService;
-
-    public AnswerService(AnswerRepository repository, QuestionService questionService, MemberService memberService) {
-        this.repository = repository;
-        this.questionService = questionService;
-        this.memberService = memberService;
-    }
 
     public Answer createAnswer (Answer answer) {
         Long memberId = memberService.findSecurityContextHolderMemberId();
@@ -57,7 +53,6 @@ public class AnswerService {
         }
         else throw new BusinessLogicException(ExceptionCode.ANSWER_NOT_MEMBER);
     }
-    // 해당 Question 에 존재하는 답변인가
     public void verifyQuestionAnswer(long answerId, Question question) {
         boolean QuestionAnswer = question.getAnswers()
                 .stream()
@@ -70,7 +65,6 @@ public class AnswerService {
 
     @Transactional(readOnly = true)
     public List<Answer> AllAnswer (long questionId) {
-        // 해당 질문글에 해당하는 모든 답변 불러오기
         questionService.verifyQuestion(questionId);
 
         List<Answer> result = repository.findAll(Sort.by(Sort.Direction.ASC, "answerId"))
