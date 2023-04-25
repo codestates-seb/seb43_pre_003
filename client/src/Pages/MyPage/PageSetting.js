@@ -175,6 +175,7 @@ function PageSetting({ user, setUser, setAuth }) {
         setAuth(false);
         setUser({});
         navigate("/");
+        localStorage.removeItem("token");
       })
       .catch((err) => {
         console.log(err);
