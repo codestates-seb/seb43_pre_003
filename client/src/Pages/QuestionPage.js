@@ -72,9 +72,8 @@ function QuestionsPage({ auth }) {
         `${process.env.REACT_APP_API_URL}/question?page=${currentPage}&size=10`
       )
       .then((res) => {
-        console.log(res);
         setList(res.data.pageInfo.totalElements);
-        setCurrentPosts(res.data.data); // 0 , 10
+        setCurrentPosts(res.data.data);
       })
       .catch((error) => {
         console.log("error", error);
