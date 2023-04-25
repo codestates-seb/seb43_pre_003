@@ -6,6 +6,7 @@ import TitleBg from "../Components/style/img/bg-askQuestion.svg";
 import Input from "../Components/style/Input.js";
 import Tag from "../Components/style/Tag";
 import { axiosCreate } from "../util/api.js";
+import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as PencilImg } from "../Components/style/img/img-spotPencil.svg";
 
@@ -65,9 +66,6 @@ const Card = styled.div`
     font-size: 12px;
     color: var(--black-700);
   }
-  &:nth-child(2) {
-    height: 340px;
-  }
 `;
 
 const ErrTxt = styled.div`
@@ -115,6 +113,8 @@ const BtnArea = styled.div`
 `;
 
 function AskQuestion() {
+  const navigate = useNavigate();
+
   const [titleValue, setTitleValue] = useState("");
   const [editorValue, setEditorValue] = useState("");
 
@@ -148,7 +148,11 @@ function AskQuestion() {
     };
 
     if (titleValue.length > 14 && editorValue.length > 29) {
-      axiosCreate(`${process.env.REACT_APP_API_URL}/question`, newList);
+      axiosCreate(`${process.env.REACT_APP_API_URL}/question`, newList).then(
+        () => {
+          navigate("/");
+        }
+      );
     }
   };
 
