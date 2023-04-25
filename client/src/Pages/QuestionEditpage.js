@@ -3,7 +3,7 @@ import Editor from "../Components/QuestionDetail/Editor";
 import Button from "../Components/style/Button";
 import Tag from "../Components/style/Tag";
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import questionAxios from "../util/questionAxios";
 import axios from "axios";
 
@@ -74,16 +74,17 @@ const WarningText = styled.div`
 
 const QuestionEditpage = () => {
   const { questionId } = useParams();
-  const navigate = useNavigate();
+  console.log(questionId);
+  //const navigate = useNavigate();
 
   const [list, isPending, error] = questionAxios(
-    `${process.env.REACT_APP_API_URL}/${questionId}`
+    `${process.env.REACT_APP_API_URL}/question/${questionId}`
   );
 
   useEffect(() => {
-    if (list && list.question && list.question.title) {
-      setEditorValue(list.question.content);
-      setTitleValue(list.question.title);
+    if (list && list.data && list.data.title) {
+      setEditorValue(list.data.content);
+      setTitleValue(list.data.title);
     }
   }, [list]);
 
@@ -106,19 +107,25 @@ const QuestionEditpage = () => {
 
     try {
       if (titleValue.length > 14 && editorValue.length > 29) {
-        await axios.patch(`${process.env.REACT_APP_API_URL}/${questionId}`, {
-          //axiosCreate(`${process.env.REACT_APP_API_URL}`, newList);
-          question: {
-            memberId: list.question.memberId,
+        await axios.patch(
+          `${process.env.REACT_APP_API_URL}/question/${questionId}/edit`,
+          {
             title: titleValue,
             content: editorValue,
           },
-        });
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
 
         console.log("Edit successfully saved!");
 
         setEditorValue(editorValue);
-        navigate(`/question/${questionId}`);
+        //navigate(`/question/${questionId}`);
+        window.location.href = `http://localhost:3000/question/${questionId}`;
       }
     } catch (error) {
       console.error("Failed to save edit:", error);

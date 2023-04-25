@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const qestionAxios = (url) => {
-  /* useState를 이용하여lists, isPending, error를 정의하세요. */
+const questionAxios = (url) => {
+  /* useState를 이용하여 lists, isPending, error를 정의하세요. */
 
-  const [lists, seLists] = useState(null);
+  const [lists, setLists] = useState(null);
 
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
@@ -16,8 +16,7 @@ const qestionAxios = (url) => {
         if (!response.data) {
           throw new Error("No data found");
         }
-
-        seLists(response.data); // 데이터를lists 상태에 저장
+        setLists(response.data); // 데이터를 lists 상태에 저장
         setIsPending(false);
         setError(null);
       } catch (error) {
@@ -32,4 +31,4 @@ const qestionAxios = (url) => {
   return [lists, isPending, error];
 };
 
-export default qestionAxios;
+export default questionAxios;

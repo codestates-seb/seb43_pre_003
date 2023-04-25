@@ -9,7 +9,7 @@ const EditorContainer = styled.div`
 `;
 
 const QuillEditor = styled(ReactQuill).attrs(() => ({
-  style: { height: "100%" },
+  style: { height: "80%" },
 }))``;
 
 const Editor = ({ value, onChange }) => {

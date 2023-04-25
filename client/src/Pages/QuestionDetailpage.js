@@ -6,12 +6,13 @@ import Answer from "../Components/QuestionDetail/Answser";
 import Button from "../Components/style/Button";
 import Editor from "../Components/QuestionDetail/Editor";
 
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import dateCalculate from "../util/dateCalculate";
 import questionAxios from "../util/questionAxios";
 import Aside from "../Components/Aside";
+// import { TagDiv } from "../Components/style/Tag";
 
 const Container = styled.div`
   max-width: 1100px;
@@ -130,12 +131,12 @@ const WarningText = styled.div`
 const QuestionDetailpage = ({ auth }) => {
   const { questionId } = useParams();
   console.log(questionId);
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const [list, isPending, error] = questionAxios(
-    `${process.env.REACT_APP_API_URL}/${questionId}`
+    `${process.env.REACT_APP_API_URL}/question/${questionId}`
   );
-
+  console.log(list);
   const [answerValue, setAnswerValue] = useState("");
   const [zeroeditorError, setzeroEditorError] = useState(false);
   const [thirtyeditorError, setthirtyEditorError] = useState(false);
@@ -157,19 +158,21 @@ const QuestionDetailpage = ({ auth }) => {
     handlezeroEditorError();
     handlethirtyEditorError();
     try {
-      await axios.post(`/${questionId}`, {
-        question: {
-          answer: [
-            {
-              memberId: 5,
-              content: answerValue,
-            },
-          ],
+      await axios.post(
+        `${process.env.REACT_APP_API_URL}/question/${questionId}`,
+        {
+          content: answerValue,
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
       setAnswerValue(answerValue);
-      navigate(`/question/${questionId}`);
+      //  navigate(`/question/${questionId}`);
+      window.location.href = `http://localhost:3000/question/${questionId}`;
     } catch (error) {
       console.error("Failed to save edit:", error);
     }
@@ -182,7 +185,7 @@ const QuestionDetailpage = ({ auth }) => {
       {list && (
         <Contain>
           <Header1>
-            <H1>{list.question.title}</H1>
+            <H1>{list.data.title}</H1>
 
             <Link to="/question/ask">
               <Button variant="mediumBlue" size="question">
@@ -193,11 +196,11 @@ const QuestionDetailpage = ({ auth }) => {
 
           <Section1>
             <Strong>Asked</Strong>
-            <Span>{dateCalculate(list.question.createdAt)}</Span>
+            <Span>{dateCalculate(list.data.createdAt)}</Span>
             <Strong>Modified</Strong>
-            <Span>{dateCalculate(list.question.modifiedAt)}</Span>
+            <Span>{dateCalculate(list.data.modifiedAt)}</Span>
             <Strong>viewed</Strong>
-            <Span>{list.question.views}times</Span>
+            <Span>{list.data.views}times</Span>
           </Section1>
 
           <Body>
@@ -205,9 +208,8 @@ const QuestionDetailpage = ({ auth }) => {
               <Main>
                 <Aside1>
                   <RecommendButton
-                    votes={list.question.votes}
+                    votes={list.data.votes}
                     questionId={questionId}
-                    memberId={list.question.memberId}
                   />
                 </Aside1>
 
@@ -216,29 +218,24 @@ const QuestionDetailpage = ({ auth }) => {
                     <div>
                       <p
                         dangerouslySetInnerHTML={{
-                          __html: list.question.content,
+                          __html: list.data.content,
                         }}
                       />
                     </div>
                   </div>
-
                   <Section3>
                     <Sharedomain questionId={questionId} auth={auth} />
                     <AuthorProfile
-                      createdAt={list.question.createdAt}
-                      userName={list.question.userName}
+                      createdAt={list.data.createdAt}
+                      userName={list.data.userName}
                     />
                   </Section3>
                 </Section2>
               </Main>
               <Header2>
-                <h1>{list.question.answerCount} Answers</h1>
+                <h1>{list.data.answerCount} Answers</h1>
               </Header2>
-              <Answer
-                answers={list.answer}
-                questionId={questionId}
-                auth={auth}
-              />
+              <Answer answers={list.data.answers} questionId={questionId} />
               <h2>Your Answer</h2>
               <div>
                 <Editor value={answerValue} onChange={setAnswerValue} />

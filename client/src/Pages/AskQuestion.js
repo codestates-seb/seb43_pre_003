@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Button from "../Components/style/Button";
 import Editor from "../Components/QuestionDetail/Editor";
 import TitleBg from "../Components/style/img/bg-askQuestion.svg";
@@ -121,8 +121,8 @@ function AskQuestion() {
   const [titleError, setTitleError] = useState(false);
   const [editorError, setEditorError] = useState(false);
 
-  const listId = useRef(0);
-  const questionListId = useRef(0);
+  // const listId = useRef(0);
+  // const questionListId = useRef(0);
 
   const handleChange = (e) => {
     setTitleValue(e.target.value);
@@ -144,25 +144,30 @@ function AskQuestion() {
   const handleSubmit = () => {
     handleTitleError();
     handleEditorError();
-    const createdAt = new Date().toLocaleString();
+    // const createdAt = new Date().toLocaleString();
+
+    // const newList = {
+    //   id: listId.current,
+    //   question: {
+    //     questionId: questionListId.current,
+    //     title: titleValue,
+    //     content: editorValue,
+    //     tags: ["kind of beauty"],
+    //     userid: 0,
+    //     userName: "mooni",
+    //     answerCount: 0,
+    //     views: 0,
+    //     votes: 0,
+    //     questionStatus: "QUESTION_REGISTERED",
+    //     createdAt,
+    //     modifiedAt: "",
+    //   },
+    //   answer: [],
+    // };
 
     const newList = {
-      id: listId.current,
-      question: {
-        questionId: questionListId.current,
-        title: titleValue,
-        content: editorValue,
-        tags: ["kind of beauty"],
-        userid: 0,
-        userName: "mooni",
-        answerCount: 0,
-        views: 0,
-        votes: 0,
-        questionStatus: "QUESTION_REGISTERED",
-        createdAt,
-        modifiedAt: "",
-      },
-      answer: [],
+      title: titleValue,
+      content: editorValue,
     };
 
     // const newList = {
@@ -171,10 +176,10 @@ function AskQuestion() {
     // };
 
     if (titleValue.length > 14 && editorValue.length > 29) {
-      axiosCreate("${process.env.REACT_APP_API_URL}/", newList);
-      // axiosCreate(`${process.env.REACT_APP_API_URL}`, newList);
-      listId.current += 1;
-      questionListId.current += 1;
+      // axiosCreate("http://localhost:3001/data/", newList);
+      axiosCreate(`${process.env.REACT_APP_API_URL}/question`, newList);
+      // listId.current += 1;
+      // questionListId.current += 1;
     }
   };
 

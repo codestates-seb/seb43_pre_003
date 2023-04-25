@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Editor from "../Components/QuestionDetail/Editor";
 import Button from "../Components/style/Button";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import questionAxios from "../util/questionAxios";
@@ -52,22 +52,25 @@ const WarningText = styled.div`
 
 const AnswerEditpage = () => {
   const { questionId, answerId } = useParams();
-  const navigate = useNavigate();
+
+  // const navigate = useNavigate();
   console.log(questionId);
   console.log(answerId);
+
+  //list.data.answers.findIndex((answer) => answer.answerId === answerIdToFind);
+
   const [list, isPending, error] = questionAxios(
-    `${process.env.REACT_APP_API_URL}/${questionId}`
+    `${process.env.REACT_APP_API_URL}/question/${questionId}`
   );
   useEffect(() => {
-    if (list && list.answer) {
-      // list가 null 또는 undefined인 경우 접근하지 않음
-      console.log(list.answer); // list.answer에 접근
+    if (list && list.data.answer) {
+      console.log(list.data.answers);
     }
   }, [list]);
 
   useEffect(() => {
-    if (list && list.answer && list.answer[answerId - 1]) {
-      setAEditorValue(list.answer[answerId - 1].content);
+    if (list && list.data.answer && list.data.answer[answerId]) {
+      setAEditorValue(list.answer[answerId].content);
     }
   }, [list, answerId - 1, questionId]);
 
@@ -88,18 +91,22 @@ const AnswerEditpage = () => {
     }
   };
 
-  const answerEditClick = async (questionId) => {
+  const answerEditClick = async (questionId, answerId) => {
     handlezeroEditorError();
     handlethirtyEditorError();
     try {
       await axios.patch(
-        `${process.env.REACT_APP_API_URL}/${questionId}/${answerId}`,
+        `${process.env.REACT_APP_API_URL}/question/${questionId}/${answerId}/edit`,
         {
           question: {
             answer: {
-              memberId: list.answer[answerId - 1].memberId,
               content: aeditorValue,
             },
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
@@ -107,7 +114,8 @@ const AnswerEditpage = () => {
       console.log("Edit successfully saved!");
 
       setAEditorValue(aeditorValue);
-      navigate(`/question/${questionId}`);
+      // navigate(`/question/${questionId}`);
+      window.location.href = `http://localhost:3000/question/${questionId}`;
     } catch (error) {
       console.error("Failed to save edit:", error);
     }

@@ -10,7 +10,7 @@ import Nav from "./Components/Nav";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import AskQuestion from "./Pages/AskQuestion";
-import questionAxios from "./util/questionAxios";
+// import questionAxios from "./util/questionAxios";
 // import HomeAside from "./Components/Aside";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/Signup";
@@ -22,9 +22,9 @@ const AppWrap = styled.div`
 `;
 
 function App() {
-  const [list, isPending, error] = questionAxios(
-    `${process.env.REACT_APP_API_URL}`
-  );
+  // const [list, isPending, error] = questionAxios(
+  //   `http://ec2-54-180-100-255.ap-northeast-2.compute.amazonaws.com:8080/`
+  // );
   const [auth, setAuth] = useState(false);
   const [side, setSide] = useState(true);
 
@@ -32,24 +32,14 @@ function App() {
     <AppWrap>
       <GlobalStyles />
       <BrowserRouter>
-        {error && <div>{error}</div>}
+        {/* {error && <div>{error}</div>} */}
         <Header auth={auth} setAuth={setAuth} side={side} setSide={setSide} />
         {side ? (
           <div className="wrap">
             <div className="container">
               <Nav />
               <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <QuestionPage
-                      list={list}
-                      isPending={isPending}
-                      auth={auth}
-                      setAuth={setAuth}
-                    />
-                  }
-                />
+                <Route path="/" element={<QuestionPage auth={auth} />} />
                 <Route path="/test" element={<Modaltest />} />
                 <Route
                   path="/mypage"
@@ -59,7 +49,7 @@ function App() {
                 <Route path="/question/ask" element={<AskQuestion />} />
                 <Route
                   path="question/:questionId"
-                  element={<QuestionDetailpage auth={auth} />}
+                  element={<QuestionDetailpage />}
                 />
                 <Route
                   path="/question/:questionId/:answerId/edit"

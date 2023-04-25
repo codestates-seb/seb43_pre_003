@@ -61,26 +61,24 @@ const NoQuestion = styled.div`
   height: 60vh;
 `;
 
-function QuestionsPage({ lists, isPending, auth }) {
-  const [list, setList] = useState([]); // 리스트에 나타낼 아이템들
+function QuestionsPage({ auth }) {
+  const [list, setList] = useState(0); // 리스트에 나타낼 아이템들
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지. default 값으로 1
   const [currentPosts, setCurrentPosts] = useState([]); // 현재 페이지에서 보여지는 아이템들
 
   useEffect(() => {
     axios
-      .get("${process.env.REACT_APP_API_URL}")
+      .get(
+        `${process.env.REACT_APP_API_URL}/question?page=${currentPage}&size=10`
+      )
       .then((res) => {
-        setList(res.data.sort((a, b) => b.id - a.id));
-        setCurrentPosts(res.data.slice(0, 10)); // 0 , 10
+        console.log(res);
+        setList(res.data.pageInfo.totalElements);
+        setCurrentPosts(res.data.data); // 0 , 10
       })
       .catch((error) => {
         console.log("error", error);
       });
-  }, [lists]);
-
-  useEffect(() => {
-    const firstPost = (currentPage - 1) * 10;
-    setCurrentPosts(list.slice(firstPost, firstPost + 10));
   }, [currentPage]);
 
   const setPage = (el) => {
@@ -89,15 +87,15 @@ function QuestionsPage({ lists, isPending, auth }) {
 
   return (
     <>
-      {isPending && <div>Loading...</div>}
-
       <QuestionWrap>
         <QuestionTitle>
           <Title>All Questions</Title>
+          {/* 비로그인인 경우 로그인 페이지로 이동 */}
+          {/* 로그인 된 경우 */}
           <Button variant="mediumBlue" size="question">
             <Link to="/mypage">My Page</Link>
           </Button>
-          {!auth ? (
+          {auth ? (
             <Link to="/question/ask">
               <Button variant="mediumBlue" size="question">
                 Ask Question
@@ -112,25 +110,21 @@ function QuestionsPage({ lists, isPending, auth }) {
           )}
         </QuestionTitle>
         <QuestionFilter>
-          <QuestionCount>{list.length} questions</QuestionCount>
+          <QuestionCount>{list} questions</QuestionCount>
           <SortTab>
             <SortBtn />
           </SortTab>
         </QuestionFilter>
         <AllQuestion>
-          {currentPosts && list.length > 0 ? (
+          {currentPosts && list > 0 ? (
             currentPosts.map((el) => (
-              <QuestionsList key={el.question.questionId} data={el} />
+              <QuestionsList key={el.questionId} data={el} />
             ))
           ) : (
             <NoQuestion>No Question</NoQuestion>
           )}
         </AllQuestion>
-        <Pagination
-          currentPage={currentPage}
-          count={list.length}
-          setPage={setPage}
-        />
+        <Pagination currentPage={currentPage} count={list} setPage={setPage} />
       </QuestionWrap>
       <Aside />
     </>
