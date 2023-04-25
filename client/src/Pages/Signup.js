@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 const Container = styled.div`
   display: flex;
-  width: 1264px;
+  width: 100vw;
   height: 100vh;
   justify-content: center;
   align-items: center;
@@ -184,11 +184,12 @@ function Signup({ setSide }) {
         setErrMessage("");
         setErrpw("");
         navi("/Login");
-        alert("아이디가 생성되었습니다, 생성된 아이디로 로그인 해주세요.");
+        alert("아이디가 생성되었습니다. 생성된 아이디로 로그인 해주세요.");
       })
       .catch((err) => {
         console.log(err);
         setErrMessage("이메일 또는 패스워드가 올바르지 않습니다.");
+        setCheck(false);
       });
   };
 
