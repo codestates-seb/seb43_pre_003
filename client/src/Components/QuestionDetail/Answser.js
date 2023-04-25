@@ -4,15 +4,14 @@ import AuthorProfile from "./Authorprofile";
 
 const Main = styled.main`
   display: flex;
-  margin-top: 30px;
-  padding-bottom: 18px;
+  /* margin-top: 30px; */
+  padding: 18px 10px;
   border-bottom: 1px solid rgb(227, 230, 232);
 `;
 
 const Section2 = styled.section`
   flex-grow: 1;
   p {
-    margin-left: 7px;
     font-size: 15px;
     font-weight: 500;
     line-height: 22.5px;
@@ -23,7 +22,7 @@ const Section3 = styled.section`
   position: relative;
   display: flex;
   justify-content: space-between;
-  margin: 25px 0px;
+  margin: 25px 0px 0px;
   width: 100%;
 `;
 

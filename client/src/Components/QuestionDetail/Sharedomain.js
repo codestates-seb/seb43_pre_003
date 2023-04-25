@@ -50,6 +50,7 @@ const Sharedomain = ({ questionId, answerId }) => {
         size="custom"
         padding="0px 3px 0px 3px"
         onClick={handleShareClick}
+        height="auto"
       >
         Share
       </Button>
@@ -81,6 +82,7 @@ const Sharedomain = ({ questionId, answerId }) => {
           size="custom"
           onClick={() => handleqDeleteClick(questionId)}
           padding="0px 3px 0px 3px"
+          height="auto"
         >
           Delete
         </Button>

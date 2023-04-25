@@ -1,18 +1,22 @@
 import styled from "styled-components";
-import Profile from "../style/img/profile.png";
+// import Profile from "../style/img/profile.png";
+import { ReactComponent as ProfileImg } from "../style/img/img-profile.svg";
+
 const Wrapper = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
 
 const Aside = styled.div`
-  width: 187px;
-  height: 67px;
-  padding: 5px 7px;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  /* height: 67px; */
+  padding: 8px 10px;
   background-color: var(--powder-200);
   border-radius: 3px;
   span {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--black-500);
   }
 
@@ -20,9 +24,17 @@ const Aside = styled.div`
     display: flex;
     align-items: center;
     font-size: 12px;
-    justify-content: space-between;
+    margin-top: 4px;
     padding-right: 60px;
+    svg {
+      width: 32px;
+      height: 32px;
+      border-radius: 2px;
+    }
     span {
+      white-space: normal;
+      overflow-wrap: anywhere;
+      margin-left: 8px;
       font-size: 15px;
       color: var(--blue-600);
     }
@@ -42,7 +54,8 @@ const AuthorProfile = ({ createdAt, userName }) => {
       <Aside>
         <span>asked {formattedDate}</span>
         <div>
-          <img src={Profile} alt="프로필 사진" />
+          {/* <img src={Profile} alt="프로필 사진" /> */}
+          <ProfileImg />
           <span>{userName}</span>
         </div>
       </Aside>

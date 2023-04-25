@@ -12,7 +12,7 @@ import axios from "axios";
 import dateCalculate from "../util/dateCalculate";
 import questionAxios from "../util/questionAxios";
 import Aside from "../Components/Aside";
-//import { TagDiv } from "../Components/style/Tag";
+import { TagDiv } from "../Components/style/Tag";
 
 const Container = styled.div`
   max-width: 1100px;
@@ -33,9 +33,11 @@ const Contain = styled.div`
 const Header1 = styled.header`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
   h1 {
-    font-size: 18px;
+    font-size: 26px;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 `;
 
@@ -50,9 +52,9 @@ const H1 = styled.h1`
 
 const Section1 = styled.section`
   display: flex;
-  padding-bottom: 8px;
-  margin-bottom: 16px;
-  border-bottom: 2px solid var(--black-100);
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--black-100);
 `;
 
 const Strong = styled.strong`
@@ -73,30 +75,35 @@ const Body = styled.div`
 
 const Main = styled.main`
   display: flex;
-  margin: 15px;
-  padding-bottom: 18px;
+  padding-bottom: 32px;
 `;
 
 const Aside1 = styled.aside`
   flex: display;
+  margin-right: 24px;
 `;
 
 const Section2 = styled.section`
   flex-grow: 1;
-  p {
-    margin-left: 12px;
+  > p > p {
     font-size: 15px;
-    font-weight: 500;
     line-height: 22.5px;
     white-space: pre-line;
   }
+`;
+
+const Tags = styled.div`
+  display: flex;
+  margin: 24px 0;
+  flex-flow: row wrap;
+  row-gap: 2px;
 `;
 
 const Section3 = styled.section`
   position: relative;
   display: flex;
   justify-content: space-between;
-  margin: 25px 0px;
+  margin: 40px 0px;
   width: 100%;
 `;
 
@@ -106,25 +113,26 @@ const Section4 = styled.section`
   h2 {
     font-size: 18px;
     margin: 20px 0;
+    color: var(--black-900);
   }
 `;
 
-const Header2 = styled.header`
+const Header2 = styled.div`
   display: flex;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
-  h1 {
-    font-size: 18px;
-    margin-bottom: 15px;
-  }
+  /* -webkit-box-pack: justify; */
+  /* justify-content: space-between; */
+  margin: 20px 0;
+  color: var(--black-900);
+  font-size: 18px;
+  font-weight: 400;
 `;
 
 const Position = styled.div`
-  margin-top: 70px;
+  margin-top: 24px;
 `;
 const WarningText = styled.div`
   margin: 10px 5px 20px 0px;
-  color: red;
+  color: var(--red-400);
   font-size: 12px;
 `;
 
@@ -213,15 +221,14 @@ const QuestionDetailpage = ({ auth }) => {
                 </Aside1>
 
                 <Section2>
-                  <div>
-                    <div>
-                      <p
-                        dangerouslySetInnerHTML={{
-                          __html: list.data.content,
-                        }}
-                      />
-                    </div>
-                  </div>
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: list.data.content,
+                    }}
+                  />
+                  <Tags>
+                    <TagDiv>kind of beauty</TagDiv>
+                  </Tags>
                   <Section3>
                     <Sharedomain questionId={questionId} auth={auth} />
                     <AuthorProfile
@@ -231,11 +238,9 @@ const QuestionDetailpage = ({ auth }) => {
                   </Section3>
                 </Section2>
               </Main>
-              <Header2>
-                <h1>{list.data.answerCount} Answers</h1>
-              </Header2>
+              <Header2>{list.data.answerCount} Answers</Header2>
               <Answer answers={list.data.answers} questionId={questionId} />
-              <h2>Your Answer</h2>
+              <Header2>Your Answer</Header2>
               <div>
                 <Editor value={answerValue} onChange={setAnswerValue} />
 
