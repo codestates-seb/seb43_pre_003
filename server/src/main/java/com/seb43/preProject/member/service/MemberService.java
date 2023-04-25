@@ -64,7 +64,6 @@ public class MemberService {
     public Member updateMember(MemberPatchDto member,Long memberId) {
 
         Member findMember = findVerifiedMember(memberId);
-        findMember.setPassword(passwordEncoder.encode(member.getPassword()));
         findMember.setUserName(member.getUserName());
         findMember.setModifiedAt(LocalDateTime.now());
 
@@ -72,6 +71,11 @@ public class MemberService {
     }
     public Member deleteMember(Long memberId){
         Member deletMember = findVerifiedMember(memberId);
+        deletMember.setMemberStatus(Member.MemberStatus.MEMBER_QUIT);
+        deletMember.setModifiedAt(LocalDateTime.now());
+        deletMember.setPassword("");
+        deletMember.setUserName("탈퇴한 회원");
+
         return memberRepository.save(deletMember);
     }
 
