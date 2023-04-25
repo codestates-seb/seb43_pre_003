@@ -41,8 +41,14 @@ public class AnswerService {
 
     public Answer updateAnswer (Answer answer) {
         Question question = questionService.verifyQuestion(answer.getQuestion().getQuestionId());
+
         Long memberId = memberService.findSecurityContextHolderMemberId();
+        Member member = new Member();
+        member.setMemberId(memberId);
+
         verifyQuestionAnswer(answer.getAnswerId(), question);
+
+        answer.setMember(member);
 
         Answer find = existsAnswer(answer.getAnswerId());
         answer.setUserName(find.getUserName());
