@@ -15,7 +15,8 @@ import AskQuestion from "./Pages/AskQuestion";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/Signup";
 import Modaltest from "./Pages/ModalTest";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const AppWrap = styled.div`
   width: 100vw;
@@ -27,6 +28,25 @@ function App() {
   // );
   const [auth, setAuth] = useState(false);
   const [side, setSide] = useState(true);
+  const [user, setUser] = useState({});
+
+  // 자동로그인 작성
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/members/profile`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
+          },
+        })
+        .then((res) => {
+          setAuth(true);
+          setUser(res.data);
+          console.log(res);
+        });
+    }
+  }, []);
 
   return (
     <AppWrap>
@@ -43,7 +63,9 @@ function App() {
                 <Route path="/test" element={<Modaltest />} />
                 <Route
                   path="/mypage"
-                  element={<MyPage auth={auth} setAuth={setAuth} />}
+                  element={
+                    <MyPage user={user} setUser={setUser} setAuth={setAuth} />
+                  }
                 />
                 <Route path="/ask" element></Route>
                 <Route path="/question/ask" element={<AskQuestion />} />
@@ -74,6 +96,7 @@ function App() {
                 side={side}
                 setSide={setSide}
                 index
+                setUser={setUser}
               />
             }
           />
