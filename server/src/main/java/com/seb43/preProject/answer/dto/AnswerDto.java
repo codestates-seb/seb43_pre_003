@@ -26,10 +26,10 @@ import javax.validation.constraints.NotBlank;
         @Setter
         @AllArgsConstructor
         public static class Response {
-            private String content;
-            private long questionId;
             private long answerId;
-            private long memberId;
+            private String content;
             private String userName;
+            private long memberId;
+            private long questionId;
         }
     }
