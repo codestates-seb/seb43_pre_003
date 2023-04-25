@@ -125,13 +125,20 @@ function Login({ setAuth, setSide }) {
       .post(
         `http://ec2-54-180-100-255.ap-northeast-2.compute.amazonaws.com:8080/auth/login`,
         {
-          email: loginInfo.email,
-          password: loginInfo.password,
+          // email: loginInfo.email,
+          // password: loginInfo.password,
+          email: "test@gmail.com",
+          password: "11111111",
         },
-        { withCredentials: true }
+        {
+          // withCredentials: true,
+          // headers: { "Access-Control-Expose-Headers": "Authorization" },
+        }
       )
       .then((res) => {
         console.log(res.headers.get("Authorization"));
+        console.log(res.config.headers);
+        console.log(res);
         setAuth(true);
         setSide(true);
         setErrMessage("");
