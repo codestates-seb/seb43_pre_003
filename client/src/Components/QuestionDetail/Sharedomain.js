@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Button from "../style/Button";
 import Sheet from "./Sheet";
@@ -10,9 +10,14 @@ const Sharedomain = ({ questionId, answerId }) => {
 
   const handleqDeleteClick = (id) => {
     axios
-      .delete(`http://localhost:3001/data/${id}`)
+      .delete(`${process.env.REACT_APP_API_URL}/question/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then(() => {
         navigate("/");
+        //window.location.href = `http://localhost:3000`;
       })
       .catch((error) => {
         console.error("Error", error);
@@ -21,7 +26,11 @@ const Sharedomain = ({ questionId, answerId }) => {
 
   const handleaDeleteClick = (id, answerId) => {
     axios
-      .delete(`http://localhost:3001/data/${id}/${answerId}`)
+      .delete(`${process.env.REACT_APP_API_URL}/question/${id}/${answerId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then(() => {
         navigate(`/question/${questionId}`);
       })

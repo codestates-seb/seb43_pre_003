@@ -72,7 +72,7 @@ function App() {
                 <Route path="/question/ask" element={<AskQuestion />} />
                 <Route
                   path="question/:questionId"
-                  element={<QuestionDetailpage auth={auth} />}
+                  element={<QuestionDetailpage />}
                 />
                 <Route
                   path="/question/:questionId/:answerId/edit"

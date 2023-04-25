@@ -34,6 +34,9 @@ const List = styled.main`
 `;
 
 const Answer = ({ answers, questionId, auth }) => {
+  if (!answers) {
+    return null;
+  }
   return (
     <List>
       {answers.map((answer) => (
@@ -41,7 +44,11 @@ const Answer = ({ answers, questionId, auth }) => {
           <Section2>
             <div>
               <div>
-                <p>{answer.content}</p>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: answer.content,
+                  }}
+                />
               </div>
             </div>
             <Section3>
