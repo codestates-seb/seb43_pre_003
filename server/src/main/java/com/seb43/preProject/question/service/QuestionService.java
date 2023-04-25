@@ -8,13 +8,12 @@ import com.seb43.preProject.question.entity.Question;
 import com.seb43.preProject.question.entity.Votes;
 import com.seb43.preProject.question.repository.QuestionRepository;
 import com.seb43.preProject.question.repository.VotesRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -47,6 +46,7 @@ public class QuestionService {
         if (memberId == findQuestion.getMember().getMemberId()) {
             Optional.ofNullable(question.getTitle()).ifPresent(title -> findQuestion.setTitle(title));
             Optional.ofNullable(question.getContent()).ifPresent(content -> findQuestion.setContent(content));
+            System.out.println(findQuestion);
             return questionRepository.save(findQuestion);
         } else {
             throw new BusinessLogicException(ExceptionCode.NO_PERMESSION);
@@ -58,7 +58,10 @@ public class QuestionService {
         question.setViews(question.getViews() + 1);
         return question;
     }
-    public Page<Question> findQuestions(int page, int size){
+    public Page<Question> findQuestions(int page, int size) {
+//        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
+//        Pageable pageable = PageRequest.of(page, size, sort);
+//        return questionRepository.findAll(pageable);
         return questionRepository.findAll(PageRequest.of(page, size, Sort.by("questionId").descending()));
     }
 
@@ -110,8 +113,7 @@ public class QuestionService {
     }
 
     public Question verifyQuestion(long questionId) {
-        return questionRepository.findById(questionId).orElseThrow(
-                () -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+        return questionRepository.findById(questionId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
     }
     public void answerCountPlus (Question question) {
         int now = question.getAnswerCount();
