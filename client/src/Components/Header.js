@@ -7,6 +7,7 @@ import Logout from "./style/img/ic-menu.png";
 import Inbox from "./style/img/ic-inbox.png";
 import Trophy from "./style/img/ic- trophy.png";
 import Que from "./style/img/ic-question.png";
+// /import axios from "axios";
 // import { useEffect } from "react";
 
 const Container = styled.div`
@@ -15,18 +16,29 @@ const Container = styled.div`
   border-top: 3px solid var(--main-400);
   display: flex;
   justify-content: center;
+  align-items: center;
   background-color: var(--black-025);
   box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.05), 0 1px 4px hsla(0, 0%, 0%, 0.05),
     0 2px 8px hsla(0, 0%, 0%, 0.05);
+
+  @media screen and (max-width: 750px) {
+    width: 100vw;
+  }
+
+  @media screen and (max-width: 970px) {
+    width: 100vw;
+  }
 `;
 
 const HeaderBox = styled.header`
   width: 100vw;
-  min-width: 1264px;
   height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 750px) {
+    width: 500px;
+  }
 `;
 const Img = styled.img`
   width: 151px;
@@ -79,6 +91,15 @@ const Input = styled.input`
     box-shadow: 0px 0px 10px 5px var(--blue-050);
     outline: none;
     border: 1px solid var(--blue-500);
+  }
+  @media screen and (max-width: 750px) {
+    min-width: 300px;
+  }
+  @media screen and (max-width: 970px) {
+    min-width: 300px;
+  }
+  @media screen and (max-width: 1200px) {
+    min-width: 300px;
   }
 `;
 
@@ -138,13 +159,10 @@ const IconDiv = styled.div`
 `;
 
 function Header({ auth, setAuth, setSide }) {
-  const onClick = () => {
+  const logout = () => {
     setAuth(!auth);
-    setSide(false);
+    localStorage.removeItem("token");
   };
-  // const sidefunc = () => {
-  //   setSide(!side);
-  // };
 
   return (
     <>
@@ -186,7 +204,9 @@ function Header({ auth, setAuth, setSide }) {
                 <Img src={Logo} alt="" />
               </LogoBtn>
             </Link>
-            <ProductBtn>Product</ProductBtn>
+            <Link to="/test">
+              <ProductBtn>Product</ProductBtn>
+            </Link>
             <LoginInput />
             <Link to="/mypage">
               <ProfileNumber>
@@ -203,7 +223,7 @@ function Header({ auth, setAuth, setSide }) {
             <IconDiv>
               <img src={Que} alt="" />
             </IconDiv>
-            <LogoutBtn onClick={onClick}>
+            <LogoutBtn onClick={logout}>
               <img src={Logout} alt=""></img>
             </LogoutBtn>
           </HeaderBox>

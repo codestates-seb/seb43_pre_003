@@ -10,7 +10,7 @@ import axios from "axios";
 
 const Container = styled.div`
   display: flex;
-  width: 1264px;
+  width: 100%;
   height: 100vh;
   flex-direction: column;
   padding: 24px 16px;
@@ -105,11 +105,6 @@ function Login({ setAuth, setSide, setUser }) {
 
   const funcLogin = () => {
     axios.defaults.withCredentials = true;
-
-    // const headers = {
-    //   "Access-Control-Allow-Origin": "*",
-    //   "Content-Type": "application/json",
-    // };
 
     if (loginInfo.email.length < 1) {
       setErrMessage("아이디를 입력하세요.");
