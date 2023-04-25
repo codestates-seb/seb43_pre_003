@@ -63,6 +63,7 @@ public class AnswerService {
         boolean QuestionAnswer = question.getAnswers()
                 .stream()
                 .anyMatch(id -> id.getAnswerId() == answerId);
+
         if (!QuestionAnswer) {
             log.error("This Answer not Question");
             throw new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND);
