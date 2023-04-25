@@ -6,7 +6,7 @@ import Answer from "../Components/QuestionDetail/Answser";
 import Button from "../Components/style/Button";
 import Editor from "../Components/QuestionDetail/Editor";
 
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import dateCalculate from "../util/dateCalculate";
@@ -138,14 +138,15 @@ const WarningText = styled.div`
 
 const QuestionDetailpage = ({ auth }) => {
   const { questionId } = useParams();
-  console.log(questionId);
-  const navigate = useNavigate();
+  // console.log(questionId);
+  // const navigate = useNavigate();
 
-  const [list, isPending, error] = questionAxios(
+  const [list, setLists] = questionAxios(
     `${process.env.REACT_APP_API_URL}/question/${questionId}`
   );
-  console.log(list);
+  // console.log(list);
   const [answerValue, setAnswerValue] = useState("");
+
   const [zeroeditorError, setzeroEditorError] = useState(false);
   const [thirtyeditorError, setthirtyEditorError] = useState(false);
 
@@ -161,34 +162,44 @@ const QuestionDetailpage = ({ auth }) => {
       setthirtyEditorError(false);
     }
   };
-  console.log(answerValue);
-  const AnswerCreateClick = async (questionId) => {
+
+  const AnswerCreateClick = () => {
     handlezeroEditorError();
     handlethirtyEditorError();
-    try {
-      await axios.post(
+
+    axios
+      .post(
         `${process.env.REACT_APP_API_URL}/question/${questionId}`,
         {
           content: answerValue,
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
           },
         }
-      );
-
-      setAnswerValue(answerValue);
-      navigate(`/question/${questionId}`);
-    } catch (error) {
-      console.error("Failed to save edit:", error);
-    }
+      )
+      .then((e) => {
+        console.log(e);
+        console.log(list);
+        setLists((prev) => {
+          return {
+            data: {
+              ...prev.data,
+              answers: [...prev.data.answers, e.data],
+            },
+          };
+        });
+        setAnswerValue("");
+      })
+      .catch((err) => {
+        console.err("Failed to save edit:", err);
+      });
   };
 
   return (
     <Container>
-      {error && <div>{error}</div>}
-      {isPending && <div>Loading...</div>}
       {list && (
         <Contain>
           <Header1>
@@ -239,7 +250,11 @@ const QuestionDetailpage = ({ auth }) => {
                 </Section2>
               </Main>
               <Header2>{list.data.answerCount} Answers</Header2>
-              <Answer answers={list.data.answers} questionId={questionId} />
+              {/* answer 등록 시 map으로 돌려서 받아오기 */}
+              {list.data.answers.map((el) => (
+                <Answer key={el.answersId} answers={el} />
+              ))}
+
               <Header2>Your Answer</Header2>
               <div>
                 <Editor value={answerValue} onChange={setAnswerValue} />
