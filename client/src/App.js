@@ -48,7 +48,13 @@ function App() {
     <AppWrap>
       <GlobalStyles />
       <BrowserRouter>
-        <Header auth={auth} setAuth={setAuth} side={side} setSide={setSide} />
+        <Header
+          auth={auth}
+          setAuth={setAuth}
+          side={side}
+          setSide={setSide}
+          user={user}
+        />
         {side ? (
           <div className="wrap">
             <div className="container">
