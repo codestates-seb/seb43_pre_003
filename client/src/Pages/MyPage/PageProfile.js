@@ -80,7 +80,7 @@ const StatContent = styled.div`
   }
 `;
 
-function PageProfile() {
+function PageProfile(user) {
   return (
     <>
       <ProfileWrap>
@@ -97,11 +97,11 @@ function PageProfile() {
                 <div>reached</div>
               </StatContent>
               <StatContent>
-                <div>0</div>
+                <div>{user.user.answerCount}</div>
                 <div>answers</div>
               </StatContent>
               <StatContent>
-                <div>0</div>
+                <div>{user.user.questionCount}</div>
                 <div>questions</div>
               </StatContent>
             </Content>

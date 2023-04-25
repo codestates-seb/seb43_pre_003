@@ -131,6 +131,7 @@ const ErrTxt = styled.div`
 function PageSetting({ user, setUser, setAuth }) {
   const [modal, setModal] = useState(false);
   const [name, setName] = useState(user.userName);
+  const [err, setErr] = useState(false);
 
   const navigate = useNavigate();
 
@@ -142,20 +143,30 @@ function PageSetting({ user, setUser, setAuth }) {
     setName(e.target.value);
   };
 
+  const handleErr = () => {
+    name.length === 0 ? setErr(true) : setErr(false);
+  };
+
   const handleEdit = () => {
+    handleErr();
+
+    const editName = {
+      userName: name,
+    };
+
     if (name.length > 0) {
       axios
-        .patch(`${process.env.REACT_APP_API_URL}/members/profile`, {
+        .patch(`${process.env.REACT_APP_API_URL}/members/profile`, editName, {
           headers: {
             "Content-Type": "application/json",
             Authorization: localStorage.getItem("token"),
           },
         })
         .then((res) => {
+          console.log(res);
           setUser((prev) => {
             return { ...prev, userName: name };
           });
-          console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -202,9 +213,17 @@ function PageSetting({ user, setUser, setAuth }) {
                 <SubTitle>Display name</SubTitle>
                 <InputArea>
                   <div>
-                    <Input value={name} onChange={handleChange} />
-                    {name.length === 0 && (
-                      <ErrTxt>Name must be at least 0 characters.</ErrTxt>
+                    {name.length !== 0 || !err ? (
+                      <Input value={name} onChange={handleChange} />
+                    ) : (
+                      <>
+                        <Input
+                          value={name}
+                          onChange={handleChange}
+                          errorType="error"
+                        />
+                        <ErrTxt>Name must be at least 0 characters.</ErrTxt>
+                      </>
                     )}
                   </div>
                   <Button
