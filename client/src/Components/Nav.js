@@ -25,7 +25,7 @@ const DivBox = styled.div`
     font-weight: bold;
     background: #efefef;
     border-right: 4px solid var(--main-400);
-    color: black;
+    color: var(--black-900);
   }
 `;
 

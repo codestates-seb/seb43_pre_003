@@ -37,7 +37,7 @@ const QuestionState = styled.div`
 `;
 
 const QuestionContent = styled.div`
-  max-width: calc(100% - 108px);
+  max-width: calc(100% - 124px);
   width: 100%;
   height: auto;
   display: flex;
@@ -53,27 +53,25 @@ const QuestionTitle = styled.h3`
   /* word-break: break-all; */
   /* word-wrap: break-word; */
   /* hyphens: auto; */
-  color: var(--blue-600);
   font-size: 18px;
   font-weight: 400;
   line-height: 1.3;
   margin: 0 0 1em;
   margin-bottom: 6px;
   padding-right: 24px;
-  &:hover {
-    cursor: pointer;
-    color: var(--blue-500);
-  }
   > a {
     font-size: 18px;
     width: calc(100%);
     white-space: normal;
     overflow-wrap: anywhere;
-
-    color: var(--blue-500);
+    color: var(--blue-600);
     cursor: pointer;
     text-decoration: none;
     user-select: auto;
+    &:hover {
+      cursor: pointer;
+      color: var(--blue-500);
+    }
   }
 `;
 
