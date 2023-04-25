@@ -28,9 +28,10 @@ function App() {
   // );
   const [auth, setAuth] = useState(false);
   const [side, setSide] = useState(true);
+
   const [user, setUser] = useState({});
 
-  // 자동로그인 작성
+  // 자동로그인 작성(새로고침 시 로그인데이터 가지고있게)
   useEffect(() => {
     if (localStorage.getItem("token")) {
       axios

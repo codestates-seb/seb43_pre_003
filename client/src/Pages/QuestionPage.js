@@ -9,7 +9,7 @@ import { SortBtn } from "../Components/SortBtn";
 import Button from "../Components/style/Button";
 
 const QuestionWrap = styled.section`
-  width: calc(100% - 300px);
+  width: calc(100% - 454px);
   padding-right: 30px;
   /* padding: 24px; */
 `;

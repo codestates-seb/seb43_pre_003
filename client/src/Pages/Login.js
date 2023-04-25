@@ -142,14 +142,11 @@ function Login({ setAuth, setSide, setUser }) {
 
         // 로그인 시 member 정보 받아오는 axios 작성
         axios
-          .get(
-            "http://ec2-54-180-100-255.ap-northeast-2.compute.amazonaws.com:8080/members/profile",
-            {
-              headers: {
-                Authorization: localStorage.getItem("token"),
-              },
-            }
-          )
+          .get(`${process.env.REACT_APP_API_URL}/members/profile`, {
+            headers: {
+              Authorization: localStorage.getItem("token"),
+            },
+          })
           .then((res) => {
             setUser(res.data);
             console.log(res);
