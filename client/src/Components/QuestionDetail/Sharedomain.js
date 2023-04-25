@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Button from "../style/Button";
 import Sheet from "./Sheet";
 
 const Sharedomain = ({ questionId, answerId }) => {
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   const [showSheet, setShowSheet] = useState(false);
 
   const handleqDeleteClick = (id) => {
@@ -16,8 +16,8 @@ const Sharedomain = ({ questionId, answerId }) => {
         },
       })
       .then(() => {
-        //navigate("/");
-        window.location.href = `http://localhost:3000`;
+        navigate("/");
+        //window.location.href = `http://localhost:3000`;
       })
       .catch((error) => {
         console.error("Error", error);
@@ -32,8 +32,7 @@ const Sharedomain = ({ questionId, answerId }) => {
         },
       })
       .then(() => {
-        // navigate(`/question/${questionId}`);
-        window.location.href = `http://localhost:3000/question/${questionId}`;
+        navigate(`/question/${questionId}`);
       })
       .catch((error) => {
         console.error("Error", error);

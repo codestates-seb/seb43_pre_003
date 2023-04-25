@@ -1,10 +1,8 @@
 import axios from "axios";
-//import { useNavigate } from "react-router-dom";
 const BASE_URL = `http://localhost:3000/`;
 // const DATA_URL = "http://localhost:3000/question/";
 
 export const axiosCreate = (url, data) => {
-  //const navigate = useNavigate();
   axios
     .post(url, data, {
       headers: {
@@ -15,7 +13,6 @@ export const axiosCreate = (url, data) => {
     .then((res) => {
       console.log(res);
       window.location.href = BASE_URL;
-      //navigate(`/}`);
     })
     .catch((err) => {
       if (err.response) {

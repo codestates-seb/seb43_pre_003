@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Editor from "../Components/QuestionDetail/Editor";
 import Button from "../Components/style/Button";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import questionAxios from "../util/questionAxios";
@@ -53,7 +53,7 @@ const WarningText = styled.div`
 const AnswerEditpage = () => {
   const { questionId, answerId } = useParams();
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   console.log(questionId);
   console.log(answerId);
 
@@ -114,8 +114,7 @@ const AnswerEditpage = () => {
       console.log("Edit successfully saved!");
 
       setAEditorValue(aeditorValue);
-      // navigate(`/question/${questionId}`);
-      window.location.href = `http://localhost:3000/question/${questionId}`;
+      navigate(`/question/${questionId}`);
     } catch (error) {
       console.error("Failed to save edit:", error);
     }

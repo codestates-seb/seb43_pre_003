@@ -6,13 +6,13 @@ import Answer from "../Components/QuestionDetail/Answser";
 import Button from "../Components/style/Button";
 import Editor from "../Components/QuestionDetail/Editor";
 
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import dateCalculate from "../util/dateCalculate";
 import questionAxios from "../util/questionAxios";
 import Aside from "../Components/Aside";
-// import { TagDiv } from "../Components/style/Tag";
+//import { TagDiv } from "../Components/style/Tag";
 
 const Container = styled.div`
   max-width: 1100px;
@@ -131,7 +131,7 @@ const WarningText = styled.div`
 const QuestionDetailpage = ({ auth }) => {
   const { questionId } = useParams();
   console.log(questionId);
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [list, isPending, error] = questionAxios(
     `${process.env.REACT_APP_API_URL}/question/${questionId}`
@@ -171,8 +171,7 @@ const QuestionDetailpage = ({ auth }) => {
       );
 
       setAnswerValue(answerValue);
-      //  navigate(`/question/${questionId}`);
-      window.location.href = `http://localhost:3000/question/${questionId}`;
+      navigate(`/question/${questionId}`);
     } catch (error) {
       console.error("Failed to save edit:", error);
     }

@@ -3,7 +3,7 @@ import Editor from "../Components/QuestionDetail/Editor";
 import Button from "../Components/style/Button";
 import Tag from "../Components/style/Tag";
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import questionAxios from "../util/questionAxios";
 import axios from "axios";
 
@@ -75,7 +75,7 @@ const WarningText = styled.div`
 const QuestionEditpage = () => {
   const { questionId } = useParams();
   console.log(questionId);
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [list, isPending, error] = questionAxios(
     `${process.env.REACT_APP_API_URL}/question/${questionId}`
@@ -124,8 +124,7 @@ const QuestionEditpage = () => {
         console.log("Edit successfully saved!");
 
         setEditorValue(editorValue);
-        //navigate(`/question/${questionId}`);
-        window.location.href = `http://localhost:3000/question/${questionId}`;
+        navigate(`/question/${questionId}`);
       }
     } catch (error) {
       console.error("Failed to save edit:", error);
