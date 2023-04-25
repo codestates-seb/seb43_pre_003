@@ -208,10 +208,12 @@ function Header({ auth, setAuth, setSide }) {
               <ProductBtn>Product</ProductBtn>
             </Link>
             <LoginInput />
-            <ProfileNumber>
-              <ProfileButton />
-              <div>22</div>
-            </ProfileNumber>
+            <Link to="/mypage">
+              <ProfileNumber>
+                <ProfileButton />
+                <div>22</div>
+              </ProfileNumber>
+            </Link>
             <IconDiv>
               <img src={Inbox} alt="" />
             </IconDiv>

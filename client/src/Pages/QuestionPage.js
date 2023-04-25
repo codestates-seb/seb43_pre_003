@@ -9,7 +9,7 @@ import { SortBtn } from "../Components/SortBtn";
 import Button from "../Components/style/Button";
 
 const QuestionWrap = styled.section`
-  width: calc(100% - 300px);
+  width: calc(100% - 454px);
   padding-right: 30px;
   /* padding: 24px; */
 `;
@@ -72,9 +72,8 @@ function QuestionsPage({ auth }) {
         `${process.env.REACT_APP_API_URL}/question?page=${currentPage}&size=10`
       )
       .then((res) => {
-        console.log(res);
         setList(res.data.pageInfo.totalElements);
-        setCurrentPosts(res.data.data); // 0 , 10
+        setCurrentPosts(res.data.data);
       })
       .catch((error) => {
         console.log("error", error);
@@ -90,11 +89,6 @@ function QuestionsPage({ auth }) {
       <QuestionWrap>
         <QuestionTitle>
           <Title>All Questions</Title>
-          {/* 비로그인인 경우 로그인 페이지로 이동 */}
-          {/* 로그인 된 경우 */}
-          <Button variant="mediumBlue" size="question">
-            <Link to="/mypage">My Page</Link>
-          </Button>
           {auth ? (
             <Link to="/question/ask">
               <Button variant="mediumBlue" size="question">

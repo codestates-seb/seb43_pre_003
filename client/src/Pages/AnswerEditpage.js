@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Editor from "../Components/QuestionDetail/Editor";
 import Button from "../Components/style/Button";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import questionAxios from "../util/questionAxios";
@@ -43,35 +43,70 @@ const Editbox = styled.header`
     white-space: pre-line;
   }
 `;
+const WarningText = styled.div`
+  margin-left: 5px;
+  margin-top: 10px;
+  color: red;
+  font-size: 12px;
+`;
 
 const AnswerEditpage = () => {
   const { questionId, answerId } = useParams();
+
   const navigate = useNavigate();
   console.log(questionId);
   console.log(answerId);
+
+  //list.data.answers.findIndex((answer) => answer.answerId === answerIdToFind);
+
   const [list, isPending, error] = questionAxios(
-    `http://localhost:3001/data/${questionId}`
+    `${process.env.REACT_APP_API_URL}/question/${questionId}`
   );
-  console.log(questionId);
+  useEffect(() => {
+    if (list && list.data.answer) {
+      console.log(list.data.answers);
+    }
+  }, [list]);
 
   useEffect(() => {
-    if (list && list.answer && list.answer[answerId]) {
+    if (list && list.data.answer && list.data.answer[answerId]) {
       setAEditorValue(list.answer[answerId].content);
     }
-  }, [answerId]);
+  }, [list, answerId - 1, questionId]);
 
   const [aeditorValue, setAEditorValue] = useState("");
+  const [zeroeditorError, setzeroEditorError] = useState(false);
+  const [thirtyeditorError, setthirtyEditorError] = useState(false);
   console.log(aeditorValue);
-  const answerEditClick = async (questionId) => {
+  const handlezeroEditorError = () => {
+    aeditorValue.length <= 0
+      ? setzeroEditorError(true)
+      : setzeroEditorError(false);
+  };
+  const handlethirtyEditorError = () => {
+    if (aeditorValue.length > 0 && aeditorValue.length < 30) {
+      setthirtyEditorError(true);
+    } else {
+      setthirtyEditorError(false);
+    }
+  };
+
+  const answerEditClick = async (questionId, answerId) => {
+    handlezeroEditorError();
+    handlethirtyEditorError();
     try {
       await axios.patch(
-        `http://localhost:3001/data/${questionId}/${answerId}`,
+        `${process.env.REACT_APP_API_URL}/question/${questionId}/${answerId}/edit`,
         {
           question: {
             answer: {
-              memberId: list.answer[answerId].memberId,
               content: aeditorValue,
             },
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
@@ -107,6 +142,7 @@ const AnswerEditpage = () => {
             </Editbox>
             <h2>Answer</h2>
             <Editor value={aeditorValue} onChange={setAEditorValue} />
+
             <Position>
               <Button
                 variant="mediumBlue"
@@ -115,11 +151,16 @@ const AnswerEditpage = () => {
               >
                 Save Edits
               </Button>
+
               <Link to={`/question/${questionId}`}>
                 <Button variant="mediumWhite" size="question">
                   Cancel
                 </Button>
               </Link>
+              {zeroeditorError && <WarningText>Answer is missing</WarningText>}
+              {thirtyeditorError && (
+                <WarningText>Minimum 30 characters required</WarningText>
+              )}
             </Position>
           </Contain>
         )}

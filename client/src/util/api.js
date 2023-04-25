@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = `http://localhost:3000/`;
 // const DATA_URL = "http://localhost:3000/question/";
 
 export const axiosCreate = (url, data) => {
@@ -8,10 +7,11 @@ export const axiosCreate = (url, data) => {
     .post(url, data, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.REACT_APP_TOKEN}`,
+        Authorization: localStorage.getItem("token"),
       },
     })
-    .then(() => {
+    .then((res) => {
+      console.log(res);
       window.location.href = BASE_URL;
     })
     .catch((err) => {

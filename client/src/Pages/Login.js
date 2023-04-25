@@ -81,7 +81,7 @@ const Errdiv = styled.div`
   font-size: var(--font-small);
 `;
 
-function Login({ setAuth, setSide }) {
+function Login({ setAuth, setSide, setUser }) {
   const navi = useNavigate();
   const [check, setCheck] = useState(true);
   const [loginInfo, setLoginInfo] = useState({
@@ -92,6 +92,8 @@ function Login({ setAuth, setSide }) {
   const [errpw, setErrpw] = useState("");
   const [count, setCount] = useState(true);
 
+  // const [user, setUser] = useState({});
+
   useEffect(() => {
     setSide();
   }, []);
@@ -99,28 +101,6 @@ function Login({ setAuth, setSide }) {
   const handleInputValue = (key) => (e) => {
     console.log({ ...loginInfo, [key]: e.target.value });
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
-  };
-
-  const getItem = () => {
-    axios.defaults.withCredentials = true;
-    const token = localStorage.getItem("token");
-    return axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/members/profile`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log("get");
-      });
   };
 
   const funcLogin = () => {
@@ -139,26 +119,33 @@ function Login({ setAuth, setSide }) {
     }
 
     return axios
-      .post(
-        `${process.env.REACT_APP_API_URL}/auth/login`,
-        {
-          email: loginInfo.email,
-          password: loginInfo.password,
-        },
-        { withCredentials: true }
-      )
+      .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
+        email: loginInfo.email,
+        password: loginInfo.password,
+      })
       .then((res) => {
-        console.log(res.data);
-        localStorage.setItem(`token`, res.headers.get("Authorization"));
-        localStorage.getItem("token");
-
-        setCount(true);
+        // console.log(res.headers.get("Authorization"));
+        // console.log(res.config.headers);
+        // console.log(res);
         setAuth(true);
         setSide(true);
         setErrMessage("");
         setErrpw("");
         navi("/");
-        getItem();
+        setCount(true);
+        localStorage.setItem("token", res.headers.get("Authorization")); //localStorage.getItem("token")
+
+        // 로그인 시 member 정보 받아오는 axios 작성
+        axios
+          .get(`${process.env.REACT_APP_API_URL}/members/profile`, {
+            headers: {
+              Authorization: localStorage.getItem("token"),
+            },
+          })
+          .then((res) => {
+            setUser(res.data);
+            console.log(res);
+          });
       })
       .catch((err) => {
         console.log(err);

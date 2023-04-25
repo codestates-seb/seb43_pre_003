@@ -91,7 +91,7 @@ const TabContent = styled.div`
   width: 100%;
 `;
 
-function MyPage({ auth, setAuth }) {
+function MyPage({ user, setUser, setAuth }) {
   const [currentTab, setCurrentTab] = useState(0);
 
   const tabArr = [
@@ -100,7 +100,7 @@ function MyPage({ auth, setAuth }) {
     {
       id: 2,
       name: "Settings",
-      content: <Settings auth={auth} setAuth={setAuth} />,
+      content: <Settings user={user} setUser={setUser} setAuth={setAuth} />,
     },
   ];
 
@@ -112,8 +112,7 @@ function MyPage({ auth, setAuth }) {
             <div>
               <img src={ProfileImg} alt="user profile"></img>
               <ProfileTxt>
-                {/* userName 가져오기 */}
-                <div>User name</div>
+                <div>{user.userName}</div>
                 <div>
                   <WelcomeImg />
                   <p>Welcome stackoverflow</p>
