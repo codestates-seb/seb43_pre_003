@@ -72,9 +72,6 @@ public class MemberService {
     }
     public Member deleteMember(Long memberId){
         Member deletMember = findVerifiedMember(memberId);
-        deletMember.setMemberStatus(Member.MemberStatus.MEMBER_QUIT);
-        deletMember.setModifiedAt(LocalDateTime.now());
-
         return memberRepository.save(deletMember);
     }
 

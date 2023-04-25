@@ -34,6 +34,8 @@ public class MemberDto {
         private String userName;
         private String password;
         private Member.MemberStatus memberStatus;
+        private int questionCount;
+        private int answerCount;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
 //        private Object profileImage;

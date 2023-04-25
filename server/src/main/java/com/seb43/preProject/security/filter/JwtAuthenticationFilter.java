@@ -50,12 +50,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain chain,
                                             Authentication authResult) {
         Member member = (Member) authResult.getPrincipal();
-
+        System.out.println("=".repeat(25) + member);
         String accessToken = delegateAccessToken(member);
         String refreshToken = delegateRefreshToken(member);
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
+
     }
     private String delegateAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();

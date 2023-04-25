@@ -1,5 +1,6 @@
 package com.seb43.preProject.member.entity;
 
+import com.seb43.preProject.answer.entity.Answer;
 import com.seb43.preProject.question.entity.Question;
 import com.seb43.preProject.question.entity.Votes;
 
@@ -41,6 +42,8 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Question> questions = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    private List<Answer> answers = new ArrayList<>();
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Votes> votesList = new ArrayList<>();
     @Enumerated(value = EnumType.STRING)

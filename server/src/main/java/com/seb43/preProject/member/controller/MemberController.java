@@ -37,7 +37,7 @@ public class MemberController {
     public ResponseEntity getMember(){
         Long memberId = memberService.findSecurityContextHolderMemberId();
         Member member = memberService.findVerifiedMember(memberId);
-
+        System.out.println(member.getQuestions().size());
         return new ResponseEntity<>((memberMapper.memberToMemberResponse(member)),HttpStatus.OK);
 
     }

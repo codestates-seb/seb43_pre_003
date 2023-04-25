@@ -15,7 +15,6 @@ public class MemberResponseDto {
     private long memberId;
     private String email;
     private String userName;
-    private String password;
 //    private Object profileImage;
 
 }

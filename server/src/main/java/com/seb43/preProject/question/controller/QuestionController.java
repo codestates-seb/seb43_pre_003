@@ -106,6 +106,6 @@ public class QuestionController {
             findUri = findUri.substring(0, findUri.length() - 1);
         }
         findUri = findUri.replace("/currentUri", "");
-        return "http://ec2-54-180-100-255.ap-northeast-2.compute.amazonaws.com:8080/" + findUri;
+        return "http://ec2-54-180-100-255.ap-northeast-2.compute.amazonaws.com:8080" + findUri;
     }
 }
