@@ -67,8 +67,8 @@ public class SecurityConfiguration {
                             .antMatchers(HttpMethod.GET, "/question").permitAll()
                             .antMatchers(HttpMethod.DELETE, "/question/**/**").hasRole("USER")
                             .antMatchers(HttpMethod.GET, "/question/search").permitAll()
-//                            .antMatchers(HttpMethod.GET, "/question/**/**/vote/up").permitAll()
-//                            .antMatchers(HttpMethod.GET, "/question/**/**/vote/down").permitAll()
+                            .antMatchers(HttpMethod.GET, "/question/**/**/vote/up").hasRole("USER")
+                            .antMatchers(HttpMethod.GET, "/question/**/**/vote/down").hasRole("USER")
 //                            .antMatchers(HttpMethod.GET, "/question/currentUri/**").permitAll()
 
                             .antMatchers(HttpMethod.POST, "/question/**").hasRole("USER")
@@ -82,10 +82,7 @@ public class SecurityConfiguration {
                             .antMatchers(HttpMethod.PATCH, "/comment/answer/**/**").hasRole("USER")
                             .antMatchers(HttpMethod.DELETE, "/comment/question/**/**/**").hasRole("USER")
                             .antMatchers(HttpMethod.DELETE, "/comment/**/answer/**/**/**").hasRole("USER")
-
-
-
-
+                                    .anyRequest().permitAll()
                     );
             return http.build();
         }
@@ -106,7 +103,7 @@ public class SecurityConfiguration {
             configuration.setAllowedHeaders(Arrays.asList("*"));
             configuration.setAllowCredentials(true);
             configuration.addAllowedHeader("*");
-            configuration.addExposedHeader("*");
+            configuration.addExposedHeader("*, Authorization");
 
             UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
             source.registerCorsConfiguration("/**", configuration);
