@@ -7,6 +7,7 @@ import Logout from "./style/img/ic-menu.png";
 import Inbox from "./style/img/ic-inbox.png";
 import Trophy from "./style/img/ic- trophy.png";
 import Que from "./style/img/ic-question.png";
+// /import axios from "axios";
 // import { useEffect } from "react";
 
 const Container = styled.div`
@@ -158,6 +159,11 @@ const IconDiv = styled.div`
 `;
 
 function Header({ auth, setAuth, setSide }) {
+  const logout = () => {
+    setAuth(!auth);
+    localStorage.removeItem("token");
+  };
+
   return (
     <>
       <Container>
@@ -198,7 +204,9 @@ function Header({ auth, setAuth, setSide }) {
                 <Img src={Logo} alt="" />
               </LogoBtn>
             </Link>
-            <ProductBtn>Product</ProductBtn>
+            <Link to="/test">
+              <ProductBtn>Product</ProductBtn>
+            </Link>
             <LoginInput />
             <ProfileNumber>
               <ProfileButton />
@@ -213,7 +221,7 @@ function Header({ auth, setAuth, setSide }) {
             <IconDiv>
               <img src={Que} alt="" />
             </IconDiv>
-            <LogoutBtn onClick={() => setAuth(!auth)}>
+            <LogoutBtn onClick={logout}>
               <img src={Logout} alt=""></img>
             </LogoutBtn>
           </HeaderBox>

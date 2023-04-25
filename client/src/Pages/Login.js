@@ -101,13 +101,30 @@ function Login({ setAuth, setSide }) {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
 
+  const getItem = () => {
+    axios.defaults.withCredentials = true;
+    const token = localStorage.getItem("token");
+    return axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/members/profile`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("get");
+      });
+  };
+
   const funcLogin = () => {
     axios.defaults.withCredentials = true;
-
-    // const headers = {
-    //   "Access-Control-Allow-Origin": "*",
-    //   "Content-Type": "application/json",
-    // };
 
     if (loginInfo.email.length < 1) {
       setErrMessage("아이디를 입력하세요.");
@@ -123,7 +140,7 @@ function Login({ setAuth, setSide }) {
 
     return axios
       .post(
-        `${process.env.REACT_APP_API_URL}auth/login`,
+        `${process.env.REACT_APP_API_URL}/auth/login`,
         {
           email: loginInfo.email,
           password: loginInfo.password,
@@ -131,13 +148,17 @@ function Login({ setAuth, setSide }) {
         { withCredentials: true }
       )
       .then((res) => {
-        localStorage.setItem("token", res.data.jwt);
+        console.log(res.data);
+        localStorage.setItem(`token`, res.headers.get("Authorization"));
+        localStorage.getItem("token");
+
         setCount(true);
         setAuth(true);
         setSide(true);
         setErrMessage("");
         setErrpw("");
         navi("/");
+        getItem();
       })
       .catch((err) => {
         console.log(err);
@@ -147,12 +168,6 @@ function Login({ setAuth, setSide }) {
         setErrMessage("이메일 또는 패스워드가 올바르지 않습니다.");
       });
   };
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      navi("/");
-    }
-  }, []);
 
   return (
     <>

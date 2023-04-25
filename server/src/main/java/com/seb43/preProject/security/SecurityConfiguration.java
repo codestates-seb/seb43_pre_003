@@ -2,10 +2,15 @@ package com.seb43.preProject.security;
 
 import com.seb43.preProject.security.filter.JwtAuthenticationFilter;
 import com.seb43.preProject.security.filter.JwtVerificationFilter;
+import com.seb43.preProject.security.handler.MemberAccessDeniedHandler;
+import com.seb43.preProject.security.handler.MemberAuthenticationEntryPoint;
+import com.seb43.preProject.security.handler.MemberAuthenticationFailureHandler;
+import com.seb43.preProject.security.handler.MemberAuthenticationSuccessHandler;
 import com.seb43.preProject.security.jwt.JwtTokenizer;
 import com.seb43.preProject.security.util.CustomAuthorityUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -40,12 +45,47 @@ public class SecurityConfiguration {
                     .csrf().disable()
                     .cors().configurationSource(corsConfigurationSource())
                     .and()
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .and()
                     .formLogin().disable()
                     .httpBasic().disable()
+                    .exceptionHandling()
+                    .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
+                    .accessDeniedHandler(new MemberAccessDeniedHandler())
+                    .and()
                     .apply(new CustomFilterConfigurer())
                     .and()
                     .authorizeHttpRequests(authorize -> authorize
-                            .anyRequest().permitAll()
+                            .antMatchers(HttpMethod.POST, "/members/join").permitAll()
+                            .antMatchers(HttpMethod.GET, "/members/**/profile").hasRole("USER")
+                            .antMatchers(HttpMethod.PATCH, "/members/**/profile").hasRole("USER")
+                            .antMatchers(HttpMethod.DELETE, "/members/**/profile/delete").hasRole("USER")
+
+                            .antMatchers(HttpMethod.POST, "/question").hasRole("USER")
+                            .antMatchers(HttpMethod.PATCH, "/question/**/edit").hasRole("USER")
+                            .antMatchers(HttpMethod.GET, "/question/**").permitAll()
+                            .antMatchers(HttpMethod.GET, "/question").permitAll()
+                            .antMatchers(HttpMethod.DELETE, "/question/**/**").hasRole("USER")
+                            .antMatchers(HttpMethod.GET, "/question/search").permitAll()
+//                            .antMatchers(HttpMethod.GET, "/question/**/**/vote/up").permitAll()
+//                            .antMatchers(HttpMethod.GET, "/question/**/**/vote/down").permitAll()
+//                            .antMatchers(HttpMethod.GET, "/question/currentUri/**").permitAll()
+
+                            .antMatchers(HttpMethod.POST, "/question/**").hasRole("USER")
+                            .antMatchers(HttpMethod.PATCH, "/question/**/**/edit").hasRole("USER")
+                            .antMatchers(HttpMethod.GET, "/question/**/answers").permitAll()
+                            .antMatchers(HttpMethod.DELETE, "/question/**/answers/**/**").hasRole("USER")
+
+                            .antMatchers(HttpMethod.POST, "/comment/question/**").hasRole("USER")
+                            .antMatchers(HttpMethod.POST, "/comment/answer/**").hasRole("USER")
+                            .antMatchers(HttpMethod.PATCH, "/comment/question/**/**").hasRole("USER")
+                            .antMatchers(HttpMethod.PATCH, "/comment/answer/**/**").hasRole("USER")
+                            .antMatchers(HttpMethod.DELETE, "/comment/question/**/**/**").hasRole("USER")
+                            .antMatchers(HttpMethod.DELETE, "/comment/**/answer/**/**/**").hasRole("USER")
+
+
+
+
                     );
             return http.build();
         }
@@ -68,7 +108,6 @@ public class SecurityConfiguration {
             configuration.addAllowedHeader("*");
             configuration.addExposedHeader("*");
 
-            configuration.validateAllowCredentials();
             UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
             source.registerCorsConfiguration("/**", configuration);
             return source;
@@ -77,15 +116,15 @@ public class SecurityConfiguration {
         public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
             @Override
             public void configure(HttpSecurity builder) throws Exception {
-                AuthenticationManager authenticationManager =
-                        builder.getSharedObject(AuthenticationManager.class);
+                AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-                JwtAuthenticationFilter jwtAuthenticationFilter =
-                        new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
-
+                JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
                 jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login");
+                jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
+                jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
                 JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtil);
+
                 builder
                         .addFilter(jwtAuthenticationFilter)
                         .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);

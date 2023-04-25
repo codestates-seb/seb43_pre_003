@@ -54,7 +54,7 @@ public class AnswerController {
                 mapper.AnswerToListResponse(service.AllAnswer(questionId)), HttpStatus.OK
         );
     }
-    @DeleteMapping("/{question_id}/answer/{answer_id}")
+    @DeleteMapping("/{question_id}/{answer_id}")
     public ResponseEntity deleteAnswer (@PathVariable("question_id") @Positive long questionId,
                                         @PathVariable("answer_id") @Positive long answerId) {
         service.deleteAnswer(questionId, answerId);
