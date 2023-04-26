@@ -11,10 +11,12 @@ const Main = styled.main`
 
 const Section2 = styled.section`
   flex-grow: 1;
-  p {
+  > p > p {
     font-size: 15px;
     font-weight: 500;
     line-height: 22.5px;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 `;
 
@@ -32,38 +34,28 @@ const List = styled.main`
   width: 100%;
 `;
 
-const Answer = ({ answers, questionId, auth }) => {
+const Answer = ({ questionId, answers }) => {
   if (!answers) {
     return null;
   }
   return (
     <List>
-      {answers.map((answer) => (
-        <Main key={answer.answerId}>
-          <Section2>
-            <div>
-              <div>
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: answer.content,
-                  }}
-                />
-              </div>
-            </div>
-            <Section3>
-              <Sharedomain
-                questionId={questionId}
-                answerId={answer.answerId}
-                auth={auth}
-              />
-              <AuthorProfile
-                createdAt={answer.createdAt}
-                userName={answer.userName}
-              />
-            </Section3>
-          </Section2>
-        </Main>
-      ))}
+      <Main key={answers.answerId}>
+        <Section2>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: answers.content,
+            }}
+          />
+          <Section3>
+            <Sharedomain questionId={questionId} answerId={answers.answerId} />
+            <AuthorProfile
+              createdAt={answers.createdAt}
+              userName={answers.userName}
+            />
+          </Section3>
+        </Section2>
+      </Main>
     </List>
   );
 };

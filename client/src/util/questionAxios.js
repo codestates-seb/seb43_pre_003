@@ -28,7 +28,7 @@ const questionAxios = (url) => {
     fetchData();
   }, [url]);
 
-  return [lists, isPending, error];
+  return [lists, isPending, error, setLists];
 };
 
 export default questionAxios;

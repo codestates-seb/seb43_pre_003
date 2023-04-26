@@ -136,15 +136,16 @@ const WarningText = styled.div`
   font-size: 12px;
 `;
 
-const QuestionDetailpage = ({ auth }) => {
+const QuestionDetailpage = () => {
   const { questionId } = useParams();
-  // console.log(questionId);
-  // const navigate = useNavigate();
 
-  const [list, setLists] = questionAxios(
+  const arr = questionAxios(
     `${process.env.REACT_APP_API_URL}/question/${questionId}`
   );
-  // console.log(list);
+
+  const list = arr[0];
+  const setLists = arr[3];
+
   const [answerValue, setAnswerValue] = useState("");
 
   const [zeroeditorError, setzeroEditorError] = useState(false);
@@ -194,7 +195,7 @@ const QuestionDetailpage = ({ auth }) => {
         setAnswerValue("");
       })
       .catch((err) => {
-        console.err("Failed to save edit:", err);
+        console.log("Failed to save edit:", err);
       });
   };
 
@@ -241,7 +242,7 @@ const QuestionDetailpage = ({ auth }) => {
                     <TagDiv>kind of beauty</TagDiv>
                   </Tags>
                   <Section3>
-                    <Sharedomain questionId={questionId} auth={auth} />
+                    <Sharedomain questionId={questionId} />
                     <AuthorProfile
                       createdAt={list.data.createdAt}
                       userName={list.data.userName}
@@ -252,7 +253,11 @@ const QuestionDetailpage = ({ auth }) => {
               <Header2>{list.data.answerCount} Answers</Header2>
               {/* answer 등록 시 map으로 돌려서 받아오기 */}
               {list.data.answers.map((el) => (
-                <Answer key={el.answersId} answers={el} />
+                <Answer
+                  key={el.answerId}
+                  answers={el}
+                  questionId={questionId}
+                />
               ))}
 
               <Header2>Your Answer</Header2>
@@ -270,7 +275,7 @@ const QuestionDetailpage = ({ auth }) => {
                     variant="mediumBlue"
                     size="custom"
                     width="130px"
-                    onClick={() => AnswerCreateClick(questionId)}
+                    onClick={() => AnswerCreateClick()}
                   >
                     Post your Answer
                   </Button>
