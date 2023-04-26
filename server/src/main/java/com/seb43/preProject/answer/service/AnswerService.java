@@ -43,19 +43,19 @@ public class AnswerService {
         Question question = questionService.verifyQuestion(answer.getQuestion().getQuestionId());
 
         Long memberId = memberService.findSecurityContextHolderMemberId();
-        Member member = new Member();
-        member.setMemberId(memberId);
+//        Member member = new Member();
+//        member.setMemberId(memberId);
 
         verifyQuestionAnswer(answer.getAnswerId(), question);
 
-        answer.setMember(member);
+//        answer.setMember(member);
 
         Answer find = existsAnswer(answer.getAnswerId());
-        answer.setUserName(find.getUserName());
+//        answer.setUserName(find.getUserName());
 
         if (memberId.equals(find.getMember().getMemberId())) {
-            Optional.ofNullable(answer.getContent()).ifPresent(content -> answer.setContent(content));
-            return repository.save(answer);
+            Optional.ofNullable(answer.getContent()).ifPresent(content -> find.setContent(content));
+            return repository.save(find);
         }
         else throw new BusinessLogicException(ExceptionCode.ANSWER_NOT_MEMBER);
     }

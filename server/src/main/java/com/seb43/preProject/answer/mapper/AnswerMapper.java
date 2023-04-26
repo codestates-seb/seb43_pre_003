@@ -6,6 +6,7 @@ import com.seb43.preProject.question.entity.Question;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
@@ -28,9 +29,12 @@ public interface AnswerMapper {
         String content = answer.getContent();
         String userName = answer.getUserName();
         long answerId = answer.getAnswerId();
+        LocalDateTime createAt = answer.getCreatedAt();
+        LocalDateTime modifiedAt = answer.getModifiedAt();
+
 
         AnswerDto.Response response = new AnswerDto.Response(
-                answerId, content, userName, memberId, questionId, answer.getCreatedAt(), answer.getModifiedAt()
+                answerId, content, userName, memberId, questionId, createAt, modifiedAt
         );
         return response;
     }
