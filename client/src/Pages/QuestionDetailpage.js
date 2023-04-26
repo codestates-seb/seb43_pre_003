@@ -167,6 +167,9 @@ const QuestionDetailpage = () => {
   const AnswerCreateClick = () => {
     handlezeroEditorError();
     handlethirtyEditorError();
+    if (answerValue.length <= 0 || answerValue.length >= 30) {
+      return;
+    }
 
     axios
       .post(
