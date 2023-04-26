@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class QuestionResponseDto {
-    @Positive
     private long questionId;
+    private long memberId;
     private String title;
     private String content;
     private String userName;
