@@ -38,9 +38,7 @@ public interface QuestionMapper {
                         answer.getContent(),
                         answer.getUserName(),
                         answer.getMember().getMemberId(),
-                        answer.getQuestion().getQuestionId(),
-                        answer.getCreatedAt(),
-                        answer.getModifiedAt()
+                        answer.getQuestion().getQuestionId()
                 ))
                 .sorted(Comparator.comparing(a -> a.getAnswerId()))
                 .collect(Collectors.toList());

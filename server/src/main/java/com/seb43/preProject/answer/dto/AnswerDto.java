@@ -32,7 +32,5 @@ public class AnswerDto {
             private String userName;
             private long memberId;
             private long questionId;
-            private LocalDateTime createdAt;
-            private LocalDateTime modifiedAt;
         }
     }
