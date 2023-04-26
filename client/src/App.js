@@ -18,6 +18,8 @@ import axios from "axios";
 
 const AppWrap = styled.div`
   width: 100vw;
+  display: flex;
+  flex-direction: column;
 `;
 
 function App() {
@@ -55,34 +57,32 @@ function App() {
           user={user}
         />
         {side ? (
-          <div className="wrap">
-            <div className="container">
-              <Nav />
-              <Routes>
-                <Route path="/" element={<QuestionPage auth={auth} />} />
+          <div className="container">
+            <Nav />
+            <Routes>
+              <Route path="/" element={<QuestionPage auth={auth} />} />
 
-                <Route
-                  path="/mypage"
-                  element={
-                    <MyPage user={user} setUser={setUser} setAuth={setAuth} />
-                  }
-                />
-                <Route path="/ask" element></Route>
-                <Route path="/question/ask" element={<AskQuestion />} />
-                <Route
-                  path="question/:questionId"
-                  element={<QuestionDetailpage auth={auth} user={user} />}
-                />
-                <Route
-                  path="/question/:questionId/:answerId/edit"
-                  element={<AnswerEditpage />}
-                />
-                <Route
-                  path="/question/:questionId/edit"
-                  element={<QuestionEditpage />}
-                />
-              </Routes>
-            </div>
+              <Route
+                path="/mypage"
+                element={
+                  <MyPage user={user} setUser={setUser} setAuth={setAuth} />
+                }
+              />
+              <Route path="/ask" element></Route>
+              <Route path="/question/ask" element={<AskQuestion />} />
+              <Route
+                path="question/:questionId"
+                element={<QuestionDetailpage auth={auth} user={user} />}
+              />
+              <Route
+                path="/question/:questionId/:answerId/edit"
+                element={<AnswerEditpage />}
+              />
+              <Route
+                path="/question/:questionId/edit"
+                element={<QuestionEditpage />}
+              />
+            </Routes>
           </div>
         ) : null}
 
