@@ -4,7 +4,7 @@ import axios from "axios";
 import Button from "../style/Button";
 import Sheet from "./Sheet";
 
-const Sharedomain = ({ questionId, answerId }) => {
+const Sharedomain = ({ questionId, answerId, auth }) => {
   const navigate = useNavigate();
   const [showSheet, setShowSheet] = useState(false);
 
@@ -32,7 +32,8 @@ const Sharedomain = ({ questionId, answerId }) => {
         },
       })
       .then(() => {
-        navigate(`/question/${questionId}`);
+        //navigate(`/question/${questionId}`);
+        window.location.href = `http://localhost:3000/question/${questionId}`;
       })
       .catch((error) => {
         console.error("Error", error);
@@ -45,28 +46,32 @@ const Sharedomain = ({ questionId, answerId }) => {
 
   return (
     <div>
-      <Button
-        variant="share"
-        size="custom"
-        padding="0px 3px 0px 3px"
-        onClick={handleShareClick}
-      >
-        Share
-      </Button>
-      {answerId ? (
+      {
+        <Button
+          variant="share"
+          size="custom"
+          padding="0px 3px 0px 3px"
+          onClick={handleShareClick}
+        >
+          Share
+        </Button>
+      }
+      {auth && answerId ? (
         <Link to={`/question/${questionId}/${answerId}/edit`}>
           <Button variant="share" size="custom" padding="0px 3px 0px 3px">
             Edit
           </Button>
         </Link>
       ) : (
-        <Link to={`/question/${questionId}/edit`}>
-          <Button variant="share" size="custom" padding="0px 3px 0px 3px">
-            Edit
-          </Button>
-        </Link>
+        auth && (
+          <Link to={`/question/${questionId}/edit`}>
+            <Button variant="share" size="custom" padding="0px 3px 0px 3px">
+              Edit
+            </Button>
+          </Link>
+        )
       )}
-      {answerId ? (
+      {auth && answerId ? (
         <Button
           variant="share"
           size="custom"
@@ -76,14 +81,16 @@ const Sharedomain = ({ questionId, answerId }) => {
           Delete
         </Button>
       ) : (
-        <Button
-          variant="share"
-          size="custom"
-          onClick={() => handleqDeleteClick(questionId)}
-          padding="0px 3px 0px 3px"
-        >
-          Delete
-        </Button>
+        auth && (
+          <Button
+            variant="share"
+            size="custom"
+            onClick={() => handleqDeleteClick(questionId)}
+            padding="0px 3px 0px 3px"
+          >
+            Delete
+          </Button>
+        )
       )}
       {showSheet && <Sheet />}
     </div>

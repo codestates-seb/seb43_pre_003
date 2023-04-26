@@ -6,7 +6,7 @@ import Answer from "../Components/QuestionDetail/Answser";
 import Button from "../Components/style/Button";
 import Editor from "../Components/QuestionDetail/Editor";
 
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import dateCalculate from "../util/dateCalculate";
@@ -128,10 +128,10 @@ const WarningText = styled.div`
   font-size: 12px;
 `;
 
-const QuestionDetailpage = ({ auth }) => {
+const QuestionDetailpage = ({ auth, user }) => {
   const { questionId } = useParams();
   console.log(questionId);
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const [list, isPending, error] = questionAxios(
     `${process.env.REACT_APP_API_URL}/question/${questionId}`
@@ -153,25 +153,34 @@ const QuestionDetailpage = ({ auth }) => {
       setthirtyEditorError(false);
     }
   };
+
   console.log(answerValue);
+
   const AnswerCreateClick = async (questionId) => {
     handlezeroEditorError();
     handlethirtyEditorError();
-    try {
-      await axios.post(
-        `${process.env.REACT_APP_API_URL}/question/${questionId}`,
-        {
-          content: answerValue,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
 
-      setAnswerValue(answerValue);
-      navigate(`/question/${questionId}`);
+    if (zeroeditorError || thirtyeditorError) {
+      return;
+    }
+
+    try {
+      if (answerValue.length > 0 && answerValue.length > 29) {
+        await axios.post(
+          `${process.env.REACT_APP_API_URL}/question/${questionId}`,
+          {
+            content: answerValue,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        // navigate(`/question/${questionId}`);
+        window.location.href = `http://localhost:3000/question/${questionId}`;
+      }
     } catch (error) {
       console.error("Failed to save edit:", error);
     }
@@ -223,7 +232,11 @@ const QuestionDetailpage = ({ auth }) => {
                     </div>
                   </div>
                   <Section3>
-                    <Sharedomain questionId={questionId} auth={auth} />
+                    <Sharedomain
+                      questionId={questionId}
+                      auth={auth}
+                      user={user}
+                    />
                     <AuthorProfile
                       createdAt={list.data.createdAt}
                       userName={list.data.userName}
@@ -234,7 +247,12 @@ const QuestionDetailpage = ({ auth }) => {
               <Header2>
                 <h1>{list.data.answerCount} Answers</h1>
               </Header2>
-              <Answer answers={list.data.answers} questionId={questionId} />
+              <Answer
+                answers={list.data.answers}
+                questionId={questionId}
+                auth={auth}
+                user={user}
+              />
               <h2>Your Answer</h2>
               <div>
                 <Editor value={answerValue} onChange={setAnswerValue} />
