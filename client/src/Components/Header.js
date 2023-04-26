@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "./style/Button";
 import Logo from "./style/img/logo.png";
@@ -159,9 +159,12 @@ const IconDiv = styled.div`
 `;
 
 function Header({ auth, setAuth, setSide }) {
+  const navi = useNavigate();
   const logout = () => {
     setAuth(!auth);
     localStorage.removeItem("token");
+    navi("/");
+    alert("로그아웃 되었습니다.");
   };
 
   return (
@@ -174,9 +177,7 @@ function Header({ auth, setAuth, setSide }) {
                 <Img src={Logo} alt="" />
               </LogoBtn>
             </Link>
-            <Link to="/test">
-              <ProductBtn onClick={() => setSide(true)}>Product</ProductBtn>
-            </Link>
+            <ProductBtn>Product</ProductBtn>
             <Input />
             <Link to="/Login">
               <Button
@@ -204,9 +205,9 @@ function Header({ auth, setAuth, setSide }) {
                 <Img src={Logo} alt="" />
               </LogoBtn>
             </Link>
-            <Link to="/test">
-              <ProductBtn>Product</ProductBtn>
-            </Link>
+
+            <ProductBtn>Product</ProductBtn>
+
             <LoginInput />
             <Link to="/mypage">
               <ProfileNumber>

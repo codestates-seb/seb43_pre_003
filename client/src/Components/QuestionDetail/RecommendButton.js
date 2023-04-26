@@ -45,43 +45,46 @@ const Total = styled.div`
 `;
 
 const RecommendButton = ({ votes, questionId }) => {
-  const [voteCount, setVoteCount] = useState(votes);
+  const [newVote, setVotes] = useState(votes);
   const [activeButton, setActiveButton] = useState(null);
 
-  const Voteup = async (questionId) => {
-    try {
-      setActiveButton("up");
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/question/${questionId}/vote/up`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      const newVoteCount = response.data.voteCount;
-      setVoteCount(newVoteCount);
-    } catch (error) {
-      console.error("Failed to save edit:", error);
-    }
+  const Voteup = (questionId) => {
+    setActiveButton("up");
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/question/${questionId}/vote/up`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        setVotes(response.data.data.votes);
+        console.log(response.data.votes);
+      })
+      .catch((error) => {
+        console.error("Failed to save edit:", error);
+      });
   };
 
   const Votedown = async (questionId) => {
-    try {
-      setActiveButton("down");
-      const response = await axios.get(
+    setActiveButton("down");
+    axios
+      .get(
         `${process.env.REACT_APP_API_URL}/question/${questionId}/vote/down`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
-      );
-      const newVoteCount = response.data.voteCount;
-      setVoteCount(newVoteCount);
-    } catch (error) {
-      console.error("Failed to save edit:", error);
-    }
+      )
+      .then((response) => {
+        console.log(response);
+        setVotes(response.data.data.votes);
+        console.log(response.data.votes);
+      })
+      .catch((error) => {
+        console.error("Failed to save edit:", error);
+      });
   };
 
   return (
@@ -92,7 +95,9 @@ const RecommendButton = ({ votes, questionId }) => {
       >
         <ArrowUp active={activeButton === "up"} />
       </ArrowButton>
-      <Total>{voteCount}</Total>
+      <Total>
+        <span>{newVote}</span>
+      </Total>
       <ArrowButton
         onClick={() => Votedown(questionId)}
         disabled={activeButton === "up" || activeButton === "down"}
