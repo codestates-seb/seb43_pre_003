@@ -12,7 +12,7 @@ const Sharedomain = ({ questionId, answerId }) => {
     axios
       .delete(`${process.env.REACT_APP_API_URL}/question/${questionId}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: localStorage.getItem("token"),
         },
       })
       .then(() => {

@@ -167,17 +167,13 @@ const QuestionDetailpage = () => {
   const AnswerCreateClick = () => {
     handlezeroEditorError();
     handlethirtyEditorError();
-    if (answerValue.length <= 0 || answerValue.length >= 30) {
-      return;
-    }
-
-    if (answerValue.length === 0 || answerValue.length <= 30) {
+    if (answerValue.length <= 0 || answerValue.length <= 30) {
       return;
     }
 
     axios
       .post(
-        `${process.env.REACT_APP_API_URL}/question/${questionId}`,
+        `${process.env.REACT_APP_API_URL}/question/${questionId}`, // corrected string interpolation
         {
           content: answerValue,
         },
@@ -256,7 +252,6 @@ const QuestionDetailpage = () => {
                 </Section2>
               </Main>
               <Header2>{list.data.answerCount} Answers</Header2>
-              {/* answer 등록 시 map으로 돌려서 받아오기 */}
               {list.data.answers.map((el) => (
                 <Answer
                   key={el.answerId}
