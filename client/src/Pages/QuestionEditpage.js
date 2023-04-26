@@ -103,7 +103,8 @@ const QuestionEditpage = () => {
   const handleEditClick = async (questionId) => {
     handleTitleError();
     handleEditorError();
-
+    console.log(titleValue);
+    console.log(editorValue);
     try {
       if (titleValue.length > 14 && editorValue.length > 29) {
         await axios.patch(
@@ -115,7 +116,7 @@ const QuestionEditpage = () => {
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: localStorage.getItem("token"),
             },
           }
         );

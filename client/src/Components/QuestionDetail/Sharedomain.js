@@ -4,7 +4,7 @@ import axios from "axios";
 import Button from "../style/Button";
 import Sheet from "./Sheet";
 
-const Sharedomain = ({ questionId, answerId, auth }) => {
+const Sharedomain = ({ questionId, answerId }) => {
   const navigate = useNavigate();
   const [showSheet, setShowSheet] = useState(false);
 
@@ -12,7 +12,7 @@ const Sharedomain = ({ questionId, answerId, auth }) => {
     axios
       .delete(`${process.env.REACT_APP_API_URL}/question/${questionId}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: localStorage.getItem("token"),
         },
       })
       .then(() => {
@@ -64,15 +64,13 @@ const Sharedomain = ({ questionId, answerId, auth }) => {
           </Button>
         </Link>
       ) : (
-        auth && (
-          <Link to={`/question/${questionId}/edit`}>
-            <Button variant="share" size="custom" padding="0px 3px 0px 3px">
-              Edit
-            </Button>
-          </Link>
-        )
+        <Link to={`/question/${questionId}/edit`}>
+          <Button variant="share" size="custom" padding="0px 3px 0px 3px">
+            Edit
+          </Button>
+        </Link>
       )}
-      {auth && answerId ? (
+      {answerId ? (
         <Button
           variant="share"
           size="custom"
