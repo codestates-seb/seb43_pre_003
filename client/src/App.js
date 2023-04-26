@@ -3,6 +3,7 @@ import GlobalStyles from "./GlobalStyles";
 import QuestionDetailpage from "./Pages/QuestionDetailpage";
 import styled from "styled-components";
 import QuestionPage from "./Pages/QuestionPage";
+import QuestionSearchPage from "./Pages/QuestionSearchPage";
 import QuestionEditpage from "./Pages/QuestionEditpage";
 import AnswerEditpage from "./Pages/AnswerEditpage";
 import MyPage from "./Pages/MyPage/MyPage";
@@ -27,6 +28,7 @@ function App() {
   const [side, setSide] = useState(true);
 
   const [user, setUser] = useState({});
+  const [search, setSearch] = useState("");
 
   // 자동로그인 작성(새로고침 시 로그인데이터 가지고있게)
   useEffect(() => {
@@ -55,21 +57,23 @@ function App() {
           side={side}
           setSide={setSide}
           user={user}
+          setSearch={setSearch}
         />
         {side ? (
           <div className="container">
             <Nav />
             <Routes>
-              <Route path="/" element={<QuestionPage auth={auth} />} />
-
               <Route
-                path="/mypage"
-                element={
-                  <MyPage user={user} setUser={setUser} setAuth={setAuth} />
-                }
+                path="/"
+                element={<QuestionPage auth={auth} searchValue={search} />}
               />
-              <Route path="/ask" element></Route>
+              <Route
+                path="/search"
+                element={<QuestionSearchPage auth={auth} />}
+              />
+
               <Route path="/question/ask" element={<AskQuestion />} />
+
               <Route
                 path="question/:questionId"
                 element={<QuestionDetailpage auth={auth} user={user} />}
@@ -81,6 +85,13 @@ function App() {
               <Route
                 path="/question/:questionId/edit"
                 element={<QuestionEditpage />}
+              />
+
+              <Route
+                path="/mypage"
+                element={
+                  <MyPage user={user} setUser={setUser} setAuth={setAuth} />
+                }
               />
             </Routes>
           </div>
