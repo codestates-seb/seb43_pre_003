@@ -12,6 +12,19 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  sql:
+    init:
+      data-locations: classpath*:db/h2/data.sql
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 779483876979-7vum4c629sll36cj7seff2spdc42spre.apps.googleusercontent.com
+            clientSecret: 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
+            scope:
+              - email
+              - profile
 
 mail:
   address:

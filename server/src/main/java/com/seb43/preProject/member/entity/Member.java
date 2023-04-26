@@ -26,7 +26,7 @@ public class Member {
     private String email;
     @Column(length = 100, nullable = false)
     private String userName;
-    @Column(nullable = false)
+    @Column
     private String password;
 
 //    @Column(length = 100, nullable = false)
@@ -50,6 +50,10 @@ public class Member {
     @Column
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
+    public Member(String email, String userName) {
+        this.email = email;
+        this.userName = userName;
+    }
     public enum MemberStatus {
         MEMBER_ACTIVE("활동중"),
         MEMBER_SLEEP("휴면 상태"),

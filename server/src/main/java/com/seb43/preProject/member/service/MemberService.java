@@ -1,15 +1,17 @@
 package com.seb43.preProject.member.service;
 
 
-import com.seb43.preProject.security.SecurityConfiguration;
 import com.seb43.preProject.security.util.CustomAuthorityUtil;
 import com.seb43.preProject.exception.BusinessLogicException;
 import com.seb43.preProject.exception.ExceptionCode;
 import com.seb43.preProject.member.dto.MemberPatchDto;
 import com.seb43.preProject.member.entity.Member;
 import com.seb43.preProject.member.repository.MemberRepository;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,33 +22,25 @@ import java.util.Optional;
 
 @Service
 public class MemberService {
-    private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
     private final CustomAuthorityUtil authorityUtils;
+    PasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public MemberService(PasswordEncoder passwordEncoder,
-                         MemberRepository memberRepository,
+    public MemberService(MemberRepository memberRepository,
                          CustomAuthorityUtil authorityUtils) {
-        this.passwordEncoder = passwordEncoder;
         this.memberRepository = memberRepository;
         this.authorityUtils = authorityUtils;
     }
-
-//    public Member createMember(Member member){
-//        Member creatMember = member;
-//        creatMember.setMemberStatus(Member.MemberStatus.MEMBER_ACTIVE);
-//        creatMember.setRoles(Member.Roles.ROLE_USER);
-//        return memberRepository.save(creatMember);
-//    }
     public Member createMember(Member member) {
     verifyMemberExists(member.getEmail());
-
-    String encryptedPassword = passwordEncoder.encode(member.getPassword());
+    if(member.getPassword()!=null)
+    {
+    String encryptedPassword = encoder.encode(member.getPassword());
     member.setPassword(encryptedPassword);
+    }
 
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
-
     return memberRepository.save(member);
 }
 
