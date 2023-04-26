@@ -24,7 +24,7 @@ const TextBox = styled.div`
   width: 422px;
   height: 300px;
   flex-direction: column;
-  margin: 0px 48px 0px 0px;
+  margin-right: 48px;
 `;
 
 const TextEl = styled.div`
@@ -51,7 +51,7 @@ const SignBox = styled.div`
 `;
 
 const HeaderSpan = styled.span`
-  font-size: var(--font-xx-large);
+  font-size: var(--font-x-large);
   font-weight: 400;
   margin-bottom: 32px;
 `;

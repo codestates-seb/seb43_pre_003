@@ -80,7 +80,7 @@ public class QuestionController {
     @GetMapping("/search")
     public ResponseEntity searchQuestionList(@Size(min = 1) @RequestParam(value = "title") String title,
                                              @Positive @RequestParam(defaultValue = "1") int page,
-                                             @Positive @RequestParam(defaultValue = "50") int size){
+                                             @Positive @RequestParam(defaultValue = "10") int size){
         Page<Question> questions = questionService.searchQuestions(title,page-1 , size);
         List<Question> content = questions.getContent();
 

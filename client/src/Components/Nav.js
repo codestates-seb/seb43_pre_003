@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Earth from "./style/img/ic-earth.png";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 const NavContainer = styled.div`
   flex-direction: column;
   width: 156px;
@@ -11,17 +12,22 @@ const NavContainer = styled.div`
   border-right: 1px solid var(--black-100);
 `;
 
-const DivBox = styled.div`
+const DivBox = styled.button`
   display: flex;
   align-items: center;
   width: 93%;
   height: 32px;
   padding-left: 23px;
-
+  background: #ffffff;
   font-size: var(--font-medium);
   font-weight: 400;
   cursor: pointer;
   &:hover {
+    font-weight: bold;
+
+    color: black;
+  }
+  &:active {
     font-weight: bold;
     background: #efefef;
     border-right: 4px solid var(--main-400);
@@ -29,7 +35,17 @@ const DivBox = styled.div`
   }
 `;
 
+const ActiveBox = styled(DivBox)`
+  font-weight: bold;
+  background: #efefef;
+  border-right: 4px solid var(--main-400);
+  color: black;
+`;
+
 const EarthDiv = styled(DivBox)`
+  padding-left: 0px;
+`;
+const ActEarthDiv = styled(ActiveBox)`
   padding-left: 0px;
 `;
 
@@ -54,19 +70,44 @@ const Span = styled.span`
 `;
 
 const Nav = () => {
+  const [nav, setNav] = useState("1");
+
+  useEffect(() => {
+    console.log(nav);
+  }, []);
+
   return (
     <NavContainer>
       <Span>PUBLIC</Span>
       <PublicBox>
         <Link to="/">
-          <EarthDiv>
-            <EarthImg src={Earth} alt="" />
-            Question
-          </EarthDiv>
+          {nav !== "1" ? (
+            <EarthDiv onClick={() => setNav("1")}>
+              <EarthImg src={Earth} alt="" />
+              Question
+            </EarthDiv>
+          ) : (
+            <ActEarthDiv>
+              <EarthImg src={Earth} alt="" />
+              Question
+            </ActEarthDiv>
+          )}
         </Link>
-        <DivBox>Tags</DivBox>
-        <DivBox>Users</DivBox>
-        <DivBox>Companies</DivBox>
+        {nav !== "2" ? (
+          <DivBox onClick={() => setNav("2")}>Tags</DivBox>
+        ) : (
+          <ActiveBox>Tags</ActiveBox>
+        )}
+        {nav !== "3" ? (
+          <DivBox onClick={() => setNav("3")}>Users</DivBox>
+        ) : (
+          <ActiveBox>Users</ActiveBox>
+        )}
+        {nav !== "4" ? (
+          <DivBox onClick={() => setNav("4")}>Companies</DivBox>
+        ) : (
+          <ActiveBox>Companies</ActiveBox>
+        )}
       </PublicBox>
     </NavContainer>
   );
