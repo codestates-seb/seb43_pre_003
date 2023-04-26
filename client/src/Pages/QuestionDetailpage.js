@@ -168,6 +168,10 @@ const QuestionDetailpage = () => {
     handlezeroEditorError();
     handlethirtyEditorError();
 
+    if (answerValue.length === 0 || answerValue.length <= 30) {
+      return;
+    }
+
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/question/${questionId}`,
