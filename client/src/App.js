@@ -12,7 +12,7 @@ import Footer from "./Components/Footer";
 import AskQuestion from "./Pages/AskQuestion";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/Signup";
-import Modaltest from "./Pages/ModalTest";
+
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -56,7 +56,7 @@ function App() {
               <Nav />
               <Routes>
                 <Route path="/" element={<QuestionPage auth={auth} />} />
-                <Route path="/test" element={<Modaltest />} />
+
                 <Route
                   path="/mypage"
                   element={
