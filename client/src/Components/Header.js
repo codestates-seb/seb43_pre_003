@@ -165,7 +165,7 @@ const IconDiv = styled.div`
   }
 `;
 
-function Header({ auth, setAuth, setSide, user, setSearch }) {
+function Header({ auth, setAuth, setSide, user, setSearch, searchValue }) {
   const navi = useNavigate();
 
   const handleSearchChange = (e) => {
@@ -174,7 +174,9 @@ function Header({ auth, setAuth, setSide, user, setSearch }) {
 
   const onKeyPress = (e) => {
     if (e.target.value.length !== 0 && e.key === "Enter") {
-      setSearch("");
+      console.log(e.target.value);
+      setSearch(e.target.value);
+      navi("/question/search");
     }
   };
 
@@ -226,7 +228,12 @@ function Header({ auth, setAuth, setSide, user, setSearch }) {
 
             <ProductBtn>Product</ProductBtn>
 
-            <LoginInput onChange={handleSearchChange} onKeyPress={onKeyPress} />
+            <LoginInput
+              onChange={handleSearchChange}
+              onKeyPress={onKeyPress}
+              value={searchValue}
+            />
+
             <Link to="/mypage">
               <ProfileNumber>
                 <ProfileImg />

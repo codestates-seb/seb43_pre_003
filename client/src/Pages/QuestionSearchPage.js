@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Pagination from "../Components/Pagination";
 import QuestionsList from "../Components/QuestionsList";
 import Aside from "../Components/Aside";
@@ -61,20 +61,26 @@ const NoQuestion = styled.div`
   height: 60vh;
 `;
 
-function QuestionsSearchPage({ auth }) {
+function QuestionsSearchPage({ auth, searchValue }) {
+  const navi = useNavigate();
+
   const [list, setList] = useState(0); // 총 아이템들
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지. default 값으로 1
   const [currentPosts, setCurrentPosts] = useState([]); // 현재 페이지에서 보여지는 아이템들
 
   useEffect(() => {
+    if (searchValue.length === 0) {
+      return navi("/");
+    }
     axios
       .get(
-        `${process.env.REACT_APP_API_URL}/question?page=${currentPage}&size=10`
-        // ${process.env.REACT_APP_API_URL}/question/search?title=테스트&page=${currentPage}
+        `${process.env.REACT_APP_API_URL}/question/search?title=${searchValue}&page=${currentPage}`
       )
       .then((res) => {
+        console.log(res.data);
         setList(res.data.pageInfo.totalElements);
         setCurrentPosts(res.data.data);
+        // setSearch("");
       })
       .catch((error) => {
         alert(("Failed to save edit:", error));
@@ -89,7 +95,7 @@ function QuestionsSearchPage({ auth }) {
     <>
       <QuestionWrap>
         <QuestionTitle>
-          <Title>All Questions</Title>
+          <Title>Search Questions</Title>
           {auth ? (
             <Link to="/question/ask">
               <Button variant="mediumBlue" size="question">
