@@ -39,7 +39,6 @@ function App() {
         .then((res) => {
           setAuth(true);
           setUser(res.data);
-          console.log(res);
         });
     }
   }, []);
