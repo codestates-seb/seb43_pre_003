@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import Editor from "../Components/QuestionDetail/Editor";
 import Button from "../Components/style/Button";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import questionAxios from "../util/questionAxios";
+//import questionAxios from "../util/questionAxios";
 
 const Container = styled.div`
   max-width: 1100px;
@@ -53,36 +53,53 @@ const WarningText = styled.div`
 const AnswerEditpage = () => {
   const { questionId, answerId } = useParams();
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   console.log(questionId);
   console.log(answerId);
 
-  //list.data.answers.findIndex((answer) => answer.answerId === answerIdToFind);
-
-  const [list, isPending, error] = questionAxios(
-    `${process.env.REACT_APP_API_URL}/question/${questionId}`
-  );
+  const [answers, setAnswers] = useState(null);
+  const [isPending, setIsPending] = useState(true);
+  const [error, setError] = useState(null);
   useEffect(() => {
-    if (list && list.data.answer) {
-      console.log(list.data.answers);
-    }
-  }, [list]);
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/question/${questionId}/answers`)
+      .then((res) => {
+        if (!res.data) {
+          throw new Error("No data found");
+        }
+        setAnswers(res.data);
+        setIsPending(false);
+        setError(null);
+      })
+      .catch((error) => {
+        setIsPending(false);
+        setError(error.message);
+      });
+  }, [questionId]);
+  console.log(answers);
+  const answerIdToFindNumber = Number(answerId);
+  const answerIndex = answers
+    ? answers.findIndex((answer) => answer.answerId === answerIdToFindNumber)
+    : -1;
+  console.log(answerIndex);
 
   useEffect(() => {
-    if (list && list.data.answer && list.data.answer[answerId]) {
-      setAEditorValue(list.answer[answerId].content);
+    if (answers && answerIndex !== -1 && answers[answerIndex]) {
+      setAEditorValue(answers[answerIndex].content);
     }
-  }, [list, answerId - 1, questionId]);
+  }, [answers, answerIndex]);
 
   const [aeditorValue, setAEditorValue] = useState("");
   const [zeroeditorError, setzeroEditorError] = useState(false);
   const [thirtyeditorError, setthirtyEditorError] = useState(false);
   console.log(aeditorValue);
+
   const handlezeroEditorError = () => {
     aeditorValue.length <= 0
       ? setzeroEditorError(true)
       : setzeroEditorError(false);
   };
+
   const handlethirtyEditorError = () => {
     if (aeditorValue.length > 0 && aeditorValue.length < 30) {
       setthirtyEditorError(true);
@@ -91,33 +108,33 @@ const AnswerEditpage = () => {
     }
   };
 
-  const answerEditClick = async (questionId, answerId) => {
+  const answerEditClick = (questionId, answerId) => {
     handlezeroEditorError();
     handlethirtyEditorError();
-    try {
-      await axios.patch(
+
+    axios
+      .patch(
         `${process.env.REACT_APP_API_URL}/question/${questionId}/${answerId}/edit`,
         {
-          question: {
-            answer: {
-              content: aeditorValue,
-            },
-          },
+          content: aeditorValue,
         },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
-      );
+      )
+      .then(() => {
+        console.log("Edit successfully saved!");
+        // console.log(response.data);
+        setAEditorValue(aeditorValue);
 
-      console.log("Edit successfully saved!");
-
-      setAEditorValue(aeditorValue);
-      navigate(`/question/${questionId}`);
-    } catch (error) {
-      console.error("Failed to save edit:", error);
-    }
+        // navigate(`/question/${questionId}`);
+        window.location.href = `http://localhost:3000/question/${questionId}`;
+      })
+      .catch((error) => {
+        console.error("Failed to save edit:", error);
+      });
   };
 
   return (
@@ -125,7 +142,7 @@ const AnswerEditpage = () => {
       <Container>
         {error && <div>{error}</div>}
         {isPending && <div>Loading...</div>}
-        {list && (
+        {answers && (
           <Contain>
             <Editbox>
               <p>

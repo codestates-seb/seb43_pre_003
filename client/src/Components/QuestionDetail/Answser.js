@@ -16,6 +16,7 @@ const Section2 = styled.section`
     font-size: 15px;
     font-weight: 500;
     line-height: 22.5px;
+    white-space: pre-line;
   }
 `;
 
@@ -33,7 +34,7 @@ const List = styled.main`
   width: 100%;
 `;
 
-const Answer = ({ answers, questionId, auth }) => {
+const Answer = ({ answers, questionId, auth, user }) => {
   if (!answers) {
     return null;
   }
@@ -56,6 +57,7 @@ const Answer = ({ answers, questionId, auth }) => {
                 questionId={questionId}
                 answerId={answer.answerId}
                 auth={auth}
+                user={user}
               />
               <AuthorProfile
                 createdAt={answer.createdAt}

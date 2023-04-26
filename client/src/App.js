@@ -10,6 +10,8 @@ import Nav from "./Components/Nav";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import AskQuestion from "./Pages/AskQuestion";
+// import questionAxios from "./util/questionAxios";
+// import HomeAside from "./Components/Aside";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/Signup";
 import Modaltest from "./Pages/ModalTest";
@@ -21,6 +23,9 @@ const AppWrap = styled.div`
 `;
 
 function App() {
+  // const [list, isPending, error] = questionAxios(
+  //   `http://ec2-54-180-100-255.ap-northeast-2.compute.amazonaws.com:8080/`
+  // );
   const [auth, setAuth] = useState(false);
   const [side, setSide] = useState(true);
 
@@ -43,7 +48,7 @@ function App() {
         });
     }
   }, []);
-
+  console.log(user);
   return (
     <AppWrap>
       <GlobalStyles />
@@ -67,7 +72,7 @@ function App() {
                 <Route path="/question/ask" element={<AskQuestion />} />
                 <Route
                   path="question/:questionId"
-                  element={<QuestionDetailpage />}
+                  element={<QuestionDetailpage auth={auth} user={user} />}
                 />
                 <Route
                   path="/question/:questionId/:answerId/edit"
@@ -96,7 +101,7 @@ function App() {
               />
             }
           />
-          <Route path="/signup" element={<SignUp setSide={setSide} />} />
+          <Route path="/signup" element={<SignUp setSide={setSide} />} index />
         </Routes>
         <Footer />
       </BrowserRouter>

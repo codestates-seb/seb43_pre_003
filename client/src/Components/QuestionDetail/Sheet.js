@@ -96,22 +96,24 @@ const Sheet = () => {
 
   return (
     <div>
-      <Div />
-      <Box>
-        <p>Share a link to this question</p>
-        <Input type="text" readOnly value={window.location.href}></Input>
-        <Inner>
-          <Button type="button" onClick={copyLink}>
-            copy link
-          </Button>
+      <div>
+        <Div />
+        <Box>
+          <p>Share a link to this question</p>
+          <Input type="text" readOnly value={window.location.href}></Input>
+          <Inner>
+            <Button type="button" onClick={copyLink}>
+              copy link
+            </Button>
 
-          <div>
-            <FButton>
-              <Img src={Facebook} alt="프로필 사진" />
-            </FButton>
-          </div>
-        </Inner>
-      </Box>
+            <div>
+              <FButton>
+                <Img src={Facebook} alt="프로필 사진" />
+              </FButton>
+            </div>
+          </Inner>
+        </Box>
+      </div>
     </div>
   );
 };
