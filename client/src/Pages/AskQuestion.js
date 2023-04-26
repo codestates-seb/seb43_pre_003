@@ -13,7 +13,7 @@ import { ReactComponent as PencilImg } from "../Components/style/img/img-spotPen
 const AskQuestionWrap = styled.section`
   padding: 30px;
   width: 100%;
-  /* min-height: 1050px; */
+  max-width: 1108px;
   min-height: 100%;
   padding-bottom: 64px;
 `;
@@ -23,6 +23,7 @@ const TitleArea = styled.div`
   align-items: center;
   width: 100%;
   height: 130px;
+  margin-bottom: 16px;
   background-image: url(${TitleBg});
   background-repeat: no-repeat;
   background-position: right bottom;
@@ -65,6 +66,8 @@ const Card = styled.div`
   > p {
     font-size: 12px;
     color: var(--black-700);
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 `;
 

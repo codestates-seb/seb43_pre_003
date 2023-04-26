@@ -165,8 +165,18 @@ const IconDiv = styled.div`
   }
 `;
 
-function Header({ auth, setAuth, setSide, user }) {
+function Header({ auth, setAuth, setSide, user, setSearch }) {
   const navi = useNavigate();
+
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const onKeyPress = (e) => {
+    if (e.target.value.length !== 0 && e.key === "Enter") {
+      setSearch("");
+    }
+  };
 
   const logout = () => {
     setAuth(!auth);
@@ -216,7 +226,7 @@ function Header({ auth, setAuth, setSide, user }) {
 
             <ProductBtn>Product</ProductBtn>
 
-            <LoginInput />
+            <LoginInput onChange={handleSearchChange} onKeyPress={onKeyPress} />
             <Link to="/mypage">
               <ProfileNumber>
                 <ProfileImg />
