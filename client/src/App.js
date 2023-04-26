@@ -12,7 +12,7 @@ import Footer from "./Components/Footer";
 import AskQuestion from "./Pages/AskQuestion";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/Signup";
-import Modaltest from "./Pages/ModalTest";
+
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -60,7 +60,7 @@ function App() {
               <Nav />
               <Routes>
                 <Route path="/" element={<QuestionPage auth={auth} />} />
-                <Route path="/test" element={<Modaltest />} />
+
                 <Route
                   path="/mypage"
                   element={
@@ -71,7 +71,7 @@ function App() {
                 <Route path="/question/ask" element={<AskQuestion />} />
                 <Route
                   path="question/:questionId"
-                  element={<QuestionDetailpage />}
+                  element={<QuestionDetailpage auth={auth} user={user} />}
                 />
                 <Route
                   path="/question/:questionId/:answerId/edit"
@@ -100,7 +100,7 @@ function App() {
               />
             }
           />
-          <Route path="/signup" element={<SignUp setSide={setSide} />} />
+          <Route path="/signup" element={<SignUp setSide={setSide} />} index />
         </Routes>
         <Footer />
       </BrowserRouter>

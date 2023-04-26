@@ -53,19 +53,12 @@ const WarningText = styled.div`
 const AnswerEditpage = () => {
   const { questionId, answerId } = useParams();
 
-  //const navigate = useNavigate();
-  console.log(questionId);
-  console.log(answerId);
-
   const [answers, setAnswers] = useState(null);
-  // const [isPending, setIsPending] = useState(true);
-  // const [error, setError] = useState(null);
 
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/question/${questionId}/answers`)
       .then((res) => {
-        console.log(res);
         if (!res.data) {
           throw new Error("No data found");
         }
@@ -76,13 +69,10 @@ const AnswerEditpage = () => {
       });
   }, []);
 
-  // console.log(answers);
-
   const answerIdToFindNumber = Number(answerId);
   const answerIndex = answers
     ? answers.findIndex((answer) => answer.answerId === answerIdToFindNumber)
     : -1;
-  // console.log(answerIndex);
 
   useEffect(() => {
     if (answers && answerIndex !== -1 && answers[answerIndex]) {
@@ -99,6 +89,7 @@ const AnswerEditpage = () => {
       ? setzeroEditorError(true)
       : setzeroEditorError(false);
   };
+
   const handlethirtyEditorError = () => {
     if (aeditorValue.length > 0 && aeditorValue.length < 30) {
       setthirtyEditorError(true);
@@ -125,7 +116,6 @@ const AnswerEditpage = () => {
       )
       .then(() => {
         console.log("Edit successfully saved!");
-        // console.log(response.data);
         setAEditorValue(aeditorValue);
         // 서버 응답에서 받아온 데이터로 화면 갱신
         // navigate(`/question/${questionId}`);

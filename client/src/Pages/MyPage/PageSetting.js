@@ -162,8 +162,7 @@ function PageSetting({ user, setUser, setAuth }) {
             Authorization: localStorage.getItem("token"),
           },
         })
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           setUser((prev) => {
             return { ...prev, userName: name };
           });

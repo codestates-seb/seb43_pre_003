@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import XImg from "../../Components/style/img/tabler_x.png";
 import Drag from "../../Components/style/img/drag.png";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import GlobalStyles from "../../GlobalStyles";
 
 const Container = styled.div`
@@ -12,10 +12,10 @@ const Container = styled.div`
   position: absolute;
   top: 10%;
   left: 30%;
-  transfrom: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   background-color: #ffffff;
   border-radius: 10px;
-  border 1px solid var(--black-100);
+  border: 1px solid var(--black-100);
   padding: 24px;
 `;
 
@@ -26,7 +26,7 @@ const ModalContainer = styled.div`
   position: absolute;
   top: 0%;
   left: 0%;
-  transfrom: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   background-color: #000000;
   padding: 30px;
   opacity: 50%;
@@ -39,7 +39,7 @@ const XBtn = styled.button`
   color: var(--black-500);
   text-align: center;
 
-  &: hover {
+  &:hover {
     background: var(--black-100);
   }
 `;
@@ -74,7 +74,6 @@ function ImgDrag({ showModal }) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      console.log(reader);
       setImgFile(reader.result);
     };
   };
@@ -84,16 +83,12 @@ function ImgDrag({ showModal }) {
     const file = e.dataTransfer.files[0];
     const reader = new FileReader();
 
-    console.log(reader.readAsDataURL(file));
+    reader.readAsDataURL(file);
     reader.onloadend = () => {
-      console.log(reader);
       setImgFile(reader.result);
     };
   };
 
-  useEffect(() => {
-    console.log(imgFile);
-  }, []);
   return (
     <>
       <GlobalStyles posi="fixed" />

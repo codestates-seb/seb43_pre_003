@@ -30,7 +30,7 @@ public interface AnswerMapper {
         long answerId = answer.getAnswerId();
 
         AnswerDto.Response response = new AnswerDto.Response(
-                answerId, content, userName, memberId, questionId
+                answerId, content, userName, memberId, questionId, answer.getCreatedAt(), answer.getModifiedAt()
         );
         return response;
     }

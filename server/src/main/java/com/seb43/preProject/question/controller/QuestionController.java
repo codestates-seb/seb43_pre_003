@@ -80,7 +80,7 @@ public class QuestionController {
     @GetMapping("/search")
     public ResponseEntity searchQuestionList(@Size(min = 1) @RequestParam(value = "title") String title,
                                              @Positive @RequestParam(defaultValue = "1") int page,
-                                             @Positive @RequestParam(defaultValue = "50") int size){
+                                             @Positive @RequestParam(defaultValue = "10") int size){
         Page<Question> questions = questionService.searchQuestions(title,page-1 , size);
         List<Question> content = questions.getContent();
 
@@ -106,6 +106,6 @@ public class QuestionController {
             findUri = findUri.substring(0, findUri.length() - 1);
         }
         findUri = findUri.replace("/currentUri", "");
-        return "http://ec2-54-180-100-255.ap-northeast-2.compute.amazonaws.com:8080/" + findUri;
+        return "http://ec2-54-180-100-255.ap-northeast-2.compute.amazonaws.com:8080" + findUri;
     }
 }

@@ -5,8 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
-    public class AnswerDto {
+public class AnswerDto {
         @Getter
         @Setter
         public static class Post {
@@ -31,5 +32,7 @@ import javax.validation.constraints.NotBlank;
             private String userName;
             private long memberId;
             private long questionId;
+            private LocalDateTime createdAt;
+            private LocalDateTime modifiedAt;
         }
     }

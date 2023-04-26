@@ -182,8 +182,6 @@ const QuestionDetailpage = () => {
         }
       )
       .then((e) => {
-        console.log(e);
-        console.log(list);
         setLists((prev) => {
           return {
             data: {

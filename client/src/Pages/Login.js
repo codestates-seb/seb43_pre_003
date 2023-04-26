@@ -90,7 +90,6 @@ function Login({ setAuth, setSide, setUser }) {
   });
   const [errMessage, setErrMessage] = useState("");
   const [errpw, setErrpw] = useState("");
-  const [count, setCount] = useState(true);
 
   // const [user, setUser] = useState({});
 
@@ -99,7 +98,6 @@ function Login({ setAuth, setSide, setUser }) {
   }, []);
 
   const handleInputValue = (key) => (e) => {
-    console.log({ ...loginInfo, [key]: e.target.value });
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
 
@@ -108,12 +106,14 @@ function Login({ setAuth, setSide, setUser }) {
 
     if (loginInfo.email.length < 1) {
       setErrMessage("아이디를 입력하세요.");
+      setErrpw("");
       setCheck(false);
       return;
     }
 
     if (loginInfo.password < 1) {
       setErrpw("비밀번호를 입력하세요.");
+      setErrMessage("");
       setCheck(false);
       return;
     }
@@ -124,15 +124,12 @@ function Login({ setAuth, setSide, setUser }) {
         password: loginInfo.password,
       })
       .then((res) => {
-        // console.log(res.headers.get("Authorization"));
-        // console.log(res.config.headers);
-        // console.log(res);
         setAuth(true);
         setSide(true);
         setErrMessage("");
         setErrpw("");
         navi("/");
-        setCount(true);
+
         localStorage.setItem("token", res.headers.get("Authorization")); //localStorage.getItem("token")
 
         // 로그인 시 member 정보 받아오는 axios 작성
@@ -144,12 +141,11 @@ function Login({ setAuth, setSide, setUser }) {
           })
           .then((res) => {
             setUser(res.data);
-            console.log(res);
           });
       })
       .catch((err) => {
         console.log(err);
-        setCount(false);
+
         setSide(false);
         setAuth(false);
         setErrMessage("이메일 또는 패스워드가 올바르지 않습니다.");
@@ -166,7 +162,7 @@ function Login({ setAuth, setSide, setUser }) {
             <EmailSpan>Email</EmailSpan>
           </Eldiv>
           <form onSubmit={(e) => e.preventDefault()}>
-            {count || check ? (
+            {check ? (
               <Input
                 type="text"
                 id="email"
@@ -191,7 +187,7 @@ function Login({ setAuth, setSide, setUser }) {
 
                 <ForgetBtn href="/Forget">Forgot password?</ForgetBtn>
               </Passworddiv>
-              {count || check ? (
+              {check ? (
                 <Input
                   type="password"
                   id="password"

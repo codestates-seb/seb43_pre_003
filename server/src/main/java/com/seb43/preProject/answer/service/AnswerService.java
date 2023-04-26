@@ -41,8 +41,14 @@ public class AnswerService {
 
     public Answer updateAnswer (Answer answer) {
         Question question = questionService.verifyQuestion(answer.getQuestion().getQuestionId());
+
         Long memberId = memberService.findSecurityContextHolderMemberId();
+        Member member = new Member();
+        member.setMemberId(memberId);
+
         verifyQuestionAnswer(answer.getAnswerId(), question);
+
+        answer.setMember(member);
 
         Answer find = existsAnswer(answer.getAnswerId());
         answer.setUserName(find.getUserName());
@@ -57,6 +63,7 @@ public class AnswerService {
         boolean QuestionAnswer = question.getAnswers()
                 .stream()
                 .anyMatch(id -> id.getAnswerId() == answerId);
+
         if (!QuestionAnswer) {
             log.error("This Answer not Question");
             throw new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND);

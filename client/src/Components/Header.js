@@ -187,9 +187,7 @@ function Header({ auth, setAuth, setSide, user }) {
                 <Img src={Logo} alt="" />
               </LogoBtn>
             </Link>
-            <Link to="/test">
-              <ProductBtn onClick={() => setSide(true)}>Product</ProductBtn>
-            </Link>
+            <ProductBtn>Product</ProductBtn>
             <Input />
             <Link to="/Login">
               <Button
@@ -217,9 +215,9 @@ function Header({ auth, setAuth, setSide, user }) {
                 <Img src={Logo} alt="" />
               </LogoBtn>
             </Link>
-            <Link to="/test">
-              <ProductBtn>Product</ProductBtn>
-            </Link>
+
+            <ProductBtn>Product</ProductBtn>
+
             <LoginInput />
             <Link to="/mypage">
               <ProfileNumber>
