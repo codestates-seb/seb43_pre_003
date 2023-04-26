@@ -69,6 +69,8 @@ function QuestionsSearchPage({ auth, searchValue }) {
   const [currentPosts, setCurrentPosts] = useState([]); // 현재 페이지에서 보여지는 아이템들
 
   useEffect(() => {
+    console.log(document.location.pathname);
+
     if (searchValue.length === 0) {
       return navi("/");
     }
@@ -105,7 +107,7 @@ function QuestionsSearchPage({ auth, searchValue }) {
           ) : (
             <Link to="/login">
               <Button variant="mediumBlue" size="question">
-                Ask Question
+                {searchValue}의 검색 결과
               </Button>
             </Link>
           )}

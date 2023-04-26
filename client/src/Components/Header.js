@@ -8,7 +8,7 @@ import Inbox from "./style/img/ic-inbox.png";
 import Trophy from "./style/img/ic- trophy.png";
 import Que from "./style/img/ic-question.png";
 import { ReactComponent as ProfileImg } from "./style/img/img-profile.svg";
-//import { useState } from "react";
+import { useEffect } from "react";
 
 const Container = styled.div`
   width: 100vw;
@@ -179,6 +179,12 @@ function Header({ auth, setAuth, setSide, user, setSearch, searchValue }) {
       navi("/question/search");
     }
   };
+
+  useEffect(() => {
+    if (document.location.pathname !== "/question/search") {
+      setSearch("");
+    }
+  }, [document.location.pathname]);
 
   const logout = () => {
     setAuth(!auth);
