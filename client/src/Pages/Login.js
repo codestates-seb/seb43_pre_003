@@ -98,7 +98,6 @@ function Login({ setAuth, setSide, setUser }) {
   }, []);
 
   const handleInputValue = (key) => (e) => {
-    console.log({ ...loginInfo, [key]: e.target.value });
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
 
@@ -125,9 +124,6 @@ function Login({ setAuth, setSide, setUser }) {
         password: loginInfo.password,
       })
       .then((res) => {
-        // console.log(res.headers.get("Authorization"));
-        // console.log(res.config.headers);
-        // console.log(res);
         setAuth(true);
         setSide(true);
         setErrMessage("");
@@ -145,7 +141,6 @@ function Login({ setAuth, setSide, setUser }) {
           })
           .then((res) => {
             setUser(res.data);
-            console.log(res);
           });
       })
       .catch((err) => {

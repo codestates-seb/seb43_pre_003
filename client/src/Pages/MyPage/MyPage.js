@@ -95,7 +95,7 @@ function MyPage({ user, setUser, setAuth }) {
   const [currentTab, setCurrentTab] = useState(0);
 
   const tabArr = [
-    { id: 0, name: "Profile", content: <Profile /> },
+    { id: 0, name: "Profile", content: <Profile user={user} /> },
     { id: 1, name: "Active", content: <Active /> },
     {
       id: 2,

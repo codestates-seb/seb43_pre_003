@@ -8,9 +8,9 @@ const Sharedomain = ({ questionId, answerId, auth }) => {
   const navigate = useNavigate();
   const [showSheet, setShowSheet] = useState(false);
 
-  const handleqDeleteClick = (id) => {
+  const handleqDeleteClick = () => {
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/question/${id}`, {
+      .delete(`${process.env.REACT_APP_API_URL}/question/${questionId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -24,16 +24,18 @@ const Sharedomain = ({ questionId, answerId, auth }) => {
       });
   };
 
-  const handleaDeleteClick = (id, answerId) => {
+  const handleaDeleteClick = () => {
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/question/${id}/${answerId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
+      .delete(
+        `${process.env.REACT_APP_API_URL}/question/${questionId}/${answerId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
       .then(() => {
-        //navigate(`/question/${questionId}`);
-        window.location.href = `http://localhost:3000/question/${questionId}`;
+        window.location.reload();
       })
       .catch((error) => {
         console.error("Error", error);
@@ -46,17 +48,16 @@ const Sharedomain = ({ questionId, answerId, auth }) => {
 
   return (
     <div>
-      {
-        <Button
-          variant="share"
-          size="custom"
-          padding="0px 3px 0px 3px"
-          onClick={handleShareClick}
-        >
-          Share
-        </Button>
-      }
-      {auth && answerId ? (
+      <Button
+        variant="share"
+        size="custom"
+        padding="0px 3px 0px 3px"
+        onClick={handleShareClick}
+        height="auto"
+      >
+        Share
+      </Button>
+      {answerId ? (
         <Link to={`/question/${questionId}/${answerId}/edit`}>
           <Button variant="share" size="custom" padding="0px 3px 0px 3px">
             Edit
@@ -75,22 +76,21 @@ const Sharedomain = ({ questionId, answerId, auth }) => {
         <Button
           variant="share"
           size="custom"
-          onClick={() => handleaDeleteClick(questionId, answerId)}
+          onClick={() => handleaDeleteClick()}
           padding="0px 3px 0px 3px"
         >
           Delete
         </Button>
       ) : (
-        auth && (
-          <Button
-            variant="share"
-            size="custom"
-            onClick={() => handleqDeleteClick(questionId)}
-            padding="0px 3px 0px 3px"
-          >
-            Delete
-          </Button>
-        )
+        <Button
+          variant="share"
+          size="custom"
+          onClick={() => handleqDeleteClick()}
+          padding="0px 3px 0px 3px"
+          height="auto"
+        >
+          Delete
+        </Button>
       )}
       {showSheet && <Sheet />}
     </div>

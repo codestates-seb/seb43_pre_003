@@ -57,9 +57,7 @@ const RecommendButton = ({ votes, questionId }) => {
         },
       })
       .then((response) => {
-        console.log(response);
         setVotes(response.data.data.votes);
-        console.log(response.data.votes);
       })
       .catch((error) => {
         console.error("Failed to save edit:", error);
@@ -78,9 +76,7 @@ const RecommendButton = ({ votes, questionId }) => {
         }
       )
       .then((response) => {
-        console.log(response);
         setVotes(response.data.data.votes);
-        console.log(response.data.votes);
       })
       .catch((error) => {
         console.error("Failed to save edit:", error);

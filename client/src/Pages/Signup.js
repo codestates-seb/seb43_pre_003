@@ -179,8 +179,7 @@ function Signup({ setSide }) {
         userName: member.userName,
         password: member.password,
       })
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
         setErrMessage("");
         setErrpw("");
         navi("/Login");

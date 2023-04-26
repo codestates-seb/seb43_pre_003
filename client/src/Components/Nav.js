@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Earth from "./style/img/ic-earth.png";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 const NavContainer = styled.div`
   flex-direction: column;
   width: 156px;
@@ -31,7 +31,7 @@ const DivBox = styled.button`
     font-weight: bold;
     background: #efefef;
     border-right: 4px solid var(--main-400);
-    color: black;
+    color: var(--black-900);
   }
 `;
 
@@ -71,10 +71,6 @@ const Span = styled.span`
 
 const Nav = () => {
   const [nav, setNav] = useState("1");
-
-  useEffect(() => {
-    console.log(nav);
-  }, []);
 
   return (
     <NavContainer>

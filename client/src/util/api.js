@@ -1,18 +1,12 @@
 import axios from "axios";
-const BASE_URL = `http://localhost:3000/`;
-// const DATA_URL = "http://localhost:3000/question/";
 
 export const axiosCreate = (url, data) => {
-  axios
+  return axios
     .post(url, data, {
       headers: {
         "Content-Type": "application/json",
         Authorization: localStorage.getItem("token"),
       },
-    })
-    .then((res) => {
-      console.log(res);
-      window.location.href = BASE_URL;
     })
     .catch((err) => {
       if (err.response) {

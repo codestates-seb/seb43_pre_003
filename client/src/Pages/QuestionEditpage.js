@@ -74,10 +74,9 @@ const WarningText = styled.div`
 
 const QuestionEditpage = () => {
   const { questionId } = useParams();
-  console.log(questionId);
   const navigate = useNavigate();
 
-  const [list, isPending, error] = questionAxios(
+  const [list] = questionAxios(
     `${process.env.REACT_APP_API_URL}/question/${questionId}`
   );
 
@@ -93,7 +92,7 @@ const QuestionEditpage = () => {
 
   const [titleError, setTitleError] = useState(false);
   const [editorError, setEditorError] = useState(false);
-  console.log(editorValue);
+
   const handleTitleError = () => {
     titleValue.length < 15 ? setTitleError(true) : setTitleError(false);
   };
@@ -120,9 +119,6 @@ const QuestionEditpage = () => {
             },
           }
         );
-
-        console.log("Edit successfully saved!");
-
         setEditorValue(editorValue);
         navigate(`/question/${questionId}`);
       }
@@ -131,15 +127,9 @@ const QuestionEditpage = () => {
     }
   };
 
-  console.log(editorValue);
-
-  console.log(titleValue);
-
   return (
     <>
       <Container>
-        {error && <div>{error}</div>}
-        {isPending && <div>Loading...</div>}
         {list && (
           <Contain>
             <Editbox>

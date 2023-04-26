@@ -53,13 +53,8 @@ const WarningText = styled.div`
 const AnswerEditpage = () => {
   const { questionId, answerId } = useParams();
 
-  //const navigate = useNavigate();
-  console.log(questionId);
-  console.log(answerId);
-
   const [answers, setAnswers] = useState(null);
-  const [isPending, setIsPending] = useState(true);
-  const [error, setError] = useState(null);
+
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/question/${questionId}/answers`)
@@ -68,20 +63,16 @@ const AnswerEditpage = () => {
           throw new Error("No data found");
         }
         setAnswers(res.data);
-        setIsPending(false);
-        setError(null);
       })
       .catch((error) => {
-        setIsPending(false);
-        setError(error.message);
+        console.log(error);
       });
-  }, [questionId]);
-  console.log(answers);
+  }, []);
+
   const answerIdToFindNumber = Number(answerId);
   const answerIndex = answers
     ? answers.findIndex((answer) => answer.answerId === answerIdToFindNumber)
     : -1;
-  console.log(answerIndex);
 
   useEffect(() => {
     if (answers && answerIndex !== -1 && answers[answerIndex]) {
@@ -92,7 +83,6 @@ const AnswerEditpage = () => {
   const [aeditorValue, setAEditorValue] = useState("");
   const [zeroeditorError, setzeroEditorError] = useState(false);
   const [thirtyeditorError, setthirtyEditorError] = useState(false);
-  console.log(aeditorValue);
 
   const handlezeroEditorError = () => {
     aeditorValue.length <= 0
@@ -126,9 +116,8 @@ const AnswerEditpage = () => {
       )
       .then(() => {
         console.log("Edit successfully saved!");
-        // console.log(response.data);
         setAEditorValue(aeditorValue);
-
+        // 서버 응답에서 받아온 데이터로 화면 갱신
         // navigate(`/question/${questionId}`);
         window.location.href = `http://localhost:3000/question/${questionId}`;
       })
@@ -140,8 +129,6 @@ const AnswerEditpage = () => {
   return (
     <>
       <Container>
-        {error && <div>{error}</div>}
-        {isPending && <div>Loading...</div>}
         {answers && (
           <Contain>
             <Editbox>

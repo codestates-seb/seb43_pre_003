@@ -3,10 +3,12 @@ import styled from "styled-components";
 import Button from "./style/Button";
 import Logo from "./style/img/logo.png";
 import Search from "./style/img/ic-search.png";
-import Logout from "./style/img/ic-menu.png";
+import { ReactComponent as Logout } from "./style/img/ic-logout.svg";
 import Inbox from "./style/img/ic-inbox.png";
 import Trophy from "./style/img/ic- trophy.png";
 import Que from "./style/img/ic-question.png";
+import { ReactComponent as ProfileImg } from "./style/img/img-profile.svg";
+
 // /import axios from "axios";
 // import { useEffect } from "react";
 
@@ -36,6 +38,12 @@ const HeaderBox = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  > a:active {
+    color: var(--black-900);
+  }
+  > a:visited {
+    color: var(--black-900);
+  }
   @media screen and (max-width: 750px) {
     width: 500px;
   }
@@ -107,14 +115,6 @@ const LoginInput = styled(Input)`
   width: 775px;
 `;
 
-const ProfileButton = styled.button`
-  background: blue;
-  border: 1px solid black;
-  width: 24px;
-  height: 24px;
-  margin-right: 5px;
-`;
-
 const ProfileNumber = styled.div`
   display: flex;
   justify-content: center;
@@ -128,6 +128,12 @@ const ProfileNumber = styled.div`
   &:hover {
     background: #efefef;
   }
+  > svg {
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+    border-radius: 2px;
+  }
 `;
 
 const LogoutBtn = styled.button`
@@ -136,8 +142,11 @@ const LogoutBtn = styled.button`
   cursor: pointer;
   margin-right: 12px;
   width: 30px;
-  height: 100%;
-
+  height: auto;
+  > svg {
+    width: 24px;
+    height: 24px;
+  }
   &:hover {
     background: #efefef;
   }
@@ -158,8 +167,9 @@ const IconDiv = styled.div`
   }
 `;
 
-function Header({ auth, setAuth, setSide }) {
+function Header({ auth, setAuth, setSide, user }) {
   const navi = useNavigate();
+
   const logout = () => {
     setAuth(!auth);
     localStorage.removeItem("token");
@@ -211,8 +221,8 @@ function Header({ auth, setAuth, setSide }) {
             <LoginInput />
             <Link to="/mypage">
               <ProfileNumber>
-                <ProfileButton />
-                <div>22</div>
+                <ProfileImg />
+                <div>{user.questionCount}</div>
               </ProfileNumber>
             </Link>
             <IconDiv>
@@ -225,7 +235,7 @@ function Header({ auth, setAuth, setSide }) {
               <img src={Que} alt="" />
             </IconDiv>
             <LogoutBtn onClick={logout}>
-              <img src={Logout} alt=""></img>
+              <Logout />
             </LogoutBtn>
           </HeaderBox>
         )}

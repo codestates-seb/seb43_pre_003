@@ -23,9 +23,7 @@ const questionAxios = (url) => {
       });
   }, [url]);
 
-  // 이후 로딩 중, 데이터, 에러 처리는 동일하게 진행
-
-  return [lists, isPending, error];
+  return [lists, isPending, error, setLists];
 };
 
 export default questionAxios;

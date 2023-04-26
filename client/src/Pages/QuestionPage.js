@@ -62,7 +62,7 @@ const NoQuestion = styled.div`
 `;
 
 function QuestionsPage({ auth }) {
-  const [list, setList] = useState(0); // 리스트에 나타낼 아이템들
+  const [list, setList] = useState(0); // 총 아이템들
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지. default 값으로 1
   const [currentPosts, setCurrentPosts] = useState([]); // 현재 페이지에서 보여지는 아이템들
 
