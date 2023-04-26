@@ -75,7 +75,7 @@ const QuestionTitle = styled.h3`
   }
 `;
 
-const QuestionBody = styled.p`
+const QuestionBody = styled.div`
   font-size: 14px;
   color: var(--black-700);
   margin-bottom: 8px;

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-// import Profile from "../style/img/profile.png";
 import { ReactComponent as ProfileImg } from "../style/img/img-profile.svg";
 
 const Wrapper = styled.div`
@@ -11,7 +10,6 @@ const Aside = styled.div`
   display: flex;
   flex-direction: column;
   width: 200px;
-  /* height: 67px; */
   padding: 8px 10px;
   background-color: var(--powder-200);
   border-radius: 3px;
@@ -25,7 +23,6 @@ const Aside = styled.div`
     align-items: center;
     font-size: 12px;
     margin-top: 4px;
-    padding-right: 60px;
     svg {
       width: 32px;
       height: 32px;
@@ -54,7 +51,6 @@ const AuthorProfile = ({ createdAt, userName }) => {
       <Aside>
         <span>asked {formattedDate}</span>
         <div>
-          {/* <img src={Profile} alt="프로필 사진" /> */}
           <ProfileImg />
           <span>{userName}</span>
         </div>

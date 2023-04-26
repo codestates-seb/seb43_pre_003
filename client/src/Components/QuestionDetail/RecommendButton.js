@@ -59,8 +59,8 @@ const RecommendButton = ({ votes, questionId }) => {
       .then((response) => {
         setVotes(response.data.data.votes);
       })
-      .catch((error) => {
-        console.error("Failed to save edit:", error);
+      .catch(() => {
+        alert(`"좋아요"는 한 번만 가능합니다.`);
       });
   };
 
@@ -78,8 +78,8 @@ const RecommendButton = ({ votes, questionId }) => {
       .then((response) => {
         setVotes(response.data.data.votes);
       })
-      .catch((error) => {
-        console.error("Failed to save edit:", error);
+      .catch(() => {
+        alert(`"싫어요"는 한 번만 가능합니다.`);
       });
   };
 

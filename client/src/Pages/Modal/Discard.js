@@ -1,15 +1,16 @@
 import styled from "styled-components";
 import Button from "../../Components/style/Button";
 import XImg from "../../Components/style/img/tabler_x.png";
+import GlobalStyles from "../../GlobalStyles";
 
 const Container = styled.div`
   width: 570px;
   height: 190px;
   z-index: 999;
   position: absolute;
-  top: 30%;
-  left: 30%;
-  transfrom: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: #ffffff;
   border-radius: 10px;
   border: 1px solid var(--black-100);
@@ -17,13 +18,12 @@ const Container = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   z-index: 900;
   position: absolute;
   top: 0%;
   left: 0%;
-  transfrom: translate(-50%, -50%);
   background-color: #000000;
   padding: 30px;
   opacity: 50%;
@@ -79,6 +79,7 @@ function Discard({ showModal, handleDelete }) {
 
   return (
     <>
+      <GlobalStyles posi="fixed" />
       <ModalContainer />
       <Container>
         <HeaderDiv>

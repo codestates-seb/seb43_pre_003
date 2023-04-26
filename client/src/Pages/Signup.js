@@ -137,7 +137,7 @@ const Errdiv = styled.div`
   font-size: var(--font-small);
 `;
 
-function Signup({ setSide }) {
+function Signup({ setSide, side }) {
   const navi = useNavigate();
   const [member, setmember] = useState({
     email: "",
@@ -193,8 +193,17 @@ function Signup({ setSide }) {
   };
 
   useEffect(() => {
-    setSide();
-  }, []);
+    setSide(false);
+    const preventGoBack = () => {
+      // change start
+      setSide(true);
+      navi("/");
+
+      // change end
+    };
+
+    window.addEventListener("popstate", preventGoBack);
+  }, [side]);
 
   return (
     <>

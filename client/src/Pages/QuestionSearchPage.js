@@ -61,7 +61,7 @@ const NoQuestion = styled.div`
   height: 60vh;
 `;
 
-function QuestionsPage({ auth }) {
+function QuestionsSearchPage({ auth }) {
   const [list, setList] = useState(0); // 총 아이템들
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지. default 값으로 1
   const [currentPosts, setCurrentPosts] = useState([]); // 현재 페이지에서 보여지는 아이템들
@@ -70,6 +70,7 @@ function QuestionsPage({ auth }) {
     axios
       .get(
         `${process.env.REACT_APP_API_URL}/question?page=${currentPage}&size=10`
+        // ${process.env.REACT_APP_API_URL}/question/search?title=테스트&page=${currentPage}
       )
       .then((res) => {
         setList(res.data.pageInfo.totalElements);
@@ -125,4 +126,4 @@ function QuestionsPage({ auth }) {
   );
 }
 
-export default QuestionsPage;
+export default QuestionsSearchPage;
