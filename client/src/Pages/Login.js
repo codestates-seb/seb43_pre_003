@@ -83,6 +83,7 @@ const Errdiv = styled.div`
 
 function Login({ setAuth, setSide, setUser }) {
   const navi = useNavigate();
+
   const [check, setCheck] = useState(true);
   const [loginInfo, setLoginInfo] = useState({
     email: "",
@@ -91,10 +92,14 @@ function Login({ setAuth, setSide, setUser }) {
   const [errMessage, setErrMessage] = useState("");
   const [errpw, setErrpw] = useState("");
 
-  // const [user, setUser] = useState({});
-
   useEffect(() => {
-    setSide();
+    setSide(false);
+    const preventGoBack = () => {
+      setSide(true);
+      navi("/");
+    };
+
+    window.addEventListener("popstate", preventGoBack);
   }, []);
 
   const handleInputValue = (key) => (e) => {
@@ -145,9 +150,9 @@ function Login({ setAuth, setSide, setUser }) {
       })
       .catch((err) => {
         console.log(err);
-
         setSide(false);
         setAuth(false);
+        setCheck(false);
         setErrMessage("이메일 또는 패스워드가 올바르지 않습니다.");
       });
   };
@@ -157,7 +162,7 @@ function Login({ setAuth, setSide, setUser }) {
       <Container>
         <Logo src={Logoimg} alt=""></Logo>
         <Oauth />
-        <Emailbox height={check ? "250px" : "320px"}>
+        <Emailbox height={check ? "250px" : "280px"}>
           <Eldiv>
             <EmailSpan>Email</EmailSpan>
           </Eldiv>

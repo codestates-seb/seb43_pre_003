@@ -58,6 +58,7 @@ public class QuestionService {
         question.setViews(question.getViews() + 1);
         return question;
     }
+    @Transactional(readOnly = true)
     public Page<Question> findQuestions(int page, int size) {
 //        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
 //        Pageable pageable = PageRequest.of(page, size, sort);

@@ -8,9 +8,7 @@ import Inbox from "./style/img/ic-inbox.png";
 import Trophy from "./style/img/ic- trophy.png";
 import Que from "./style/img/ic-question.png";
 import { ReactComponent as ProfileImg } from "./style/img/img-profile.svg";
-
-// /import axios from "axios";
-// import { useEffect } from "react";
+//import { useState } from "react";
 
 const Container = styled.div`
   width: 100vw;

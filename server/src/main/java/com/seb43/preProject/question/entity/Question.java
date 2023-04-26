@@ -34,7 +34,7 @@ public class Question extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany(mappedBy = "question", cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answers = new ArrayList<>();
 
     public List<Answer> getAnswers() {
@@ -43,7 +43,7 @@ public class Question extends Auditable {
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "question", cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "question")
     private List<Votes> votesList = new ArrayList<>();
 
     public Question(String title, String content) {

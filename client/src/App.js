@@ -111,7 +111,11 @@ function App() {
               />
             }
           />
-          <Route path="/signup" element={<SignUp setSide={setSide} />} index />
+          <Route
+            path="/signup"
+            element={<SignUp setSide={setSide} side={side} />}
+            index
+          />
         </Routes>
         <Footer />
       </BrowserRouter>
