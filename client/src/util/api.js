@@ -14,17 +14,17 @@ export const axiosCreate = (url, data) => {
         const { status, config } = err.response;
 
         if (status === 404) {
-          console.log(`${config.url} not found`);
+          alert(`${config.url} not found`);
         }
         if (status === 500) {
-          console.log("Server error");
+          alert("Server error");
         }
       } else if (err.request) {
         // 요청이 이루어졌으나 서버에서 응답이 없었을 경우
-        console.log("Error", err.message);
+        alert("Error", err.message);
       } else {
         // 그 외 다른 에러
-        console.log("Error", err.message);
+        alert("Error", err.message);
       }
     });
 };
