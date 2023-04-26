@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Button from "./style/Button";
 import Logo from "./style/img/logo.png";
 import Search from "./style/img/ic-search.png";
-import Logout from "./style/img/ic-menu.png";
+import { ReactComponent as Logout } from "./style/img/ic-logout.svg";
 import Inbox from "./style/img/ic-inbox.png";
 import Trophy from "./style/img/ic- trophy.png";
 import Que from "./style/img/ic-question.png";
@@ -142,8 +142,11 @@ const LogoutBtn = styled.button`
   cursor: pointer;
   margin-right: 12px;
   width: 30px;
-  height: 100%;
-
+  height: auto;
+  > svg {
+    width: 24px;
+    height: 24px;
+  }
   &:hover {
     background: #efefef;
   }
@@ -234,7 +237,7 @@ function Header({ auth, setAuth, setSide, user }) {
               <img src={Que} alt="" />
             </IconDiv>
             <LogoutBtn onClick={logout}>
-              <img src={Logout} alt=""></img>
+              <Logout />
             </LogoutBtn>
           </HeaderBox>
         )}
