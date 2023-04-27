@@ -6,7 +6,6 @@ import com.seb43.preProject.question.dto.QuestionPostDto;
 import com.seb43.preProject.question.dto.QuestionResponseDto;
 import com.seb43.preProject.question.entity.Question;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.Comparator;
 import java.util.List;

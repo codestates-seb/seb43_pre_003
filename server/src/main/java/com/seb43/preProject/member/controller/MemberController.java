@@ -13,7 +13,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Positive;
 
 @RestController
 @RequestMapping("/members")
@@ -31,14 +30,12 @@ public class MemberController {
     @PostMapping("/join") //회원가입
     public ResponseEntity postMember(@Valid @RequestBody MemberPostDto memberPostDto){
         Member member = memberService.createMember(memberMapper.memberPostDtoToMember(memberPostDto));
-
         return new ResponseEntity<>((memberMapper.memberToMemberResponse(member)), HttpStatus.CREATED);
     }
     @GetMapping("/profile")// 프로필 조회
     public ResponseEntity getMember(){
         Long memberId = memberService.findSecurityContextHolderMemberId();
         Member member = memberService.findVerifiedMember(memberId);
-        System.out.println(member.getQuestions().size());
         return new ResponseEntity<>((memberMapper.memberToMemberResponse(member)),HttpStatus.OK);
 
     }
