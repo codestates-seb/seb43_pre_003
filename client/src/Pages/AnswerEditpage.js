@@ -64,7 +64,7 @@ const AnswerEditpage = () => {
         setAnswers(res.data);
       })
       .catch((error) => {
-        console.log(error);
+        alert("Error", error);
       });
   }, []);
 
@@ -116,11 +116,10 @@ const AnswerEditpage = () => {
         }
       )
       .then(() => {
-        console.log("Edit successfully saved!");
         window.location.href = `http://localhost:3000/question/${questionId}`;
       })
       .catch((error) => {
-        console.error("Failed to save edit:", error);
+        alert("귀하의 계정이 아니므로 수정이 불가능합니다", error);
       });
   };
 

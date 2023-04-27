@@ -20,7 +20,7 @@ const Sharedomain = ({ questionId, answerId }) => {
         //window.location.href = `http://localhost:3000`;
       })
       .catch((error) => {
-        console.error("Error", error);
+        alert("귀하의 계정이 아니므로 삭제가 불가능합니다", error);
       });
   };
 
@@ -38,7 +38,7 @@ const Sharedomain = ({ questionId, answerId }) => {
         window.location.reload();
       })
       .catch((error) => {
-        console.error("Error", error);
+        alert("귀하의 계정이 아니므로 삭제가 불가능합니다", error);
       });
   };
 
@@ -90,7 +90,8 @@ const Sharedomain = ({ questionId, answerId }) => {
           Delete
         </Button>
       )}
-      {showSheet && <Sheet />}
+
+      {showSheet && <Sheet questionId={questionId} />}
     </div>
   );
 };
