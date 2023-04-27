@@ -220,7 +220,7 @@ const QuestionDetailpage = () => {
             <Strong>Modified</Strong>
             <Span>{dateCalculate(list.data.modifiedAt)}</Span>
             <Strong>viewed</Strong>
-            <Span>{list.data.views - 1} times</Span>
+            <Span>{list.data.views} times</Span>
           </Section1>
 
           <Body>
