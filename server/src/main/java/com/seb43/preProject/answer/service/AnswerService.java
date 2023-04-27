@@ -82,7 +82,6 @@ public class AnswerService {
         questionService.answerCountMinus(question);
 
         Optional<Answer> answer = repository.findById(answerId);
-
         Answer findId = answer.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
 
         if (findId.getMember().getMemberId().equals(memberId)) repository.delete(findId);

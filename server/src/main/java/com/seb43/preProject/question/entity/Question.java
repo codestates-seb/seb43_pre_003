@@ -43,6 +43,7 @@ public class Question extends Auditable {
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
+
     @OneToMany(mappedBy = "question")
     private List<Votes> votesList = new ArrayList<>();
 
