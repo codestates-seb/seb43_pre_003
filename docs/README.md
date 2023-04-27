@@ -1,85 +1,59 @@
-# 🌱 PR**방식 파일 업로드 하는 방법**
+# 😎 유종의 미 
 
-1. 이 저장소를 `Fork` 한다.
-2. 자신의 깃허브 저장소에 들어가서 fork한 저장소를 자신의 로컬pc로 `Clone` 해온다.
+### 😎 **팀 이름 : 유종의 미**
 
-3. git을 이용해서 아래와 같이 복사한 주소를 clone 한다.
+### 😎 **프로젝트 이름 : 스택오버플로우**
 
-```
-$ git clone https://github.com/자신의깃허브명/seb43_pre_003.git
-```
+### 😎 **설명 : 스택오버플로우 기능 구현**
 
-4. 원격 저장소 remote 설정하기
+### 😎 **프로젝트 기간 : 2023.04.14 ~ 2023.04.27**
 
 
-> 💡 fork한 저장소를 **원격 저장소의 최신 커밋**으로 내용을 변경하기 위해 remote 설정
+# 프로젝트 소개 
+![logo-stackof](https://user-images.githubusercontent.com/114140840/234765260-faf5c555-73c4-4e5c-bafa-82cde327ab90.svg)
 
-- clone 한 저장소에 원격 저장소 설정하기(PR 보낼 저장소를 추가하는 것)
-- 원격 저장소 git 주소는 PR 보낼 저장소를 의미한다.
-- 원격 저장소의 이름을 `upstream` 으로 설정한다.
-
-```
-$ git remote add upstream https://github.com/codestates-seb/seb43_pre_003.git
-```
-
-5. 아래의 명령어로 remote 설정이 완료되었는지 확인한다.
-
-```
-$ git remote -v
-
-> origin https://github.com/자신의깃허브명/seb43_pre_003.git (fetch)
-> origin https://github.com/자신의깃허브명/seb43_pre_003.git (push)
-> upstream https://github.com/codestates-seb/seb43_pre_003.git (fetch)
-> upstream https://github.com/codestates-seb/seb43_pre_003.git (push)
-```
-
-6. PR용 새로운 브랜치를 생성한다.
-- 아래의 명령어로 PR을 내보내고 작업할 branch를 생성한다.
-- branch 이름은 자신의 깃허브명으로 생성한다.
-
-```
-$ git checkout -b 자신의깃허브명
-```
-
-7. VSCode 등 추가할 파일 작업을 마친 후 저장 한 뒤 `add & commit` 한다.
-- git add. 을 입력하면 현재 작업 후 저장된 모든 파일을 선택함
-- git add 특정파일명 을 입력하면 특정파일만 선택가능
-- git commit -m 뒤에는 커밋 컨벤션에 맞게 작성한다.
-
-```
-$ git add .
-$ git commit -m "컨벤션에 맞게 작성한다."
-```
-[컨벤션](https://github.com/codestates-seb/seb43_pre_003/blob/main/docs/convention.md)
-
-8. 자신이 생성한 브랜치에 `push` 한다.
-- 브랜치명은 main 이 아닌 PR용으로 새롭게 생성한 자신의 브랜치명으로 입력한다.
-
-```
-$ git push origin 자신의깃허브명
-```
-
-9. 깃허브에서 PR(Pull Request)을 보낸다.
-
-![img](https://github.com/codestates-seb/seb43_pre_003/blob/main/docs/pull_requ.png)
-- PR을 한번 보내면 close를 하지않아도 push한 파일들이 자동 반영된다.
-
-- compare: 가 자신의 브랜치명인지 확인한다.
-- 제목 작성시 아래 링크를 확인해주시고 양식에 맞게 작성하고 Create pull request 버튼을 클릭한다.
-[컨벤션](https://github.com/codestates-seb/seb43_pre_003/blob/main/docs/convention.md)
+[배포 사이트](http://pre-project43.s3-website.ap-northeast-2.amazonaws.com)
 
 
-10. PR 승인 확인 후 동기화 및 브랜치 삭제
-- **PR이 원격 저장소에서 승인되어 원격 저장소에 merge가 되었다면 작업 끝난 branch는 삭제한다.**
-- 아래 명령어로 원격 저장소와 로컬 저장소의 코드를 동기화한다.
+## 팀 소개
+|임민규(FE)|문혜린(FE)|유소영(FE)|정승현(BE)|조대욱(BE)|김은정(BE)|
+|:--:|:--:|:--:|:--:|:--:|:--:|
+|||||||
+|[nile27](https://github.com/nile27)|[moonozz](https://github.com/moonozz)|[ysycoding](https://github.com/ysycoding)|[JSeungHyun](https://github.com/JSeungHyun)|[JoDaeUk](https://github.com/JoDaeUk)|[196docd-gray](https://github.com/196code-gray)|
+## 페이지 소개 이미지 
 
-```
-$ git pull upstream FE or BE
-```
 
-- 아래 명령어로 각각 local 과 remote branch를 삭제한다. (자신의깃허브명으로 생성된 브랜치명)
+## 툴 소개
 
-```
-$ git branch -D 자신의깃허브명
-$ git push origin --delete 자신의깃허브명
-```
+### 공통 
+<img src="https://img.shields.io/badge/Discode-5865F2?style=for-the-badge&logo=discode&logoColor=white"/> <img src="https://img.shields.io/badge/kakaotalk-FFCD00?style=for-the-badge&logo=kakaotalk&logoColor=white"/>
+<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"/>
+
+### Front-end
+
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white"/> <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"/>
+<img src="https://img.shields.io/badge/reactrouter-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white"/>
+<img src="https://img.shields.io/badge/createreactapp-09D3AC?style=for-the-badge&logo=createreactapp&logoColor=white"/>
+<img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white"/>
+<img src="https://img.shields.io/badge/amazons3-569A31?style=for-the-badge&logo=amazons3&logoColor=white"/>
+<img src="https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white"/>
+<img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white"/>
+
+### Back-end
+<img src="https://img.shields.io/badge/JAVA-ffffff?style=for-the-badge&logo=JAVA&logoColor=black"/><img src="https://img.shields.io/badge/intellijidea-000000?style=for-the-badge&logo=intellijidea&logoColor=white"/>
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"/>
+<img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"/>
+<img src="https://img.shields.io/badge/JWT-4B32C3?style=for-the-badge&logo=JWT&logoColor=white"/>
+<img src="https://img.shields.io/badge/amazonec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white"/>
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"/>
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"/>
+<img src="https://img.shields.io/badge/amazonrds-527FFF?style=for-the-badge&logo=amazonrds&logoColor=white"/>
+<img src="https://img.shields.io/badge/lombok-DE4F54?style=for-the-badge&logo=lombok &logoColor=white"/>
+<img src="https://img.shields.io/badge/H2-DE4F54?style=for-the-badge&logo=H2 &logoColor=white"/>
+
+## API 명세서
+
+<a href = "https://documenter.getpostman.com/view/25533497/2s93Y2TMnv#2f149e31-6b27-4782-aa72-e507ae4e609c" target = "_blank"> API 명세서 </a>
+## DB Diagram (사진)
+
+![DB_Diagram](https://user-images.githubusercontent.com/114140840/234760980-09a6b26c-3040-4b51-a46a-28b05f70f55a.png)
