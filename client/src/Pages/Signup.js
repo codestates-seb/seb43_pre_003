@@ -195,11 +195,8 @@ function Signup({ setSide, side }) {
   useEffect(() => {
     setSide(false);
     const preventGoBack = () => {
-      // change start
       setSide(true);
       navi("/");
-
-      // change end
     };
 
     window.addEventListener("popstate", preventGoBack);

@@ -77,11 +77,6 @@ const HeaderDiv = styled.div`
 `;
 
 function Discard({ showModal, handleDelete }) {
-  // const Navigate = (e) => {
-  //   e.preventDefault();
-  //   window.location.replace("/test");
-  // };
-
   return (
     <>
       <GlobalStyles posi="fixed" />

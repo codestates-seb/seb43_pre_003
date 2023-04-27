@@ -31,7 +31,6 @@ function App() {
   const [user, setUser] = useState({});
   const [search, setSearch] = useState("");
 
-  // 자동로그인 작성(새로고침 시 로그인데이터 가지고있게)
   useEffect(() => {
     if (localStorage.getItem("token")) {
       axios
@@ -75,7 +74,7 @@ function App() {
               <Route path="/question/ask" element={<AskQuestion />} />
 
               <Route
-                path="question/:questionId"
+                path="/question/:questionId"
                 element={<QuestionDetailpage />}
               />
               <Route

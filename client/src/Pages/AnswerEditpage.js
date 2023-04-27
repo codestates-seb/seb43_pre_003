@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import Editor from "../Components/QuestionDetail/Editor";
 import Button from "../Components/style/Button";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-//import questionAxios from "../util/questionAxios";
 
 const Container = styled.div`
   max-width: 1100px;
@@ -52,7 +51,7 @@ const WarningText = styled.div`
 
 const AnswerEditpage = () => {
   const { questionId, answerId } = useParams();
-
+  const navigate = useNavigate();
   const [answers, setAnswers] = useState(null);
   useEffect(() => {
     axios
@@ -116,7 +115,7 @@ const AnswerEditpage = () => {
         }
       )
       .then(() => {
-        window.location.href = `http://localhost:3000/question/${questionId}`;
+        navigate(`/question/${questionId}`);
       })
       .catch((error) => {
         alert("귀하의 계정이 아니므로 수정이 불가능합니다", error);

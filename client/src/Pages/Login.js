@@ -135,7 +135,7 @@ function Login({ setAuth, setSide, setUser }) {
         setErrpw("");
         navi("/");
 
-        localStorage.setItem("token", res.headers.get("Authorization")); //localStorage.getItem("token")
+        localStorage.setItem("token", res.headers.get("Authorization"));
 
         // 로그인 시 member 정보 받아오는 axios 작성
         axios
