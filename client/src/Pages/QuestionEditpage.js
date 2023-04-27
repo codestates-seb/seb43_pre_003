@@ -115,7 +115,7 @@ const QuestionEditpage = () => {
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: localStorage.getItem("token"),
             },
           }
         );
@@ -123,7 +123,7 @@ const QuestionEditpage = () => {
         navigate(`/question/${questionId}`);
       }
     } catch (error) {
-      console.error("Failed to save edit:", error);
+      alert("귀하의 계정이 아니므로 수정이 불가능합니다", error);
     }
   };
 

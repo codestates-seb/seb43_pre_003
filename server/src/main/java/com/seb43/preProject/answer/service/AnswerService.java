@@ -43,15 +43,10 @@ public class AnswerService {
         Question question = questionService.verifyQuestion(answer.getQuestion().getQuestionId());
 
         Long memberId = memberService.findSecurityContextHolderMemberId();
-//        Member member = new Member();
-//        member.setMemberId(memberId);
 
         verifyQuestionAnswer(answer.getAnswerId(), question);
 
-//        answer.setMember(member);
-
         Answer find = existsAnswer(answer.getAnswerId());
-//        answer.setUserName(find.getUserName());
 
         if (memberId.equals(find.getMember().getMemberId())) {
             Optional.ofNullable(answer.getContent()).ifPresent(content -> find.setContent(content));
@@ -87,7 +82,6 @@ public class AnswerService {
         questionService.answerCountMinus(question);
 
         Optional<Answer> answer = repository.findById(answerId);
-
         Answer findId = answer.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
 
         if (findId.getMember().getMemberId().equals(memberId)) repository.delete(findId);

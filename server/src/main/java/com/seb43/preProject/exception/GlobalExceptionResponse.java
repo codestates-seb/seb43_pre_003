@@ -1,7 +1,5 @@
 package com.seb43.preProject.exception;
 
-import com.seb43.preProject.exception.BusinessLogicException;
-import com.seb43.preProject.exception.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

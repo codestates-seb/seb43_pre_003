@@ -54,7 +54,6 @@ const AnswerEditpage = () => {
   const { questionId, answerId } = useParams();
 
   const [answers, setAnswers] = useState(null);
-
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/question/${questionId}/answers`)
@@ -65,7 +64,7 @@ const AnswerEditpage = () => {
         setAnswers(res.data);
       })
       .catch((error) => {
-        console.log(error);
+        alert("Error", error);
       });
   }, []);
 
@@ -101,7 +100,9 @@ const AnswerEditpage = () => {
   const answerEditClick = (questionId, answerId) => {
     handlezeroEditorError();
     handlethirtyEditorError();
-
+    if (aeditorValue.length <= 0 || aeditorValue.length <= 30) {
+      return;
+    }
     axios
       .patch(
         `${process.env.REACT_APP_API_URL}/question/${questionId}/${answerId}/edit`,
@@ -110,19 +111,15 @@ const AnswerEditpage = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: localStorage.getItem("token"),
           },
         }
       )
       .then(() => {
-        console.log("Edit successfully saved!");
-        setAEditorValue(aeditorValue);
-        // 서버 응답에서 받아온 데이터로 화면 갱신
-        // navigate(`/question/${questionId}`);
         window.location.href = `http://localhost:3000/question/${questionId}`;
       })
       .catch((error) => {
-        console.error("Failed to save edit:", error);
+        alert("귀하의 계정이 아니므로 수정이 불가능합니다", error);
       });
   };
 
@@ -151,7 +148,7 @@ const AnswerEditpage = () => {
               <Button
                 variant="mediumBlue"
                 size="question"
-                onClick={() => answerEditClick(questionId)}
+                onClick={() => answerEditClick(questionId, answerId)}
               >
                 Save Edits
               </Button>

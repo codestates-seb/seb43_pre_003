@@ -6,7 +6,6 @@ import com.seb43.preProject.question.dto.QuestionPostDto;
 import com.seb43.preProject.question.dto.QuestionResponseDto;
 import com.seb43.preProject.question.entity.Question;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.Comparator;
 import java.util.List;
@@ -20,6 +19,7 @@ public interface QuestionMapper {
         QuestionResponseDto responseDto = new QuestionResponseDto();
 
         responseDto.setQuestionId(question.getQuestionId());
+        responseDto.setMemberId(question.getMember().getMemberId());
         responseDto.setTitle(question.getTitle());
         responseDto.setContent(question.getContent());
         responseDto.setUserName(question.getUserName());

@@ -39,12 +39,12 @@ public class Member {
     @Column
     private LocalDateTime modifiedAt= LocalDateTime.now();
     @Column
-    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Question> questions = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Answer> answers = new ArrayList<>();
-    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "member")
     private List<Votes> votesList = new ArrayList<>();
     @Enumerated(value = EnumType.STRING)
     @Column

@@ -9,12 +9,9 @@ import com.seb43.preProject.question.entity.Votes;
 import com.seb43.preProject.question.repository.QuestionRepository;
 import com.seb43.preProject.question.repository.VotesRepository;
 import org.springframework.data.domain.*;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Transactional
@@ -58,6 +55,7 @@ public class QuestionService {
         question.setViews(question.getViews() + 1);
         return question;
     }
+    @Transactional(readOnly = true)
     public Page<Question> findQuestions(int page, int size) {
 //        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
 //        Pageable pageable = PageRequest.of(page, size, sort);

@@ -167,7 +167,7 @@ const QuestionDetailpage = () => {
   const AnswerCreateClick = () => {
     handlezeroEditorError();
     handlethirtyEditorError();
-    if (answerValue.length <= 0 || answerValue.length >= 30) {
+    if (answerValue.length <= 0 || answerValue.length <= 30) {
       return;
     }
 
@@ -196,7 +196,7 @@ const QuestionDetailpage = () => {
         setAnswerValue("");
       })
       .catch((err) => {
-        console.log("Failed to save edit:", err);
+        alert("답변을 게시하려면 먼저 로그인이 필요합니다.", err);
       });
   };
 
@@ -252,7 +252,6 @@ const QuestionDetailpage = () => {
                 </Section2>
               </Main>
               <Header2>{list.data.answerCount} Answers</Header2>
-              {/* answer 등록 시 map으로 돌려서 받아오기 */}
               {list.data.answers.map((el) => (
                 <Answer
                   key={el.answerId}

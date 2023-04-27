@@ -4,8 +4,10 @@ import XImg from "../../Components/style/img/tabler_x.png";
 import GlobalStyles from "../../GlobalStyles";
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 570px;
-  height: 190px;
+  /* height: 190px; */
   z-index: 999;
   position: absolute;
   top: 50%;
@@ -37,13 +39,16 @@ const H1 = styled.span`
 `;
 
 const Textdiv = styled.div`
-  width: 20px;
-  margin: 20px 0px;
-  height: 10px;
+  margin: 16px 4px;
+  > span {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.4;
+  }
 `;
 const Buttondiv = styled.div`
   display: flex;
-  margin-top: 40px;
+  margin-top: 24px;
 `;
 const Span = styled.span`
   font-size: var(--font-large);
@@ -83,7 +88,7 @@ function Discard({ showModal, handleDelete }) {
       <ModalContainer />
       <Container>
         <HeaderDiv>
-          <H1>Discard Question</H1>
+          <H1>Delete Profile</H1>
           <XBtn onClick={showModal}>
             <Ximg src={XImg} alt="" />
           </XBtn>
@@ -91,8 +96,9 @@ function Discard({ showModal, handleDelete }) {
 
         <Textdiv>
           <Span>
-            Are you sure you want to discard this question? This cannot be
-            undone.
+            I have read the information stated above and understand the
+            implications of having my profile deleted. I wish to proceed with
+            the deletion of my profile.
           </Span>
         </Textdiv>
         <Buttondiv>
@@ -108,7 +114,7 @@ function Discard({ showModal, handleDelete }) {
               handleDelete();
             }}
           >
-            Discard Question
+            Yes
           </Button>
           <Button
             size="custom"
@@ -117,7 +123,7 @@ function Discard({ showModal, handleDelete }) {
             height="40px"
             onClick={showModal}
           >
-            Cansel
+            Cancel
           </Button>
         </Buttondiv>
       </Container>

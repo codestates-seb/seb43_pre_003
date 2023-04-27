@@ -4,7 +4,7 @@ import axios from "axios";
 import Button from "../style/Button";
 import Sheet from "./Sheet";
 
-const Sharedomain = ({ questionId, answerId, auth }) => {
+const Sharedomain = ({ questionId, answerId }) => {
   const navigate = useNavigate();
   const [showSheet, setShowSheet] = useState(false);
 
@@ -12,7 +12,7 @@ const Sharedomain = ({ questionId, answerId, auth }) => {
     axios
       .delete(`${process.env.REACT_APP_API_URL}/question/${questionId}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: localStorage.getItem("token"),
         },
       })
       .then(() => {
@@ -20,7 +20,7 @@ const Sharedomain = ({ questionId, answerId, auth }) => {
         //window.location.href = `http://localhost:3000`;
       })
       .catch((error) => {
-        console.error("Error", error);
+        alert("귀하의 계정이 아니므로 삭제가 불가능합니다", error);
       });
   };
 
@@ -38,7 +38,7 @@ const Sharedomain = ({ questionId, answerId, auth }) => {
         window.location.reload();
       })
       .catch((error) => {
-        console.error("Error", error);
+        alert("귀하의 계정이 아니므로 삭제가 불가능합니다", error);
       });
   };
 
@@ -64,15 +64,13 @@ const Sharedomain = ({ questionId, answerId, auth }) => {
           </Button>
         </Link>
       ) : (
-        auth && (
-          <Link to={`/question/${questionId}/edit`}>
-            <Button variant="share" size="custom" padding="0px 3px 0px 3px">
-              Edit
-            </Button>
-          </Link>
-        )
+        <Link to={`/question/${questionId}/edit`}>
+          <Button variant="share" size="custom" padding="0px 3px 0px 3px">
+            Edit
+          </Button>
+        </Link>
       )}
-      {auth && answerId ? (
+      {answerId ? (
         <Button
           variant="share"
           size="custom"
@@ -92,7 +90,8 @@ const Sharedomain = ({ questionId, answerId, auth }) => {
           Delete
         </Button>
       )}
-      {showSheet && <Sheet />}
+
+      {showSheet && <Sheet questionId={questionId} />}
     </div>
   );
 };
