@@ -17,7 +17,6 @@ const Sharedomain = ({ questionId, answerId }) => {
       })
       .then(() => {
         navigate("/");
-        //window.location.href = `http://localhost:3000`;
       })
       .catch((error) => {
         alert("귀하의 계정이 아니므로 삭제가 불가능합니다", error);
@@ -35,7 +34,7 @@ const Sharedomain = ({ questionId, answerId }) => {
         }
       )
       .then(() => {
-        window.location.reload();
+        navigate(0);
       })
       .catch((error) => {
         alert("귀하의 계정이 아니므로 삭제가 불가능합니다", error);

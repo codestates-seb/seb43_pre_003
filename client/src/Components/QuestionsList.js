@@ -150,7 +150,7 @@ function QuestionsList({ data }) {
             <span>answers</span>
           </div>
           <div>
-            <span>{el.views}</span>
+            <span>{el.views - 1}</span>
             <span>views</span>
           </div>
         </QuestionState>

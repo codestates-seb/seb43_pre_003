@@ -13,7 +13,8 @@ import Footer from "./Components/Footer";
 import AskQuestion from "./Pages/AskQuestion";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/Signup";
-
+import Forget from "./Pages/Forget/Forget";
+import ForgetS from "./Pages/Forget/ForgetComplete";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -30,7 +31,6 @@ function App() {
   const [user, setUser] = useState({});
   const [search, setSearch] = useState("");
 
-  // 자동로그인 작성(새로고침 시 로그인데이터 가지고있게)
   useEffect(() => {
     if (localStorage.getItem("token")) {
       axios
@@ -74,7 +74,7 @@ function App() {
               <Route path="/question/ask" element={<AskQuestion />} />
 
               <Route
-                path="question/:questionId"
+                path="/question/:questionId"
                 element={<QuestionDetailpage />}
               />
               <Route
@@ -115,6 +115,14 @@ function App() {
             element={<SignUp setSide={setSide} side={side} />}
             index
           />
+          <Route
+            path="/forget"
+            element={<Forget setSide={setSide} side={side} />}
+          ></Route>
+          <Route
+            path="/forgetS"
+            element={<ForgetS setSide={setSide} side={side} />}
+          ></Route>
         </Routes>
         <Footer />
       </BrowserRouter>
