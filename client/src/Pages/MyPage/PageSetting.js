@@ -167,8 +167,8 @@ function PageSetting({ user, setUser, setAuth }) {
             return { ...prev, userName: name };
           });
         })
-        .catch((err) => {
-          alert(("Failed to save edit:", err));
+        .catch(() => {
+          alert("이름 수정을 성공하지 못했습니다.");
         });
     }
   };
@@ -187,8 +187,8 @@ function PageSetting({ user, setUser, setAuth }) {
         navigate("/");
         localStorage.removeItem("token");
       })
-      .catch((err) => {
-        alert(("Failed to save edit:", err));
+      .catch(() => {
+        alert("탈퇴 시도를 성공하지 못했습니다.");
       });
   };
 

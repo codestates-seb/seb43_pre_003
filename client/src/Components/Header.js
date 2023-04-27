@@ -8,7 +8,7 @@ import Inbox from "./style/img/ic-inbox.png";
 import Trophy from "./style/img/ic- trophy.png";
 import Que from "./style/img/ic-question.png";
 import { ReactComponent as ProfileImg } from "./style/img/img-profile.svg";
-//import { useState } from "react";
+import { useEffect } from "react";
 
 const Container = styled.div`
   width: 100vw;
@@ -165,7 +165,7 @@ const IconDiv = styled.div`
   }
 `;
 
-function Header({ auth, setAuth, setSide, user, setSearch }) {
+function Header({ auth, setAuth, setSide, user, setSearch, searchValue }) {
   const navi = useNavigate();
 
   const handleSearchChange = (e) => {
@@ -174,9 +174,16 @@ function Header({ auth, setAuth, setSide, user, setSearch }) {
 
   const onKeyPress = (e) => {
     if (e.target.value.length !== 0 && e.key === "Enter") {
-      setSearch("");
+      setSearch(e.target.value);
+      navi("/question/search");
     }
   };
+
+  useEffect(() => {
+    if (document.location.pathname !== "/question/search") {
+      setSearch("");
+    }
+  }, [document.location.pathname]);
 
   const logout = () => {
     setAuth(!auth);
@@ -196,7 +203,11 @@ function Header({ auth, setAuth, setSide, user, setSearch }) {
               </LogoBtn>
             </Link>
             <ProductBtn>Product</ProductBtn>
-            <Input />
+            <Input
+              onChange={handleSearchChange}
+              onKeyPress={onKeyPress}
+              value={searchValue}
+            />
             <Link to="/Login">
               <Button
                 variant="smallWhite"
@@ -226,7 +237,12 @@ function Header({ auth, setAuth, setSide, user, setSearch }) {
 
             <ProductBtn>Product</ProductBtn>
 
-            <LoginInput onChange={handleSearchChange} onKeyPress={onKeyPress} />
+            <LoginInput
+              onChange={handleSearchChange}
+              onKeyPress={onKeyPress}
+              value={searchValue}
+            />
+
             <Link to="/mypage">
               <ProfileNumber>
                 <ProfileImg />

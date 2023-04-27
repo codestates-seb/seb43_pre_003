@@ -54,22 +54,21 @@ function App() {
         <Header
           auth={auth}
           setAuth={setAuth}
-          side={side}
           setSide={setSide}
           user={user}
           setSearch={setSearch}
+          searchValue={search}
         />
         {side ? (
           <div className="container">
             <Nav />
             <Routes>
+              <Route path="/" element={<QuestionPage auth={auth} />} />
               <Route
-                path="/"
-                element={<QuestionPage auth={auth} searchValue={search} />}
-              />
-              <Route
-                path="/search"
-                element={<QuestionSearchPage auth={auth} />}
+                path="/question/search"
+                element={
+                  <QuestionSearchPage auth={auth} searchValue={search} />
+                }
               />
 
               <Route path="/question/ask" element={<AskQuestion />} />
