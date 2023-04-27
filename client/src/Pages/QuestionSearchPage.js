@@ -11,7 +11,6 @@ import Button from "../Components/style/Button";
 const QuestionWrap = styled.section`
   width: calc(100% - 454px);
   padding-right: 30px;
-  /* padding: 24px; */
 `;
 
 const QuestionTitle = styled.div`
@@ -69,8 +68,6 @@ function QuestionsSearchPage({ auth, searchValue }) {
   const [currentPosts, setCurrentPosts] = useState([]); // 현재 페이지에서 보여지는 아이템들
 
   useEffect(() => {
-    console.log(document.location.pathname);
-
     if (searchValue.length === 0) {
       return navi("/");
     }
@@ -79,13 +76,11 @@ function QuestionsSearchPage({ auth, searchValue }) {
         `${process.env.REACT_APP_API_URL}/question/search?title=${searchValue}&page=${currentPage}`
       )
       .then((res) => {
-        console.log(res.data);
         setList(res.data.pageInfo.totalElements);
         setCurrentPosts(res.data.data);
-        // setSearch("");
       })
       .catch((error) => {
-        alert(("Failed to save edit:", error));
+        alert(("Failed :", error));
       });
   }, [currentPage]);
 

@@ -168,7 +168,7 @@ function PageSetting({ user, setUser, setAuth }) {
           });
         })
         .catch((err) => {
-          alert(("Failed to save edit:", err));
+          alert(("Failed :", err));
         });
     }
   };
@@ -188,7 +188,7 @@ function PageSetting({ user, setUser, setAuth }) {
         localStorage.removeItem("token");
       })
       .catch((err) => {
-        alert(("Failed to save edit:", err));
+        alert(("Failed :", err));
       });
   };
 

@@ -76,7 +76,7 @@ function QuestionsPage({ auth }) {
         setCurrentPosts(res.data.data);
       })
       .catch((error) => {
-        alert(("Failed to save edit:", error));
+        alert(("Failed", error));
       });
   }, [currentPage]);
 
