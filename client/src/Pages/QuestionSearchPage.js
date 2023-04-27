@@ -79,8 +79,8 @@ function QuestionsSearchPage({ auth, searchValue }) {
         setList(res.data.pageInfo.totalElements);
         setCurrentPosts(res.data.data);
       })
-      .catch((error) => {
-        alert(("Failed :", error));
+      .catch(() => {
+        alert("데이터를 불러오지 못했습니다.");
       });
   }, [currentPage]);
 
@@ -92,7 +92,7 @@ function QuestionsSearchPage({ auth, searchValue }) {
     <>
       <QuestionWrap>
         <QuestionTitle>
-          <Title>Search Questions</Title>
+          <Title>&quot;{searchValue}&quot; 의 검색 결과</Title>
           {auth ? (
             <Link to="/question/ask">
               <Button variant="mediumBlue" size="question">
@@ -102,7 +102,7 @@ function QuestionsSearchPage({ auth, searchValue }) {
           ) : (
             <Link to="/login">
               <Button variant="mediumBlue" size="question">
-                {searchValue}의 검색 결과
+                Ask Question
               </Button>
             </Link>
           )}

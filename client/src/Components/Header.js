@@ -174,7 +174,6 @@ function Header({ auth, setAuth, setSide, user, setSearch, searchValue }) {
 
   const onKeyPress = (e) => {
     if (e.target.value.length !== 0 && e.key === "Enter") {
-      console.log(e.target.value);
       setSearch(e.target.value);
       navi("/question/search");
     }
@@ -204,7 +203,11 @@ function Header({ auth, setAuth, setSide, user, setSearch, searchValue }) {
               </LogoBtn>
             </Link>
             <ProductBtn>Product</ProductBtn>
-            <Input />
+            <Input
+              onChange={handleSearchChange}
+              onKeyPress={onKeyPress}
+              value={searchValue}
+            />
             <Link to="/Login">
               <Button
                 variant="smallWhite"
