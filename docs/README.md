@@ -53,7 +53,8 @@
 
 ## API 명세서
 
-<a href = "https://documenter.getpostman.com/view/25533497/2s93Y2TMnv#2f149e31-6b27-4782-aa72-e507ae4e609c" target = "_blank"> API 명세서 </a>
+<a href = "https://documenter.getpostman.com/view/25533497/2s93Y2TMnv#2f149e31-6b27-4782-aa72-e507ae4e609c" target = "_blank"> API 명세서 </a> 
+
 ## DB Diagram (사진)
 
 ![DB_Diagram](https://user-images.githubusercontent.com/114140840/234760980-09a6b26c-3040-4b51-a46a-28b05f70f55a.png)
