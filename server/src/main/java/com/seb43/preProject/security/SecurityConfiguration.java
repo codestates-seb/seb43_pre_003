@@ -24,7 +24,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 public class SecurityConfiguration {
@@ -57,32 +56,32 @@ public class SecurityConfiguration {
                     .and()
                     .authorizeHttpRequests(authorize -> authorize
                             .antMatchers(HttpMethod.POST, "/members/join").permitAll()
-                            .antMatchers(HttpMethod.GET, "/members/**/profile").hasRole("USER")
-                            .antMatchers(HttpMethod.PATCH, "/members/**/profile").hasRole("USER")
-                            .antMatchers(HttpMethod.DELETE, "/members/**/profile/delete").hasRole("USER")
+                            .antMatchers(HttpMethod.GET, "/members/profile").hasRole("USER")
+                            .antMatchers(HttpMethod.PATCH, "/members/profile").hasRole("USER")
+                            .antMatchers(HttpMethod.DELETE, "/members/profile/delete").hasRole("USER")
 
                             .antMatchers(HttpMethod.POST, "/question").hasRole("USER")
                             .antMatchers(HttpMethod.PATCH, "/question/**/edit").hasRole("USER")
                             .antMatchers(HttpMethod.GET, "/question/**").permitAll()
                             .antMatchers(HttpMethod.GET, "/question").permitAll()
-                            .antMatchers(HttpMethod.DELETE, "/question/**/**").hasRole("USER")
+                            .antMatchers(HttpMethod.DELETE, "/question/**").hasRole("USER")
                             .antMatchers(HttpMethod.GET, "/question/search").permitAll()
-                            .antMatchers(HttpMethod.GET, "/question/**/**/vote/up").hasRole("USER")
-                            .antMatchers(HttpMethod.GET, "/question/**/**/vote/down").hasRole("USER")
-//                            .antMatchers(HttpMethod.GET, "/question/currentUri/**").permitAll()
+                            .antMatchers(HttpMethod.GET, "/question/**/vote/up").hasRole("USER")
+                            .antMatchers(HttpMethod.GET, "/question/**/vote/down").hasRole("USER")
+                            .antMatchers(HttpMethod.GET, "/question/currentUri/**").permitAll()
 
                             .antMatchers(HttpMethod.POST, "/question/**").hasRole("USER")
                             .antMatchers(HttpMethod.PATCH, "/question/**/**/edit").hasRole("USER")
                             .antMatchers(HttpMethod.GET, "/question/**/answers").permitAll()
-                            .antMatchers(HttpMethod.DELETE, "/question/**/answers/**/**").hasRole("USER")
+                            .antMatchers(HttpMethod.DELETE, "/question/**/**").hasRole("USER")
 
-                            .antMatchers(HttpMethod.POST, "/comment/question/**").hasRole("USER")
-                            .antMatchers(HttpMethod.POST, "/comment/answer/**").hasRole("USER")
-                            .antMatchers(HttpMethod.PATCH, "/comment/question/**/**").hasRole("USER")
-                            .antMatchers(HttpMethod.PATCH, "/comment/answer/**/**").hasRole("USER")
-                            .antMatchers(HttpMethod.DELETE, "/comment/question/**/**/**").hasRole("USER")
-                            .antMatchers(HttpMethod.DELETE, "/comment/**/answer/**/**/**").hasRole("USER")
-                                    .anyRequest().permitAll()
+//                            .antMatchers(HttpMethod.POST, "/comment/question/**").hasRole("USER")
+//                            .antMatchers(HttpMethod.POST, "/comment/answer/**").hasRole("USER")
+//                            .antMatchers(HttpMethod.PATCH, "/comment/question/**/**").hasRole("USER")
+//                            .antMatchers(HttpMethod.PATCH, "/comment/answer/**/**").hasRole("USER")
+//                            .antMatchers(HttpMethod.DELETE, "/comment/question/**/**/**").hasRole("USER")
+//                            .antMatchers(HttpMethod.DELETE, "/comment/**/answer/**/**/**").hasRole("USER")
+                            .anyRequest().permitAll()
                     );
             return http.build();
         }
@@ -96,8 +95,8 @@ public class SecurityConfiguration {
         CorsConfigurationSource corsConfigurationSource() {
             CorsConfiguration configuration = new CorsConfiguration();
             configuration.addAllowedOriginPattern("*");
-            configuration.addAllowedOrigin("http://localhost:3000");
-            configuration.addAllowedOrigin("http://localhost:8080");
+//            configuration.addAllowedOrigin("http://localhost:3000");
+//            configuration.addAllowedOrigin("http://localhost:8080");
             configuration.addAllowedOrigin("http://pre-project43.s3-website.ap-northeast-2.amazonaws.com/");
             configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
             configuration.setAllowedHeaders(Arrays.asList("*"));
@@ -121,7 +120,6 @@ public class SecurityConfiguration {
                 jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
                 JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtil);
-
                 builder
                         .addFilter(jwtAuthenticationFilter)
                         .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);

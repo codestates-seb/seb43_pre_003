@@ -173,7 +173,7 @@ const QuestionDetailpage = () => {
 
     axios
       .post(
-        `${process.env.REACT_APP_API_URL}/question/${questionId}`, // corrected string interpolation
+        `${process.env.REACT_APP_API_URL}/question/${questionId}`,
         {
           content: answerValue,
         },
@@ -196,7 +196,7 @@ const QuestionDetailpage = () => {
         setAnswerValue("");
       })
       .catch((err) => {
-        console.log("Failed to save edit:", err);
+        alert("답변을 게시하려면 먼저 로그인이 필요합니다.", err);
       });
   };
 

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import Facebook from "../style/img/vaadin_facebook.png";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const Box = styled.div`
   p {
@@ -22,7 +24,7 @@ const Box = styled.div`
     rgba(0, 0, 0, 0.1) 0px 3px 8px;
 `;
 
-const Input = styled.div`
+const Input = styled.input`
   padding: 8px;
   border: 1px solid var(--black-200);
   border-radius: 3px;
@@ -82,15 +84,37 @@ const FButton = styled.button`
   }
 `;
 
-const Sheet = () => {
+const Sheet = (questionId) => {
+  const [url, setUrl] = useState(null);
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/question/currentUri/${questionId.questionId}`
+      )
+      .then((res) => {
+        if (!res.data) {
+          throw new Error("No data found");
+        }
+        setUrl(res.data);
+      })
+      .catch((error) => {
+        alert("Error", error);
+      });
+  }, [questionId.questionId]);
+
   const copyLink = () => {
+    if (!navigator.clipboard) {
+      alert("클립보드가 지원되지 않습니다.");
+      return;
+    }
+
     navigator.clipboard
-      .writeText(window.location.href)
+      .writeText(url)
       .then(() => {
-        console.log("Copied to clipboard:", window.location.href);
+        alert("클립보드에 복사되었습니다", url);
       })
       .catch((err) => {
-        console.error("Failed to copy to clipboard:", err);
+        alert("클립보드 복사에 실패했습니다.", err);
       });
   };
 
@@ -100,7 +124,7 @@ const Sheet = () => {
         <Div />
         <Box>
           <p>Share a link to this question</p>
-          <Input type="text" readOnly value={window.location.href}></Input>
+          <Input type="text" readOnly value={url}></Input>
           <Inner>
             <Button type="button" onClick={copyLink}>
               copy link

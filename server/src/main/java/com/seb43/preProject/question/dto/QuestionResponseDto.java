@@ -5,7 +5,6 @@ import com.seb43.preProject.question.entity.Question;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.Positive;
 import java.util.List;
 import java.time.LocalDateTime;
 

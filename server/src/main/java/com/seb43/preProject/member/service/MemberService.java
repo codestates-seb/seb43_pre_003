@@ -72,7 +72,6 @@ public class MemberService {
         deletMember.setModifiedAt(LocalDateTime.now());
         deletMember.setPassword("");
         deletMember.setUserName("탈퇴한 회원");
-
         return memberRepository.save(deletMember);
     }
 

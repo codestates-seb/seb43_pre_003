@@ -6,7 +6,6 @@ import com.seb43.preProject.question.entity.Question;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper(componentModel = "spring")

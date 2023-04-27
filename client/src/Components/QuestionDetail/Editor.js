@@ -30,7 +30,6 @@ const Editor = ({ value, onChange }) => {
     <div>
       <EditorContainer>
         <ReactQuill
-          theme="snow"
           value={content}
           onChange={handleContentChange}
           className="quill-editor"

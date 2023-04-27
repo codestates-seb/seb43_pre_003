@@ -1,6 +1,5 @@
 package com.seb43.preProject.question.controller;
 
-import com.seb43.preProject.member.service.MemberService;
 import com.seb43.preProject.question.dto.QuestionPatchDto;
 import com.seb43.preProject.question.dto.QuestionPostDto;
 import com.seb43.preProject.question.entity.Question;
@@ -45,7 +44,6 @@ public class QuestionController {
         URI uri = URICreator.createUri(QUESTION_DEFAULT_URL, createdQuestion.getQuestionId());
         return ResponseEntity.created(uri).build();
     }
-
     @PatchMapping("/{question_id}/edit")
     public ResponseEntity patchQuestion(@RequestBody @Valid QuestionPatchDto questionPatchDto,
                                         @PathVariable("question_id") long questionId){
@@ -55,7 +53,6 @@ public class QuestionController {
 
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToResponseDto(updatedQuestion)),HttpStatus.OK);
     }
-    // Security USER 권한 조회 가능 설정
     @GetMapping("/{question_id}")
     public ResponseEntity getQuestion(@PathVariable("question_id") long questionId){
         Question question = questionService.findQuestion(questionId);
@@ -99,7 +96,7 @@ public class QuestionController {
         return new ResponseEntity(new SingleResponseDto<>(mapper.questionToResponseDto(question)), HttpStatus.OK);
     }
 
-    @GetMapping("/currentUri/{board_id}")
+    @GetMapping("/currentUri/{question_id}")
     public String getCurrentUri(HttpServletRequest request){
         String findUri = request.getRequestURI().toString();
         if (findUri.charAt(findUri.length() - 1) == '/'){

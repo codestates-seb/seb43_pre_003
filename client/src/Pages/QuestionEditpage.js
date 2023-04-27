@@ -103,8 +103,7 @@ const QuestionEditpage = () => {
   const handleEditClick = async (questionId) => {
     handleTitleError();
     handleEditorError();
-    console.log(titleValue);
-    console.log(editorValue);
+
     try {
       if (titleValue.length > 14 && editorValue.length > 29) {
         await axios.patch(
@@ -124,7 +123,7 @@ const QuestionEditpage = () => {
         navigate(`/question/${questionId}`);
       }
     } catch (error) {
-      console.error("Failed to save edit:", error);
+      alert("귀하의 계정이 아니므로 수정이 불가능합니다", error);
     }
   };
 
