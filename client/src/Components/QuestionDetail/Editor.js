@@ -4,28 +4,15 @@ import "react-quill/dist/quill.snow.css";
 import styled from "styled-components";
 
 const EditorContainer = styled.div`
-  .ql-formats {
-    padding: 4px 12px;
-  }
+  width: 100%;
   .ql-editor {
-    width: 100%;
-    height: 230px;
-    > p {
-      white-space: normal;
-      overflow-wrap: anywhere;
-    }
+    height: 200px;
+  }
+  .ql-editor > p {
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 `;
-
-const modules = {
-  toolbar: [
-    ["bold", "italic"],
-    [{ header: [1, 2, 3, 4, 5, 6, false] }],
-    [{ font: [] }],
-    ["link", "image", "video"],
-    [{ list: "ordered" }, { list: "bullet" }, { align: [] }],
-  ],
-};
 
 const Editor = ({ value, onChange }) => {
   const [content, setContent] = useState(value || "");
@@ -34,7 +21,7 @@ const Editor = ({ value, onChange }) => {
     setContent(value);
   }, [value]);
 
-  const handleContentChange = () => {
+  const handleContentChange = (value) => {
     setContent(value);
     onChange(value);
   };
@@ -47,7 +34,6 @@ const Editor = ({ value, onChange }) => {
           value={content}
           onChange={handleContentChange}
           className="quill-editor"
-          modules={modules}
         />
       </EditorContainer>
     </div>
