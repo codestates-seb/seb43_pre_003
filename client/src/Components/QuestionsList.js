@@ -46,13 +46,9 @@ const QuestionContent = styled.div`
 `;
 
 const QuestionTitle = styled.h3`
-  /* width: 100%; */
   width: calc(100%);
   white-space: normal;
   overflow-wrap: anywhere;
-  /* word-break: break-all; */
-  /* word-wrap: break-word; */
-  /* hyphens: auto; */
   font-size: 18px;
   font-weight: 400;
   line-height: 1.3;
@@ -174,9 +170,6 @@ function QuestionsList({ data }) {
           </QuestionBody>
           <QuestionFooter>
             <Tags>
-              {/* {el.tags.map((el, index) => (
-                <TagDiv key={index}>{el}</TagDiv>
-              ))} */}
               <TagDiv>kind of beauty</TagDiv>
             </Tags>
             <UserData>

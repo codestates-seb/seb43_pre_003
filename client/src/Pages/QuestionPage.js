@@ -75,8 +75,8 @@ function QuestionsPage({ auth }) {
         setList(res.data.pageInfo.totalElements);
         setCurrentPosts(res.data.data);
       })
-      .catch((error) => {
-        alert(("Failed", error));
+      .catch(() => {
+        alert("데이터를 불러오지 못했습니다.");
       });
   }, [currentPage]);
 
