@@ -8,12 +8,12 @@ import Trophy from "../Components/style/img/ic-trophy.png";
 import Updown from "../Components/style/img/up-down.png";
 import Sign from "../Components/style/img/sign.png";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 const Container = styled.div`
   display: flex;
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   justify-content: center;
   align-items: center;
   background: #f1f2f3;
@@ -24,7 +24,7 @@ const TextBox = styled.div`
   width: 422px;
   height: 300px;
   flex-direction: column;
-  margin: 0px 48px 0px 0px;
+  margin-right: 48px;
 `;
 
 const TextEl = styled.div`
@@ -51,7 +51,7 @@ const SignBox = styled.div`
 `;
 
 const HeaderSpan = styled.span`
-  font-size: var(--font-xx-large);
+  font-size: var(--font-x-large);
   font-weight: 400;
   margin-bottom: 32px;
 `;
@@ -149,16 +149,12 @@ function Signup({ setSide, side }) {
   const [errpw, setErrpw] = useState("");
   const [dispErr, setDisplayErr] = useState("");
 
-  useEffect(() => {
-    console.log(side);
-    setSide();
-  }, []);
-
   const handleInputValue = (key) => (e) => {
     setmember({ ...member, [key]: e.target.value });
   };
 
   const funcSignup = () => {
+    setSide(false);
     if (!member.userName) {
       setDisplayErr("닉네임을 입력하세요.");
       setCheck(false);
@@ -178,25 +174,33 @@ function Signup({ setSide, side }) {
     }
 
     return axios
-      .post("http://localhost:3001/member", {
-        header: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-        },
-        member,
+      .post(`${process.env.REACT_APP_API_URL}/members/join`, {
+        email: member.email,
+        userName: member.userName,
+        password: member.password,
       })
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
         setErrMessage("");
         setErrpw("");
         navi("/Login");
-        alert("아이디가 생성되었습니다, 생성된 아이디로 로그인 해주세요.");
+        alert("아이디가 생성되었습니다. 생성된 아이디로 로그인 해주세요.");
       })
       .catch((err) => {
         console.log(err);
         setErrMessage("이메일 또는 패스워드가 올바르지 않습니다.");
+        setCheck(false);
       });
   };
+
+  useEffect(() => {
+    setSide(false);
+    const preventGoBack = () => {
+      setSide(true);
+      navi("/");
+    };
+
+    window.addEventListener("popstate", preventGoBack);
+  }, [side]);
 
   return (
     <>
@@ -226,7 +230,7 @@ function Signup({ setSide, side }) {
               Collaborate and share knowledge with a private group for FREE.
             </BottomText>
           </TextBottom>
-          <ForgetBtn>
+          <ForgetBtn href="">
             Get Stack Overflow for Teams free for up to 50 users.
           </ForgetBtn>
         </TextBox>
@@ -306,29 +310,31 @@ function Signup({ setSide, side }) {
                 height="35px"
                 padding="10px 10px 10px 10px"
                 margin="20px 0px 20px 0px"
-                onClick={(funcSignup, () => setSide(false))}
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={funcSignup}
               >
-                Log in
+                Sign up
               </Button>
             </form>
             <TextBottom>
               <TextP>
-                가입을 클릭하면 <ForgetBtn>서비스 약관</ForgetBtn> ,
-                <ForgetBtn> 개인 정보 보호 정책</ForgetBtn> 및 쿠키 정책에
-                동의하는것입니다.
+                가입을 클릭하면 <ForgetBtn href="#">서비스 약관</ForgetBtn> ,
+                <ForgetBtn href="#"> 개인 정보 보호 정책</ForgetBtn> 및 쿠키
+                정책에 동의하는것입니다.
               </TextP>
             </TextBottom>
           </EmailBox>
           <Bottomdiv>
-            <BottomText weight="600">Already have an account?</BottomText>
-            <Link to="/Login">
-              {" "}
-              <ForgetBtn weight="600">Log in </ForgetBtn>
-            </Link>
+            <BottomText weight="600">Already have an account?</BottomText>{" "}
+            <ForgetBtn weight="600" href="/Login">
+              Log in{" "}
+            </ForgetBtn>
           </Bottomdiv>
           <Bottomdiv>
             <BottomText weight="600">Are you an employer?</BottomText>
-            <ForgetBtn weight="600">Sign up on Talent </ForgetBtn>
+            <ForgetBtn weight="600" href="#">
+              Sign up on Talent{" "}
+            </ForgetBtn>
             <Signimg src={Sign} alt="" />
           </Bottomdiv>
         </SignBox>

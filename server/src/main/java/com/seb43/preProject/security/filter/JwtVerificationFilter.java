@@ -6,7 +6,6 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -16,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,22 +30,22 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
         this.authorityUtil = authorityUtil;
     }
 
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        try{
+        try {
             Map<String, Object> claims = verifyJws(request);
-
-            setSecurityContext(claims);
-
-        }catch (SignatureException se){
+            setAuthenticationToContext(claims);
+        } catch (SignatureException se) {
             request.setAttribute("exception", se);
-        }catch (ExpiredJwtException ee){
+        } catch (ExpiredJwtException ee) {
             request.setAttribute("exception", ee);
-        }catch (Exception e){
+        } catch (Exception e) {
             request.setAttribute("exception", e);
         }
+
         filterChain.doFilter(request, response);
     }
 
@@ -56,21 +56,24 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
         return authorization == null || !authorization.startsWith("Bearer");
     }
 
-    public Map<String, Object> verifyJws(HttpServletRequest request){
+    private Map<String, Object> verifyJws(HttpServletRequest request){
         String jws = request.getHeader("Authorization").replace("Bearer ", "");
-        Map<String, Object> claims = jwtTokenizer.getClaims(jws, jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey()));
+        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
+        Map<String, Object> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody();
 
         return claims;
     }
 
 
-    public void setSecurityContext(Map<String , Object> claims){
-        String username = (String) claims.get("username");
-        List<GrantedAuthority> authorities =
-                authorityUtil.createAuthorities((List) claims.get("roles"));
+    private void setAuthenticationToContext(Map<String, Object> claims) {
+        String username = (String) claims.get("userName");
+        Long memberId = Long.valueOf(String.valueOf(claims.get("memberId")));
+        Map<String, Object> map = new HashMap<>();
+        map.put("username", username);
+        map.put("memberId", memberId);
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
-
+        List<GrantedAuthority> authorities = authorityUtil.createAuthorities((List)claims.get("roles"));
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(map, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }

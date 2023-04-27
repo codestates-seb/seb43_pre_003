@@ -8,11 +8,9 @@ const ArrowUp = styled.div`
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
   border-bottom: 15px solid
-    ${(props) => (props.disabled ? "#f58124" : "var(--black-200)")};
+    ${(props) => (props.active ? "#f58124" : "var(--black-200)")};
   padding: 0;
-  &:active {
-    border-bottom: 15px solid #f58124;
-  }
+  cursor: ${(props) => (props.active ? "default" : "pointer")};
 `;
 
 const ArrowBottom = styled.div`
@@ -21,10 +19,8 @@ const ArrowBottom = styled.div`
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
   border-top: 15px solid
-    ${(props) => (props.disabled ? "#f58124" : "var(--black-200)")};
-  &:active {
-    border-top: 15px solid "#f58124";
-  }
+    ${(props) => (props.active ? "#f58124" : "var(--black-200)")};
+  cursor: ${(props) => (props.active ? "default" : "pointer")};
 `;
 
 const ArrowButton = styled.button`
@@ -35,9 +31,8 @@ const ArrowButton = styled.button`
   cursor: pointer;
   text-align: center;
   width: 30px;
-  &:disabled {
-    cursor: default;
-  }
+  opacity: ${(props) => (props.disabled ? "0.8" : "1")};
+  pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
 `;
 
 const Total = styled.div`
@@ -49,56 +44,61 @@ const Total = styled.div`
   color: #888;
 `;
 
-const RecommendButton = ({ votes, questionId, memberId }) => {
-  const [voteCount, setVoteCount] = useState(votes);
-  const [upButtonDisabled, setUpButtonDisabled] = useState(false);
-  const [downButtonDisabled, setDownButtonDisabled] = useState(false);
+const RecommendButton = ({ votes, questionId }) => {
+  const [newVote, setVotes] = useState(votes);
+  const [activeButton, setActiveButton] = useState(null);
 
-  const Voteup = async (questionId, memberId) => {
-    try {
-      setUpButtonDisabled(true);
-      setDownButtonDisabled(true);
-
-      const response = await axios.get(
-        `http://localhost:3001/data/${questionId}/${memberId}/vote/up`
-      );
-      const newVoteCount = response.data.voteCount;
-      setVoteCount(newVoteCount);
-    } catch (error) {
-      console.error("Failed to save edit:", error);
-    }
+  const Voteup = (questionId) => {
+    setActiveButton("up");
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/question/${questionId}/vote/up`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((response) => {
+        setVotes(response.data.data.votes);
+      })
+      .catch(() => {
+        alert(`"좋아요"는 한 번만 가능합니다.`);
+      });
   };
 
-  const Votedown = async (questionId, memberId) => {
-    try {
-      // 버튼 비활성화
-      setUpButtonDisabled(true);
-      setDownButtonDisabled(true);
-
-      const response = await axios.get(
-        `http://localhost:3001/data/${questionId}/${memberId}/vote/down`
-      );
-      const newVoteCount = response.data.voteCount;
-      setVoteCount(newVoteCount);
-    } catch (error) {
-      console.error("Failed to save edit:", error);
-    }
+  const Votedown = async (questionId) => {
+    setActiveButton("down");
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/question/${questionId}/vote/down`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((response) => {
+        setVotes(response.data.data.votes);
+      })
+      .catch(() => {
+        alert(`"싫어요"는 한 번만 가능합니다.`);
+      });
   };
 
   return (
     <div>
       <ArrowButton
-        onClick={() => Voteup(questionId, memberId)}
-        disabled={upButtonDisabled}
+        onClick={() => Voteup(questionId)}
+        disabled={activeButton === "up" || activeButton === "down"}
       >
-        <ArrowUp disabled={downButtonDisabled} />
+        <ArrowUp active={activeButton === "up"} />
       </ArrowButton>
-      <Total>{voteCount}</Total>
+      <Total>
+        <span>{newVote}</span>
+      </Total>
       <ArrowButton
-        onClick={() => Votedown(questionId, memberId)}
-        disabled={downButtonDisabled}
+        onClick={() => Votedown(questionId)}
+        disabled={activeButton === "up" || activeButton === "down"}
       >
-        <ArrowBottom disabled={downButtonDisabled} />
+        <ArrowBottom active={activeButton === "down"} />
       </ArrowButton>
     </div>
   );

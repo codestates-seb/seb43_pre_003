@@ -4,11 +4,8 @@ import com.seb43.preProject.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 public class MemberDto {
@@ -34,6 +31,8 @@ public class MemberDto {
         private String userName;
         private String password;
         private Member.MemberStatus memberStatus;
+        private int questionCount;
+        private int answerCount;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
 //        private Object profileImage;

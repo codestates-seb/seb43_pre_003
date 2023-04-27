@@ -1,24 +1,18 @@
 package com.seb43.preProject.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.seb43.preProject.member.entity.Member;
-import com.seb43.preProject.member.repository.MemberRepository;
 import com.seb43.preProject.security.dto.LoginDto;
 import com.seb43.preProject.security.jwt.JwtTokenizer;
 import lombok.SneakyThrows;
-import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,12 +44,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain chain,
                                             Authentication authResult) {
         Member member = (Member) authResult.getPrincipal();
-
+        System.out.println("=".repeat(25) + member);
         String accessToken = delegateAccessToken(member);
         String refreshToken = delegateRefreshToken(member);
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
+
     }
     private String delegateAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();

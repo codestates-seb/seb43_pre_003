@@ -8,13 +8,10 @@ import com.seb43.preProject.question.entity.Question;
 import com.seb43.preProject.question.entity.Votes;
 import com.seb43.preProject.question.repository.QuestionRepository;
 import com.seb43.preProject.question.repository.VotesRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Map;
 import java.util.Optional;
 
 @Transactional
@@ -32,17 +29,21 @@ public class QuestionService {
     }
 
     public Question createQuestion(Question question){
-        Member member = memberService.findVerifiedMember(question.getMember().getMemberId());
+        Long memberId = memberService.findSecurityContextHolderMemberId();
+        Member member = memberService.findVerifiedMember(memberId);
         question.setUserName(member.getUserName());
+        question.setMember(member);
         question.setQuestionStatus(Question.QuestionStatus.QUESTION_REGISTERED);
         return questionRepository.save(question);
     }
 
     public Question updateQuestion(Question question) {
         Question findQuestion = verifyQuestion(question.getQuestionId());
-        if (question.getMember().getMemberId() == findQuestion.getMember().getMemberId()) {
+        Long memberId = memberService.findSecurityContextHolderMemberId();
+        if (memberId == findQuestion.getMember().getMemberId()) {
             Optional.ofNullable(question.getTitle()).ifPresent(title -> findQuestion.setTitle(title));
             Optional.ofNullable(question.getContent()).ifPresent(content -> findQuestion.setContent(content));
+            System.out.println(findQuestion);
             return questionRepository.save(findQuestion);
         } else {
             throw new BusinessLogicException(ExceptionCode.NO_PERMESSION);
@@ -54,12 +55,17 @@ public class QuestionService {
         question.setViews(question.getViews() + 1);
         return question;
     }
-    public Page<Question> findQuestions(int page, int size){
-        return questionRepository.findAll(PageRequest.of(page, size));
+    @Transactional(readOnly = true)
+    public Page<Question> findQuestions(int page, int size) {
+//        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
+//        Pageable pageable = PageRequest.of(page, size, sort);
+//        return questionRepository.findAll(pageable);
+        return questionRepository.findAll(PageRequest.of(page, size, Sort.by("questionId").descending()));
     }
 
-    public void removeQuestion(long questionId, long memberId){
+    public void removeQuestion(long questionId){
         Question question = verifyQuestion(questionId);
+        Long memberId = memberService.findSecurityContextHolderMemberId();
         if (question.getMember().getMemberId() == memberId){
             questionRepository.delete(verifyQuestion(questionId));
         }else{
@@ -72,8 +78,9 @@ public class QuestionService {
         return questionRepository.findByTitleContaining(title, PageRequest.of(page, size));
     }
 
-    public Question likeQuestion(long questionId, long memberId){
+    public Question likeQuestion(long questionId){
         Question question = verifyQuestion(questionId);
+        Long memberId = memberService.findSecurityContextHolderMemberId();
         Member member = memberService.findVerifiedMember(memberId);
         Optional<Votes> findVotes = votesRepository.findByQuestionAndMember(question, member);
         if (findVotes.isPresent()){
@@ -87,8 +94,9 @@ public class QuestionService {
         return question;
     }
 
-    public Question unlikeQuestion(long questionId, long memberId){
+    public Question unlikeQuestion(long questionId){
         Question question = verifyQuestion(questionId);
+        Long memberId = memberService.findSecurityContextHolderMemberId();
         Member member = memberService.findVerifiedMember(memberId);
         Optional<Votes> findVotes = votesRepository.findByQuestionAndMember(question, member);
         if (findVotes.isPresent()){
@@ -103,8 +111,7 @@ public class QuestionService {
     }
 
     public Question verifyQuestion(long questionId) {
-        return questionRepository.findById(questionId).orElseThrow(
-                () -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+        return questionRepository.findById(questionId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
     }
     public void answerCountPlus (Question question) {
         int now = question.getAnswerCount();

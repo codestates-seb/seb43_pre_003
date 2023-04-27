@@ -5,14 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
-    public class AnswerDto {
+public class AnswerDto {
         @Getter
         @Setter
         public static class Post {
             @NotBlank
             private String content;
-            private long memberId;
             private long questionId;
         }
         @Getter
@@ -20,7 +20,6 @@ import javax.validation.constraints.NotBlank;
         public static class Patch {
             @NotBlank
             private String content;
-            private long memberId;
             private long answerId;
             private long questionId;
         }
@@ -28,10 +27,12 @@ import javax.validation.constraints.NotBlank;
         @Setter
         @AllArgsConstructor
         public static class Response {
-            private String content;
-            private long questionId;
             private long answerId;
-            private long memberId;
+            private String content;
             private String userName;
+            private long memberId;
+            private long questionId;
+            private LocalDateTime createdAt;
+            private LocalDateTime modifiedAt;
         }
     }

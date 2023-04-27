@@ -1,17 +1,20 @@
 import styled from "styled-components";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Button from "../Components/style/Button";
 import Editor from "../Components/QuestionDetail/Editor";
 import TitleBg from "../Components/style/img/bg-askQuestion.svg";
 import Input from "../Components/style/Input.js";
 import Tag from "../Components/style/Tag";
 import { axiosCreate } from "../util/api.js";
+import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as PencilImg } from "../Components/style/img/img-spotPencil.svg";
 
 const AskQuestionWrap = styled.section`
   padding: 30px;
   width: 100%;
+  max-width: 1108px;
+  min-height: 100%;
   padding-bottom: 64px;
 `;
 
@@ -20,6 +23,7 @@ const TitleArea = styled.div`
   align-items: center;
   width: 100%;
   height: 130px;
+  margin-bottom: 16px;
   background-image: url(${TitleBg});
   background-repeat: no-repeat;
   background-position: right bottom;
@@ -62,10 +66,14 @@ const Card = styled.div`
   > p {
     font-size: 12px;
     color: var(--black-700);
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
-  &:nth-child(2) {
-    height: 340px;
-  }
+`;
+
+const ErrTxt = styled.div`
+  color: var(--red-400);
+  font-size: var(--font-small);
 `;
 
 const Aside = styled.div`
@@ -101,39 +109,54 @@ const Aside = styled.div`
     }
   }
 `;
+const BtnArea = styled.div`
+  margin-top: 24px;
+  display: flex;
+  gap: 12px;
+`;
 
 function AskQuestion() {
+  const navigate = useNavigate();
+
   const [titleValue, setTitleValue] = useState("");
   const [editorValue, setEditorValue] = useState("");
 
-  const listId = useRef(0);
-  const questionListId = useRef(0);
+  const [titleError, setTitleError] = useState(false);
+  const [editorError, setEditorError] = useState(false);
+
+  const handleChange = (e) => {
+    setTitleValue(e.target.value);
+  };
+
+  const handleTitleError = () => {
+    titleValue.length < 15 ? setTitleError(true) : setTitleError(false);
+  };
+
+  const handleEditorError = () => {
+    editorValue.length < 30 ? setEditorError(true) : setEditorError(false);
+  };
+
+  const handleReset = () => {
+    setTitleValue("");
+    setEditorValue("");
+  };
 
   const handleSubmit = () => {
-    // e.preventDefault();
-    const createdAt = new Date().toLocaleString();
+    handleTitleError();
+    handleEditorError();
 
     const newList = {
-      id: listId.current,
-      question: {
-        questionId: questionListId.current,
-        title: titleValue,
-        content: editorValue,
-        tags: ["kind of beauty"],
-        userid: 0,
-        userName: "mooni",
-        answerCount: 0,
-        views: 0,
-        votes: 0,
-        questionStatus: "QUESTION_REGISTERED",
-        createdAt,
-        modifiedAt: "",
-      },
-      answer: [],
+      title: titleValue,
+      content: editorValue,
     };
-    axiosCreate("http://localhost:3001/data/", newList);
-    listId.current += 1;
-    questionListId.current += 1;
+
+    if (titleValue.length > 14 && editorValue.length > 29) {
+      axiosCreate(`${process.env.REACT_APP_API_URL}/question`, newList).then(
+        () => {
+          navigate("/");
+        }
+      );
+    }
   };
 
   return (
@@ -152,10 +175,13 @@ function AskQuestion() {
               </p>
               <Input
                 type="text"
-                placeholder="Title"
+                placeholder="e.g. Is there an R function for finding the index of an element in a vector"
                 value={titleValue}
-                onChange={(e) => setTitleValue(e.target.value)}
+                onChange={handleChange}
               />
+              {titleError && (
+                <ErrTxt>Title must be at least 15 characters.</ErrTxt>
+              )}
             </Card>
             <Card>
               <h5 className="title">Body</h5>
@@ -164,6 +190,9 @@ function AskQuestion() {
                 results. Minimum 30 characters.
               </p>
               <Editor value={editorValue} onChange={setEditorValue} />
+              {editorError && (
+                <ErrTxt>Body must be at least 30 characters.</ErrTxt>
+              )}
             </Card>
             <Card>
               <h5 className="title">Tags</h5>
@@ -188,14 +217,24 @@ function AskQuestion() {
             </div>
           </Aside>
         </InputArea>
-        <Button
-          variant="mediumBlue"
-          size="custom"
-          padding="8px 10px 8px 10px"
-          onClick={() => handleSubmit()}
-        >
-          Post your question
-        </Button>
+        <BtnArea>
+          <Button
+            variant="mediumBlue"
+            size="custom"
+            padding="8px 10px 8px 10px"
+            onClick={() => handleSubmit()}
+          >
+            Post your question
+          </Button>
+          <Button
+            variant="Discard"
+            size="custom"
+            padding="8px 10px 8px 10px"
+            onClick={() => handleReset()}
+          >
+            Discard
+          </Button>
+        </BtnArea>
       </AskQuestionWrap>
     </>
   );

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.util.List;
+
 
 @RestController
 @Slf4j
@@ -32,7 +32,6 @@ public class AnswerController {
                                       @RequestBody AnswerDto.Post post) {
 
         post.setQuestionId(questionId);
-
         Answer create = mapper.PostDtoToAnswer(post);
         Answer result = service.createAnswer(create);
         return new ResponseEntity(mapper.AnswerToResponse(result), HttpStatus.CREATED);
@@ -55,11 +54,10 @@ public class AnswerController {
                 mapper.AnswerToListResponse(service.AllAnswer(questionId)), HttpStatus.OK
         );
     }
-    @DeleteMapping("/{question_id}/answer/{answer_id}/{member_id}")
+    @DeleteMapping("/{question_id}/{answer_id}")
     public ResponseEntity deleteAnswer (@PathVariable("question_id") @Positive long questionId,
-                                        @PathVariable("answer_id") @Positive long answerId,
-                                        @PathVariable("member_id") @Positive long memberId) {
-        service.deleteAnswer(questionId, answerId, memberId);
+                                        @PathVariable("answer_id") @Positive long answerId) {
+        service.deleteAnswer(questionId, answerId);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

@@ -6,12 +6,13 @@ import Answer from "../Components/QuestionDetail/Answser";
 import Button from "../Components/style/Button";
 import Editor from "../Components/QuestionDetail/Editor";
 
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import dateCalculate from "../util/dateCalculate";
 import questionAxios from "../util/questionAxios";
 import Aside from "../Components/Aside";
+import { TagDiv } from "../Components/style/Tag";
 
 const Container = styled.div`
   max-width: 1100px;
@@ -32,9 +33,11 @@ const Contain = styled.div`
 const Header1 = styled.header`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
   h1 {
-    font-size: 18px;
+    font-size: 26px;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 `;
 
@@ -49,9 +52,9 @@ const H1 = styled.h1`
 
 const Section1 = styled.section`
   display: flex;
-  padding-bottom: 8px;
-  margin-bottom: 16px;
-  border-bottom: 2px solid var(--black-100);
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--black-100);
 `;
 
 const Strong = styled.strong`
@@ -72,30 +75,35 @@ const Body = styled.div`
 
 const Main = styled.main`
   display: flex;
-  margin: 15px;
-  padding-bottom: 18px;
+  padding-bottom: 32px;
 `;
 
 const Aside1 = styled.aside`
   flex: display;
+  margin-right: 24px;
 `;
 
 const Section2 = styled.section`
   flex-grow: 1;
-  p {
-    margin-left: 12px;
+  > p > p {
     font-size: 15px;
-    font-weight: 500;
     line-height: 22.5px;
     white-space: pre-line;
   }
+`;
+
+const Tags = styled.div`
+  display: flex;
+  margin: 24px 0;
+  flex-flow: row wrap;
+  row-gap: 2px;
 `;
 
 const Section3 = styled.section`
   position: relative;
   display: flex;
   justify-content: space-between;
-  margin: 25px 0px;
+  margin: 40px 0px;
   width: 100%;
 `;
 
@@ -105,64 +113,101 @@ const Section4 = styled.section`
   h2 {
     font-size: 18px;
     margin: 20px 0;
+    color: var(--black-900);
   }
 `;
 
-const Header2 = styled.header`
+const Header2 = styled.div`
   display: flex;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
-  h1 {
-    font-size: 18px;
-    margin-bottom: 15px;
-  }
+  /* -webkit-box-pack: justify; */
+  /* justify-content: space-between; */
+  margin: 20px 0;
+  color: var(--black-900);
+  font-size: 18px;
+  font-weight: 400;
 `;
 
 const Position = styled.div`
-  margin-top: 70px;
+  margin-top: 24px;
+`;
+const WarningText = styled.div`
+  margin: 10px 5px 20px 0px;
+  color: var(--red-400);
+  font-size: 12px;
 `;
 
 const QuestionDetailpage = () => {
   const { questionId } = useParams();
-  console.log(questionId);
-  const navigate = useNavigate();
 
-  const [list, isPending, error] = questionAxios(
-    `http://localhost:3001/data/${questionId}`
+  const arr = questionAxios(
+    `${process.env.REACT_APP_API_URL}/question/${questionId}`
   );
 
-  const [answerValue, setAnswerValue] = useState("");
-  console.log(answerValue);
-  const AnswerCreateClick = async (questionId) => {
-    try {
-      await axios.post(`http://localhost:3001/data/${questionId}`, {
-        question: {
-          answer: [
-            {
-              memberId: 5,
-              content: answerValue,
-            },
-          ],
-        },
-      });
+  const list = arr[0];
+  const setLists = arr[3];
 
-      setAnswerValue(answerValue);
-      navigate(`/question/${questionId}`);
-    } catch (error) {
-      console.error("Failed to save edit:", error);
+  const [answerValue, setAnswerValue] = useState("");
+
+  const [zeroeditorError, setzeroEditorError] = useState(false);
+  const [thirtyeditorError, setthirtyEditorError] = useState(false);
+
+  const handlezeroEditorError = () => {
+    answerValue.length <= 0
+      ? setzeroEditorError(true)
+      : setzeroEditorError(false);
+  };
+  const handlethirtyEditorError = () => {
+    if (answerValue.length > 0 && answerValue.length < 30) {
+      setthirtyEditorError(true);
+    } else {
+      setthirtyEditorError(false);
     }
+  };
+
+  const AnswerCreateClick = () => {
+    handlezeroEditorError();
+    handlethirtyEditorError();
+    if (answerValue.length <= 0 || answerValue.length <= 30) {
+      return;
+    }
+
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/question/${questionId}`,
+        {
+          content: answerValue,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      )
+      .then((e) => {
+        setLists((prev) => {
+          return {
+            data: {
+              ...prev.data,
+              answers: [...prev.data.answers, e.data],
+            },
+          };
+        });
+        setAnswerValue("");
+      })
+      .catch((err) => {
+        alert("답변을 게시하려면 먼저 로그인이 필요합니다.", err);
+      });
   };
 
   return (
     <Container>
-      {error && <div>{error}</div>}
-      {isPending && <div>Loading...</div>}
       {list && (
         <Contain>
           <Header1>
-            <H1>{list.question.title}</H1>
+            <H1>{list.data.title}</H1>
 
-            <Link to="../question">
+            <Link to="/question/ask">
               <Button variant="mediumBlue" size="question">
                 Ask Question
               </Button>
@@ -171,11 +216,11 @@ const QuestionDetailpage = () => {
 
           <Section1>
             <Strong>Asked</Strong>
-            <Span>{dateCalculate(list.question.createdAt)}</Span>
+            <Span>{dateCalculate(list.data.createdAt)}</Span>
             <Strong>Modified</Strong>
-            <Span>{dateCalculate(list.question.modifiedAt)}</Span>
+            <Span>{dateCalculate(list.data.modifiedAt)}</Span>
             <Strong>viewed</Strong>
-            <Span>{list.question.views}times</Span>
+            <Span>{list.data.views} times</Span>
           </Section1>
 
           <Body>
@@ -183,44 +228,63 @@ const QuestionDetailpage = () => {
               <Main>
                 <Aside1>
                   <RecommendButton
-                    votes={list.question.votes}
+                    votes={list.data.votes}
                     questionId={questionId}
-                    memberId={list.question.memberId}
                   />
                 </Aside1>
 
                 <Section2>
-                  <div>
-                    <div>
-                      <p>{list.question.content}</p>
-                    </div>
-                  </div>
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: list.data.content,
+                    }}
+                  />
+                  <Tags>
+                    <TagDiv>kind of beauty</TagDiv>
+                  </Tags>
                   <Section3>
                     <Sharedomain questionId={questionId} />
                     <AuthorProfile
-                      createdAt={list.question.createdAt}
-                      userName={list.question.userName}
+                      createdAt={list.data.createdAt}
+                      userName={list.data.userName}
                     />
                   </Section3>
                 </Section2>
               </Main>
-              <Header2>
-                <h1>{list.question.answerCount} Answers</h1>
-              </Header2>
-              <Answer answers={list.answer} questionId={questionId} />
-              <h2>Your Answer</h2>
+              <Header2>{list.data.answerCount} Answers</Header2>
+              {list.data.answers.map((el) => (
+                <Answer
+                  key={el.answerId}
+                  answers={el}
+                  questionId={questionId}
+                />
+              ))}
+
+              <Header2>Your Answer</Header2>
               <div>
                 <Editor value={answerValue} onChange={setAnswerValue} />
 
                 <Position>
+                  {zeroeditorError && (
+                    <WarningText>Answer is missing</WarningText>
+                  )}
+                  {thirtyeditorError > 0 && answerValue.length < 30 && (
+                    <WarningText>Minimum 30 characters required</WarningText>
+                  )}
                   <Button
                     variant="mediumBlue"
                     size="custom"
                     width="130px"
-                    onClick={() => AnswerCreateClick(questionId)}
+                    onClick={() => AnswerCreateClick()}
                   >
                     Post your Answer
                   </Button>
+                  {(zeroeditorError || thirtyeditorError) && (
+                    <WarningText>
+                      your answer couldn’t be submitted. Please see the error
+                      above.
+                    </WarningText>
+                  )}
                 </Position>
               </div>
             </Section4>

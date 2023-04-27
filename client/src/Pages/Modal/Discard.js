@@ -1,29 +1,31 @@
 import styled from "styled-components";
 import Button from "../../Components/style/Button";
 import XImg from "../../Components/style/img/tabler_x.png";
+import GlobalStyles from "../../GlobalStyles";
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 570px;
-  height: 190px;
+  /* height: 190px; */
   z-index: 999;
   position: absolute;
-  top: 30%;
-  left: 30%;
-  transfrom: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: #ffffff;
   border-radius: 10px;
-  border 1px solid var(--black-100);
+  border: 1px solid var(--black-100);
   padding: 24px;
 `;
 
 const ModalContainer = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   z-index: 900;
   position: absolute;
   top: 0%;
   left: 0%;
-  transfrom: translate(-50%, -50%);
   background-color: #000000;
   padding: 30px;
   opacity: 50%;
@@ -37,13 +39,16 @@ const H1 = styled.span`
 `;
 
 const Textdiv = styled.div`
-  width: 20px;
-  margin: 20px 0px;
-  height: 10px;
+  margin: 16px 4px;
+  > span {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.4;
+  }
 `;
 const Buttondiv = styled.div`
   display: flex;
-  margin-top: 40px;
+  margin-top: 24px;
 `;
 const Span = styled.span`
   font-size: var(--font-large);
@@ -55,7 +60,7 @@ const XBtn = styled.button`
   color: var(--black-500);
   text-align: center;
 
-  &: hover {
+  &:hover {
     background: var(--black-100);
   }
 `;
@@ -71,13 +76,14 @@ const HeaderDiv = styled.div`
   justify-content: space-between;
 `;
 
-function Discard({ showModal }) {
+function Discard({ showModal, handleDelete }) {
   return (
     <>
+      <GlobalStyles posi="fixed" />
       <ModalContainer />
       <Container>
         <HeaderDiv>
-          <H1>Discard Question</H1>
+          <H1>Delete Profile</H1>
           <XBtn onClick={showModal}>
             <Ximg src={XImg} alt="" />
           </XBtn>
@@ -85,8 +91,9 @@ function Discard({ showModal }) {
 
         <Textdiv>
           <Span>
-            Are you sure you want to discard this question? This cannot be
-            undone.
+            I have read the information stated above and understand the
+            implications of having my profile deleted. I wish to proceed with
+            the deletion of my profile.
           </Span>
         </Textdiv>
         <Buttondiv>
@@ -97,8 +104,12 @@ function Discard({ showModal }) {
             height="40px"
             padding="3px 3px 3px 3px"
             margin="0px 3px 0px 0px"
+            onClick={() => {
+              showModal();
+              handleDelete();
+            }}
           >
-            Discard Question
+            Yes
           </Button>
           <Button
             size="custom"
@@ -107,7 +118,7 @@ function Discard({ showModal }) {
             height="40px"
             onClick={showModal}
           >
-            Cansel
+            Cancel
           </Button>
         </Buttondiv>
       </Container>

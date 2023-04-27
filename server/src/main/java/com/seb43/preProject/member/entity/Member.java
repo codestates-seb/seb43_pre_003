@@ -1,5 +1,6 @@
 package com.seb43.preProject.member.entity;
 
+import com.seb43.preProject.answer.entity.Answer;
 import com.seb43.preProject.question.entity.Question;
 import com.seb43.preProject.question.entity.Votes;
 
@@ -38,10 +39,12 @@ public class Member {
     @Column
     private LocalDateTime modifiedAt= LocalDateTime.now();
     @Column
-    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Question> questions = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Answer> answers = new ArrayList<>();
+    @OneToMany(mappedBy = "member")
     private List<Votes> votesList = new ArrayList<>();
     @Enumerated(value = EnumType.STRING)
     @Column

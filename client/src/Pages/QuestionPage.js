@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 import Pagination from "../Components/Pagination";
 import QuestionsList from "../Components/QuestionsList";
 import Aside from "../Components/Aside";
-import SortBtn from "../Components/SortBtn";
+import { SortBtn } from "../Components/SortBtn";
 import Button from "../Components/style/Button";
 
 const QuestionWrap = styled.section`
-  width: calc(100% - 300px);
+  width: calc(100% - 454px);
   padding-right: 30px;
   /* padding: 24px; */
 `;
@@ -61,28 +61,23 @@ const NoQuestion = styled.div`
   height: 60vh;
 `;
 
-function QuestionsPage({ lists, isPending }) {
-  const [list, setList] = useState([]); // 리스트에 나타낼 아이템들
+function QuestionsPage({ auth }) {
+  const [list, setList] = useState(0); // 총 아이템들
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지. default 값으로 1
   const [currentPosts, setCurrentPosts] = useState([]); // 현재 페이지에서 보여지는 아이템들
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/data")
+      .get(
+        `${process.env.REACT_APP_API_URL}/question?page=${currentPage}&size=10`
+      )
       .then((res) => {
-        setList(
-          res.data.sort((a, b) => b.question.questionId - a.question.questionId)
-        );
-        setCurrentPosts(res.data.slice(0, 10)); // 0 , 10
+        setList(res.data.pageInfo.totalElements);
+        setCurrentPosts(res.data.data);
       })
-      .catch((error) => {
-        console.log("error", error);
+      .catch(() => {
+        alert("데이터를 불러오지 못했습니다.");
       });
-  }, [lists]);
-
-  useEffect(() => {
-    const firstPost = (currentPage - 1) * 10;
-    setCurrentPosts(list.slice(firstPost, firstPost + 10));
   }, [currentPage]);
 
   const setPage = (el) => {
@@ -91,40 +86,39 @@ function QuestionsPage({ lists, isPending }) {
 
   return (
     <>
-      {isPending && <div>Loading...</div>}
-
       <QuestionWrap>
         <QuestionTitle>
           <Title>All Questions</Title>
-          {/* 비로그인인 경우 로그인 페이지로 이동 */}
-          {/* 로그인 된 경우 */}
-          <Button variant="mediumBlue" size="question">
-            <Link to="/mypage">My Page</Link>
-          </Button>
-          <Button variant="mediumBlue" size="question">
-            <Link to="/question/ask">Ask Question</Link>
-          </Button>
+          {auth ? (
+            <Link to="/question/ask">
+              <Button variant="mediumBlue" size="question">
+                Ask Question
+              </Button>
+            </Link>
+          ) : (
+            <Link to="/login">
+              <Button variant="mediumBlue" size="question">
+                Ask Question
+              </Button>
+            </Link>
+          )}
         </QuestionTitle>
         <QuestionFilter>
-          <QuestionCount>{list.length} questions</QuestionCount>
+          <QuestionCount>{list} questions</QuestionCount>
           <SortTab>
             <SortBtn />
           </SortTab>
         </QuestionFilter>
         <AllQuestion>
-          {currentPosts && list.length > 0 ? (
+          {currentPosts && list > 0 ? (
             currentPosts.map((el) => (
-              <QuestionsList key={el.question.questionId} data={el} />
+              <QuestionsList key={el.questionId} data={el} />
             ))
           ) : (
             <NoQuestion>No Question</NoQuestion>
           )}
         </AllQuestion>
-        <Pagination
-          currentPage={currentPage}
-          count={list.length}
-          setPage={setPage}
-        />
+        <Pagination currentPage={currentPage} count={list} setPage={setPage} />
       </QuestionWrap>
       <Aside />
     </>

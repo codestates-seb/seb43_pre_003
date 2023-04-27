@@ -3,11 +3,6 @@ import styled from "styled-components";
 import Close from "./img/ic-tag-close.png";
 import HoverClose from "./img/ic-tag-close-hover.png";
 
-// const Inputbox = styled.div`
-//   padding: 10px;
-//   height: 32px;
-// `;
-
 const TagBox = styled.div`
   display: flex;
   align-items: center;
@@ -114,7 +109,6 @@ const Tag = () => {
   };
 
   return (
-    // <Inputbox>
     <TagBox>
       {tagList.map((tagItem, index) => {
         return (
@@ -132,7 +126,6 @@ const Tag = () => {
         onKeyPress={onKeyPress}
       />
     </TagBox>
-    // </Inputbox>
   );
 };
 

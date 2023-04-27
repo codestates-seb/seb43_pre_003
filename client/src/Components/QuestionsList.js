@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { TagDiv } from "./style/Tag";
 import Profile from "./style/img/ic- trophy.png";
+import { useEffect, useRef, useState } from "react";
 
 const QuestionsLiContainer = styled.li`
   display: flex;
@@ -36,7 +37,7 @@ const QuestionState = styled.div`
 `;
 
 const QuestionContent = styled.div`
-  max-width: calc(100% - 108px);
+  max-width: calc(100% - 124px);
   width: 100%;
   height: auto;
   display: flex;
@@ -45,38 +46,32 @@ const QuestionContent = styled.div`
 `;
 
 const QuestionTitle = styled.h3`
-  /* width: 100%; */
   width: calc(100%);
   white-space: normal;
   overflow-wrap: anywhere;
-  /* word-break: break-all; */
-  /* word-wrap: break-word; */
-  /* hyphens: auto; */
-  color: var(--blue-600);
   font-size: 18px;
   font-weight: 400;
   line-height: 1.3;
   margin: 0 0 1em;
   margin-bottom: 6px;
   padding-right: 24px;
-  &:hover {
-    cursor: pointer;
-    color: var(--blue-500);
-  }
   > a {
     font-size: 18px;
     width: calc(100%);
     white-space: normal;
     overflow-wrap: anywhere;
-
-    color: var(--blue-500);
+    color: var(--blue-600);
     cursor: pointer;
     text-decoration: none;
     user-select: auto;
+    &:hover {
+      cursor: pointer;
+      color: var(--blue-500);
+    }
   }
 `;
 
-const QuestionBody = styled.p`
+const QuestionBody = styled.div`
   font-size: 14px;
   color: var(--black-700);
   margin-bottom: 8px;
@@ -132,8 +127,15 @@ const UserAsked = styled.div`
 `;
 
 function QuestionsList({ data }) {
-  const el = data.question;
-  const elA = data.answer;
+  const el = data;
+  const elA = data.answers;
+
+  const [test, setTest] = useState("");
+  const htmlTxt = useRef();
+
+  useEffect(() => {
+    setTest(htmlTxt.current.textContent);
+  }, []);
 
   return (
     <>
@@ -156,12 +158,19 @@ function QuestionsList({ data }) {
           <QuestionTitle>
             <Link to={`/question/${el.questionId}`}>{el.title}</Link>
           </QuestionTitle>
-          <QuestionBody>{el.content}</QuestionBody>
+          <QuestionBody>
+            {test}
+            <p
+              style={{ display: "none" }}
+              dangerouslySetInnerHTML={{
+                __html: el.content,
+              }}
+              ref={htmlTxt}
+            />
+          </QuestionBody>
           <QuestionFooter>
             <Tags>
-              {el.tags.map((el, index) => (
-                <TagDiv key={index}>{el}</TagDiv>
-              ))}
+              <TagDiv>kind of beauty</TagDiv>
             </Tags>
             <UserData>
               <img width="16" alt="프로필 사진" src={Profile} />

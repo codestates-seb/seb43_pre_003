@@ -1,7 +1,7 @@
-import Header from "../../Components/Header";
 import styled from "styled-components";
 import Green from "../../Components/style/img/Greenvector.png";
-
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 const Container = styled.div`
   display: flex;
   width: 100vw;
@@ -45,10 +45,21 @@ const Bodyp = styled.p`
   font-size: var(--font-large);
 `;
 
-function ForgetComplete() {
+function ForgetComplete({ setSide }) {
+  const navi = useNavigate();
+
+  useEffect(() => {
+    setSide(false);
+    const preventGoBack = () => {
+      setSide(true);
+      navi("/");
+    };
+
+    window.addEventListener("popstate", preventGoBack);
+  }, []);
+
   return (
     <>
-      <Header></Header>
       <Container>
         <Greendiv>
           <GreenImg src={Green} alt="" />

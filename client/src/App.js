@@ -3,6 +3,7 @@ import GlobalStyles from "./GlobalStyles";
 import QuestionDetailpage from "./Pages/QuestionDetailpage";
 import styled from "styled-components";
 import QuestionPage from "./Pages/QuestionPage";
+import QuestionSearchPage from "./Pages/QuestionSearchPage";
 import QuestionEditpage from "./Pages/QuestionEditpage";
 import AnswerEditpage from "./Pages/AnswerEditpage";
 import MyPage from "./Pages/MyPage/MyPage";
@@ -10,61 +11,88 @@ import Nav from "./Components/Nav";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import AskQuestion from "./Pages/AskQuestion";
-import questionAxios from "./util/questionAxios";
-// import HomeAside from "./Components/Aside";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/Signup";
-import Modaltest from "./Pages/ModalTest";
+import Forget from "./Pages/Forget/Forget";
+import ForgetS from "./Pages/Forget/ForgetComplete";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 const AppWrap = styled.div`
   width: 100vw;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 function App() {
-  const [list, isPending, error] = questionAxios(`http://localhost:3001/data/`);
   const [auth, setAuth] = useState(false);
   const [side, setSide] = useState(true);
+
+  const [user, setUser] = useState({});
+  const [search, setSearch] = useState("");
+
   useEffect(() => {
-    console.log(side);
+    if (localStorage.getItem("token")) {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/members/profile`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
+          },
+        })
+        .then((res) => {
+          setAuth(true);
+          setUser(res.data);
+        });
+    }
   }, []);
 
   return (
     <AppWrap>
       <GlobalStyles />
       <BrowserRouter>
-        {error && <div>{error}</div>}
-        <Header auth={auth} setAuth={setAuth} side={side} setSide={setSide} />
+        <Header
+          auth={auth}
+          setAuth={setAuth}
+          setSide={setSide}
+          user={user}
+          setSearch={setSearch}
+          searchValue={search}
+        />
         {side ? (
-          <div className="wrap">
-            <div className="container">
-              <Nav />
-              <Routes>
-                <Route
-                  path="/"
-                  element={<QuestionPage list={list} isPending={isPending} />}
-                />
-                <Route path="/test" element={<Modaltest />} />
-                <Route path="/mypage" element={<MyPage />} />
-                <Route path="/ask" element></Route>
-                <Route path="/question/ask" element={<AskQuestion />} />
-                <Route
-                  path="question/:questionId"
-                  element={<QuestionDetailpage />}
-                />
-                <Route
-                  path="/question/:questionId/:answerId/edit"
-                  element={<AnswerEditpage />}
-                />
-                <Route
-                  path="/question/:questionId/edit"
-                  element={<QuestionEditpage />}
-                />
-              </Routes>
-              {/* <HomeAside /> */}
-            </div>
-            <Footer />
+          <div className="container">
+            <Nav />
+            <Routes>
+              <Route path="/" element={<QuestionPage auth={auth} />} />
+              <Route
+                path="/question/search"
+                element={
+                  <QuestionSearchPage auth={auth} searchValue={search} />
+                }
+              />
+
+              <Route path="/question/ask" element={<AskQuestion />} />
+
+              <Route
+                path="/question/:questionId"
+                element={<QuestionDetailpage />}
+              />
+              <Route
+                path="/question/:questionId/:answerId/edit"
+                element={<AnswerEditpage />}
+              />
+              <Route
+                path="/question/:questionId/edit"
+                element={<QuestionEditpage />}
+              />
+
+              <Route
+                path="/mypage"
+                element={
+                  <MyPage user={user} setUser={setUser} setAuth={setAuth} />
+                }
+              />
+            </Routes>
           </div>
         ) : null}
 
@@ -77,21 +105,26 @@ function App() {
                 setAuth={setAuth}
                 side={side}
                 setSide={setSide}
+                index
+                setUser={setUser}
               />
             }
           />
           <Route
             path="/signup"
-            element={
-              <SignUp
-                auth={auth}
-                setAuth={setAuth}
-                side={side}
-                setSide={setSide}
-              />
-            }
+            element={<SignUp setSide={setSide} side={side} />}
+            index
           />
+          <Route
+            path="/forget"
+            element={<Forget setSide={setSide} side={side} />}
+          ></Route>
+          <Route
+            path="/forgetS"
+            element={<ForgetS setSide={setSide} side={side} />}
+          ></Route>
         </Routes>
+        <Footer />
       </BrowserRouter>
     </AppWrap>
   );

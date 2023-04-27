@@ -7,7 +7,6 @@ import com.seb43.preProject.member.entity.Member;
 import com.seb43.preProject.question.entity.Question;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.jmx.export.annotation.ManagedOperationParameter;
 
 @Mapper(componentModel = "spring")
 public interface CommentMapper {

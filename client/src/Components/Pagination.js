@@ -56,10 +56,6 @@ const PaginationWrap = styled.div`
   }
 `;
 
-// const PageBtn = styled.button`
-//   background-color: var(--white);
-// `;
-
 function Pagination({ currentPage, count, setPage }) {
   return (
     <>

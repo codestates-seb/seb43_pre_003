@@ -31,6 +31,7 @@ public class QuestionController {
     private final static String QUESTION_DEFAULT_URL = "/question";
     private final QuestionService questionService;
     private final QuestionMapper mapper;
+
     public QuestionController(QuestionService questionService, QuestionMapper mapper) {
         this.questionService = questionService;
         this.mapper = mapper;
@@ -43,7 +44,6 @@ public class QuestionController {
         URI uri = URICreator.createUri(QUESTION_DEFAULT_URL, createdQuestion.getQuestionId());
         return ResponseEntity.created(uri).build();
     }
-
     @PatchMapping("/{question_id}/edit")
     public ResponseEntity patchQuestion(@RequestBody @Valid QuestionPatchDto questionPatchDto,
                                         @PathVariable("question_id") long questionId){
@@ -53,7 +53,6 @@ public class QuestionController {
 
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToResponseDto(updatedQuestion)),HttpStatus.OK);
     }
-    // Security USER 권한 조회 가능 설정
     @GetMapping("/{question_id}")
     public ResponseEntity getQuestion(@PathVariable("question_id") long questionId){
         Question question = questionService.findQuestion(questionId);
@@ -69,44 +68,41 @@ public class QuestionController {
         return new ResponseEntity(new MultiResponseDto<>(mapper.questionsToQuestionDtos(content), questions), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{question_id}/{member_id}")
-    public ResponseEntity deleteQuestion(@Positive @PathVariable("question_id") long questionId,
-                                         @Positive @PathVariable("member_id") long memberId){
-        questionService.removeQuestion(questionId,memberId);
+    @DeleteMapping("/{question_id}")
+    public ResponseEntity deleteQuestion(@Positive @PathVariable("question_id") long questionId){
+        questionService.removeQuestion(questionId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/search")
     public ResponseEntity searchQuestionList(@Size(min = 1) @RequestParam(value = "title") String title,
                                              @Positive @RequestParam(defaultValue = "1") int page,
-                                             @Positive @RequestParam(defaultValue = "50") int size){
+                                             @Positive @RequestParam(defaultValue = "10") int size){
         Page<Question> questions = questionService.searchQuestions(title,page-1 , size);
         List<Question> content = questions.getContent();
 
         return new ResponseEntity(new MultiResponseDto<>(mapper.questionsToQuestionDtos(content), questions), HttpStatus.OK);
     }
 
-    @GetMapping("/{question_id}/{member_id}/vote/up")
-    public ResponseEntity likeQuestion(@Positive @PathVariable("question_id") long questionId,
-                                       @Positive @PathVariable("member_id") long memberId){
-        Question question = questionService.likeQuestion(questionId, memberId);
+    @GetMapping("/{question_id}/vote/up")
+    public ResponseEntity likeQuestion(@Positive @PathVariable("question_id") long questionId){
+        Question question = questionService.likeQuestion(questionId);
         return new ResponseEntity(new SingleResponseDto<>(mapper.questionToResponseDto(question)), HttpStatus.OK);
     }
 
-    @GetMapping("/{question_id}/{member_id}/vote/down")
-    public ResponseEntity unlikeQuestion(@Positive @PathVariable("question_id") long questionId,
-                                       @Positive @PathVariable("member_id") long memberId){
-        Question question = questionService.unlikeQuestion(questionId, memberId);
+    @GetMapping("/{question_id}/vote/down")
+    public ResponseEntity unlikeQuestion(@Positive @PathVariable("question_id") long questionId){
+        Question question = questionService.unlikeQuestion(questionId);
         return new ResponseEntity(new SingleResponseDto<>(mapper.questionToResponseDto(question)), HttpStatus.OK);
     }
 
-    @GetMapping("/currentUri/{board_id}")
+    @GetMapping("/currentUri/{question_id}")
     public String getCurrentUri(HttpServletRequest request){
         String findUri = request.getRequestURI().toString();
         if (findUri.charAt(findUri.length() - 1) == '/'){
             findUri = findUri.substring(0, findUri.length() - 1);
         }
         findUri = findUri.replace("/currentUri", "");
-        return findUri;
+        return "http://pre-project43.s3-website.ap-northeast-2.amazonaws.com" + findUri;
     }
 }

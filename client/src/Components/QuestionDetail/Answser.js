@@ -4,18 +4,19 @@ import AuthorProfile from "./Authorprofile";
 
 const Main = styled.main`
   display: flex;
-  margin-top: 30px;
-  padding-bottom: 18px;
+  /* margin-top: 30px; */
+  padding: 18px 10px;
   border-bottom: 1px solid rgb(227, 230, 232);
 `;
 
 const Section2 = styled.section`
   flex-grow: 1;
-  p {
-    margin-left: 7px;
+  > p > p {
     font-size: 15px;
     font-weight: 500;
     line-height: 22.5px;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 `;
 
@@ -23,7 +24,7 @@ const Section3 = styled.section`
   position: relative;
   display: flex;
   justify-content: space-between;
-  margin: 25px 0px;
+  margin: 25px 0px 0px;
   width: 100%;
 `;
 
@@ -33,27 +34,28 @@ const List = styled.main`
   width: 100%;
 `;
 
-const Answer = ({ answers, questionId }) => {
+const Answer = ({ questionId, answers }) => {
+  if (!answers) {
+    return null;
+  }
   return (
     <List>
-      {answers.map((answer) => (
-        <Main key={answer.answerId}>
-          <Section2>
-            <div>
-              <div>
-                <p>{answer.content}</p>
-              </div>
-            </div>
-            <Section3>
-              <Sharedomain questionId={questionId} answerId={answer.answerId} />
-              <AuthorProfile
-                createdAt={answer.createdAt}
-                userName={answer.userName}
-              />
-            </Section3>
-          </Section2>
-        </Main>
-      ))}
+      <Main key={answers.answerId}>
+        <Section2>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: answers.content,
+            }}
+          />
+          <Section3>
+            <Sharedomain questionId={questionId} answerId={answers.answerId} />
+            <AuthorProfile
+              createdAt={answers.createdAt}
+              userName={answers.userName}
+            />
+          </Section3>
+        </Section2>
+      </Main>
     </List>
   );
 };

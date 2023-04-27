@@ -10,26 +10,14 @@ const GlobalStyles = createGlobalStyle`
     font-weight: 400; 
     white-space: nowrap;
     font-size: 13px; 
-    /* font-size: 16px;  */
-    /* margin: 0 auto; */
   }
-  .wrap{
-    max-width: 1264px;
-    /* position: relative; */
-    margin: 0 auto;
-    /* padding-top: 50px; */
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    flex: 1 0 auto;
-    align-items: center;
-  }
+  
   .container {
-    /* position: relative; */
+    max-width: 1264px;
+    margin: 0 auto;
     width: 100%;
     height: max-content;
+    min-height: 1180px;
     display: flex;
     justify-content: center;
     margin: 0 auto 0;
@@ -39,6 +27,7 @@ const GlobalStyles = createGlobalStyle`
   body {
     width: 100vw;
     height: 100vh;
+    position: ${(prop) => prop.posi || "none"};
   }
   .root {
     height: 100vh;

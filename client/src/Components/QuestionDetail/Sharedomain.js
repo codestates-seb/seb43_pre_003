@@ -1,47 +1,70 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Button from "../style/Button";
 import Sheet from "./Sheet";
 
 const Sharedomain = ({ questionId, answerId }) => {
   const navigate = useNavigate();
+  const [showSheet, setShowSheet] = useState(false);
 
-  const handleqDeleteClick = (id) => {
+  const handleqDeleteClick = () => {
     axios
-      .delete(`http://localhost:3001/data/${id}`)
+      .delete(`${process.env.REACT_APP_API_URL}/question/${questionId}`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then(() => {
         navigate("/");
       })
       .catch((error) => {
-        console.error("Error", error);
+        alert("귀하의 계정이 아니므로 삭제가 불가능합니다", error);
       });
   };
 
-  const handleaDeleteClick = (id, answerId) => {
+  const handleaDeleteClick = () => {
     axios
-      .delete(`http://localhost:3001/data/${id}/${answerId}`)
+      .delete(
+        `${process.env.REACT_APP_API_URL}/question/${questionId}/${answerId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
       .then(() => {
-        navigate(`/question/${questionId}`);
+        navigate(0);
       })
       .catch((error) => {
-        console.error("Error", error);
+        alert("귀하의 계정이 아니므로 삭제가 불가능합니다", error);
       });
+  };
+
+  const handleShareClick = () => {
+    setShowSheet(!showSheet);
   };
 
   return (
     <div>
-      <Button variant="share" size="custom">
+      <Button
+        variant="share"
+        size="custom"
+        padding="0px 3px 0px 3px"
+        onClick={handleShareClick}
+        height="auto"
+      >
         Share
       </Button>
       {answerId ? (
         <Link to={`/question/${questionId}/${answerId}/edit`}>
-          <Button variant="share" size="custom">
+          <Button variant="share" size="custom" padding="0px 3px 0px 3px">
             Edit
           </Button>
         </Link>
       ) : (
         <Link to={`/question/${questionId}/edit`}>
-          <Button variant="share" size="custom">
+          <Button variant="share" size="custom" padding="0px 3px 0px 3px">
             Edit
           </Button>
         </Link>
@@ -50,7 +73,8 @@ const Sharedomain = ({ questionId, answerId }) => {
         <Button
           variant="share"
           size="custom"
-          onClick={() => handleaDeleteClick(questionId, answerId)}
+          onClick={() => handleaDeleteClick()}
+          padding="0px 3px 0px 3px"
         >
           Delete
         </Button>
@@ -58,12 +82,15 @@ const Sharedomain = ({ questionId, answerId }) => {
         <Button
           variant="share"
           size="custom"
-          onClick={() => handleqDeleteClick(questionId)}
+          onClick={() => handleqDeleteClick()}
+          padding="0px 3px 0px 3px"
+          height="auto"
         >
           Delete
         </Button>
       )}
-      <Sheet></Sheet>
+
+      {showSheet && <Sheet questionId={questionId} />}
     </div>
   );
 };

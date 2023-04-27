@@ -6,6 +6,7 @@ import { ReactComponent as Edit } from "../../Components/style/img/ic-pencil.svg
 import Button from "../../Components/style/Button";
 import Profile from "./PageProfile";
 import Active from "./PageActive";
+import Settings from "./PageSetting";
 
 const MyPageWrap = styled.section`
   padding: 30px;
@@ -14,13 +15,16 @@ const MyPageWrap = styled.section`
 `;
 
 const ProfileWrap = styled.div`
-  position: relative;
   margin-bottom: 24px;
 `;
 
 const ProfileContent = styled.div`
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+  > div {
+    display: flex;
+    align-items: center;
+  }
   > img {
     border-radius: 4px;
   }
@@ -50,10 +54,7 @@ const ProfileTxt = styled.div`
 `;
 
 const ProfileBtn = styled.div`
-  position: absolute;
   display: flex;
-  top: 0;
-  right: 0;
   > button {
     display: flex;
     gap: 4px;
@@ -62,8 +63,6 @@ const ProfileBtn = styled.div`
 `;
 
 const Tabmenu = styled.ul`
-  /* background-color: #dcdcdc; */
-  /* list-style: none; */
   cursor: pointer;
   color: var(--black-600);
   font-weight: bold;
@@ -78,7 +77,6 @@ const Tabmenu = styled.ul`
     width: auto;
     padding: 8px 16px;
     font-size: 15px;
-    transition: 0.5s;
     border-radius: 1000px;
   }
 
@@ -93,12 +91,17 @@ const TabContent = styled.div`
   width: 100%;
 `;
 
-function MyPage() {
+function MyPage({ user, setUser, setAuth }) {
   const [currentTab, setCurrentTab] = useState(0);
 
   const tabArr = [
-    { id: 0, name: "Profile", content: <Profile /> },
+    { id: 0, name: "Profile", content: <Profile user={user} /> },
     { id: 1, name: "Active", content: <Active /> },
+    {
+      id: 2,
+      name: "Settings",
+      content: <Settings user={user} setUser={setUser} setAuth={setAuth} />,
+    },
   ];
 
   return (
@@ -106,20 +109,22 @@ function MyPage() {
       <MyPageWrap>
         <ProfileWrap>
           <ProfileContent>
-            <img src={ProfileImg} alt="user profile"></img>
-            <ProfileTxt>
-              <div>User name</div>
-              <div>
-                <WelcomeImg />
-                {/* <img src={WelcomeImg} alt="welcome icon" fill=""></img>Welcome */}
-                <p>Welcome stackoverflow</p>
-              </div>
-            </ProfileTxt>
+            <div>
+              <img src={ProfileImg} alt="user profile"></img>
+              <ProfileTxt>
+                <div>{user.userName}</div>
+                <div>
+                  <WelcomeImg />
+                  <p>Welcome stackoverflow</p>
+                </div>
+              </ProfileTxt>
+            </div>
             <ProfileBtn>
               <Button
                 size="custom"
                 variant="mediumWhite"
                 padding="8px 10px 8px 10px"
+                onClick={() => setCurrentTab(2)}
               >
                 <Edit />
                 Edit profile

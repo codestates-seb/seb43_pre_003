@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import Editor from "../Components/QuestionDetail/Editor";
 import Button from "../Components/style/Button";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import questionAxios from "../util/questionAxios";
 
 const Container = styled.div`
   max-width: 1100px;
@@ -43,54 +42,90 @@ const Editbox = styled.header`
     white-space: pre-line;
   }
 `;
+const WarningText = styled.div`
+  margin-left: 5px;
+  margin-top: 10px;
+  color: red;
+  font-size: 12px;
+`;
 
 const AnswerEditpage = () => {
   const { questionId, answerId } = useParams();
   const navigate = useNavigate();
-  console.log(questionId);
-  console.log(answerId);
-  const [list, isPending, error] = questionAxios(
-    `http://localhost:3001/data/${questionId}`
-  );
-  console.log(questionId);
+  const [answers, setAnswers] = useState(null);
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/question/${questionId}/answers`)
+      .then((res) => {
+        if (!res.data) {
+          throw new Error("No data found");
+        }
+        setAnswers(res.data);
+      })
+      .catch((error) => {
+        alert("Error", error);
+      });
+  }, []);
+
+  const answerIdToFindNumber = Number(answerId);
+  const answerIndex = answers
+    ? answers.findIndex((answer) => answer.answerId === answerIdToFindNumber)
+    : -1;
 
   useEffect(() => {
-    if (list && list.answer && list.answer[answerId]) {
-      setAEditorValue(list.answer[answerId].content);
+    if (answers && answerIndex !== -1 && answers[answerIndex]) {
+      setAEditorValue(answers[answerIndex].content);
     }
-  }, [answerId]);
+  }, [answers, answerIndex]);
 
   const [aeditorValue, setAEditorValue] = useState("");
-  console.log(aeditorValue);
-  const answerEditClick = async (questionId) => {
-    try {
-      await axios.patch(
-        `http://localhost:3001/data/${questionId}/${answerId}`,
+  const [zeroeditorError, setzeroEditorError] = useState(false);
+  const [thirtyeditorError, setthirtyEditorError] = useState(false);
+
+  const handlezeroEditorError = () => {
+    aeditorValue.length <= 0
+      ? setzeroEditorError(true)
+      : setzeroEditorError(false);
+  };
+
+  const handlethirtyEditorError = () => {
+    if (aeditorValue.length > 0 && aeditorValue.length < 30) {
+      setthirtyEditorError(true);
+    } else {
+      setthirtyEditorError(false);
+    }
+  };
+
+  const answerEditClick = (questionId, answerId) => {
+    handlezeroEditorError();
+    handlethirtyEditorError();
+    if (aeditorValue.length <= 0 || aeditorValue.length <= 30) {
+      return;
+    }
+    axios
+      .patch(
+        `${process.env.REACT_APP_API_URL}/question/${questionId}/${answerId}/edit`,
         {
-          question: {
-            answer: {
-              memberId: list.answer[answerId].memberId,
-              content: aeditorValue,
-            },
+          content: aeditorValue,
+        },
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
           },
         }
-      );
-
-      console.log("Edit successfully saved!");
-
-      setAEditorValue(aeditorValue);
-      navigate(`/question/${questionId}`);
-    } catch (error) {
-      console.error("Failed to save edit:", error);
-    }
+      )
+      .then(() => {
+        navigate(`/question/${questionId}`);
+      })
+      .catch((error) => {
+        alert("귀하의 계정이 아니므로 수정이 불가능합니다", error);
+      });
   };
 
   return (
     <>
       <Container>
-        {error && <div>{error}</div>}
-        {isPending && <div>Loading...</div>}
-        {list && (
+        {answers && (
           <Contain>
             <Editbox>
               <p>
@@ -107,19 +142,25 @@ const AnswerEditpage = () => {
             </Editbox>
             <h2>Answer</h2>
             <Editor value={aeditorValue} onChange={setAEditorValue} />
+
             <Position>
               <Button
                 variant="mediumBlue"
                 size="question"
-                onClick={() => answerEditClick(questionId)}
+                onClick={() => answerEditClick(questionId, answerId)}
               >
                 Save Edits
               </Button>
+
               <Link to={`/question/${questionId}`}>
                 <Button variant="mediumWhite" size="question">
                   Cancel
                 </Button>
               </Link>
+              {zeroeditorError && <WarningText>Answer is missing</WarningText>}
+              {thirtyeditorError && (
+                <WarningText>Minimum 30 characters required</WarningText>
+              )}
             </Position>
           </Contain>
         )}
