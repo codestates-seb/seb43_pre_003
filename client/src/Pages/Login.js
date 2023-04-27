@@ -4,7 +4,7 @@ import Input from "../Components/style/Input";
 import Button from "../Components/style/Button";
 import Sign from "../Components/style/img/sign.png";
 import Oauth from "../Components/OauthBtn";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -190,7 +190,9 @@ function Login({ setAuth, setSide, setUser }) {
               <Passworddiv>
                 <EmailSpan>Password</EmailSpan>
 
-                <ForgetBtn href="/Forget">Forgot password?</ForgetBtn>
+                <Link to="/forget">
+                  <ForgetBtn href="#">Forgot password?</ForgetBtn>
+                </Link>
               </Passworddiv>
               {check ? (
                 <Input

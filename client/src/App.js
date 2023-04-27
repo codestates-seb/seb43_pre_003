@@ -12,7 +12,8 @@ import Footer from "./Components/Footer";
 import AskQuestion from "./Pages/AskQuestion";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/Signup";
-
+import Forget from "./Pages/Forget/Forget";
+import ForgetS from "./Pages/Forget/ForgetComplete";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -105,6 +106,14 @@ function App() {
             element={<SignUp setSide={setSide} side={side} />}
             index
           />
+          <Route
+            path="/forget"
+            element={<Forget setSide={setSide} side={side} />}
+          ></Route>
+          <Route
+            path="/forgetS"
+            element={<ForgetS setSide={setSide} side={side} />}
+          ></Route>
         </Routes>
         <Footer />
       </BrowserRouter>
