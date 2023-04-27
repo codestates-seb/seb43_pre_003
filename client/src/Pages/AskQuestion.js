@@ -36,7 +36,7 @@ const Title = styled.h2`
   margin: 24px 0;
 `;
 
-const InputArea = styled.form`
+const InputArea = styled.div`
   width: 100%;
   margin-bottom: 12px;
   display: flex;
@@ -165,7 +165,7 @@ function AskQuestion() {
         <TitleArea>
           <Title>Review your question</Title>
         </TitleArea>
-        <InputArea onSubmit={(e) => e.preventDefault()}>
+        <InputArea>
           <CardArea>
             <Card>
               <h5 className="title">Title</h5>

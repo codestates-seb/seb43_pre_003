@@ -8,7 +8,7 @@ const EditorContainer = styled.div`
   .ql-editor {
     height: 200px;
   }
-  .ql-editor > p {
+  .ql-editor > * {
     white-space: normal;
     overflow-wrap: anywhere;
   }

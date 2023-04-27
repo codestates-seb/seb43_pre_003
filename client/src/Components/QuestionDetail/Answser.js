@@ -11,12 +11,16 @@ const Main = styled.main`
 
 const Section2 = styled.section`
   flex-grow: 1;
-  > p > p {
+  > p > * {
     font-size: 15px;
-    font-weight: 500;
     line-height: 22.5px;
     white-space: normal;
     overflow-wrap: anywhere;
+  }
+  > p > p > * {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
   }
 `;
 

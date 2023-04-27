@@ -85,10 +85,26 @@ const Aside1 = styled.aside`
 
 const Section2 = styled.section`
   flex-grow: 1;
-  > p > p {
+  width: 70%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+  > * {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
+  }
+  > p > * {
     font-size: 15px;
-    line-height: 22.5px;
+    line-height: 1.5;
     white-space: pre-line;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  > p > p > * {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
   }
 `;
 
@@ -119,8 +135,6 @@ const Section4 = styled.section`
 
 const Header2 = styled.div`
   display: flex;
-  /* -webkit-box-pack: justify; */
-  /* justify-content: space-between; */
   margin: 20px 0;
   color: var(--black-900);
   font-size: 18px;
