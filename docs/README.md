@@ -1,12 +1,12 @@
 # 😎 유종의 미 
 
-####  🍓**팀 이름 : 유종의 미**
+####  🍓 **팀 이름 : 유종의 미**
 
-####  🍓**프로젝트 이름 : 스택오버플로우**
+####  🍓 **프로젝트 이름 : 스택오버플로우**
 
-####  🍓**설명 : 스택오버플로우 기능 구현**
+####  🍓 **설명 : 스택오버플로우 기능 구현**
 
-####  🍓**프로젝트 기간 : 2023.04.14 ~ 2023.04.27**
+####  🍓 **프로젝트 기간 : 2023.04.14 ~ 2023.04.27**
 
 
 # 프로젝트 소개 
@@ -14,16 +14,28 @@
 |:--:|
 |<a href ="http://pre-project43.s3-website.ap-northeast-2.amazonaws.com"><img src = "./logo-stackof.svg"/> </a>| 
 ### 🍊 주요 기능
-- 로그인, 회원가입
+- 로그인, 회원가입, 회원 탈퇴
 - 질문 등록, 질문 조회, 질문 업데이트, 질문 삭제
 - 댓글 등록, 댓글 조회, 댓글 업데이트, 댓글 삭제
+- "좋아요" 기능, 검색 기능, 마이페이지, 닉네임 수정 기능, 링크 공유
 
 ## 팀 소개
 |임민규(FE)|문혜린(FE)|유소영(FE)|정승현(BE)|조대욱(BE)|김은정(BE)|
 |:--:|:--:|:--:|:--:|:--:|:--:|
-|||||||
+|<img width = "100" alt = "profile" src= "https://user-images.githubusercontent.com/114140840/234771066-2282d9a7-a84a-4aa6-8e31-2943565e7baf.png"/>|<img width = "100" alt = "profile" src= "https://user-images.githubusercontent.com/114140840/234771376-2acd3cee-6cec-468a-967e-e2f19dacce95.png"/>|<img width = "100" alt = "profile" src= "https://user-images.githubusercontent.com/114140840/234771212-e9aa7466-7197-4d9a-8322-3849a36786a0.png"/>|<img width = "100" alt = "profile" src= "https://cdn.discordapp.com/attachments/1095204811282071634/1101023081591472178/KakaoTalk_20230427_145203106.png"/>|<img width = "100" alt = "profile" src= "https://cdn.discordapp.com/attachments/1095204811282071634/1101025150884904981/KakaoTalk_Photo_2023-04-27-14-59-29.peg.jpeg"/>|<img width = "100" alt = "profile" src= "https://user-images.githubusercontent.com/114140840/234772573-f5d057e1-fdb7-496d-8ce8-a8a0fd15fd92.png"/>|
 |[nile27](https://github.com/nile27)|[moonozz](https://github.com/moonozz)|[ysycoding](https://github.com/ysycoding)|[JSeungHyun](https://github.com/JSeungHyun)|[JoDaeUk](https://github.com/JoDaeUk)|[196docd-gray](https://github.com/196code-gray)|
+
 ## 페이지 소개 이미지 
+
+|회원가입|로그인|마이페이지|
+|------|---|---|
+|<img src="https://cdn.discordapp.com/attachments/1095204811282071634/1101027741157040138/2023-04-27_3.11.04.png" width="300px" height="300px">|<img src="https://cdn.discordapp.com/attachments/1095204811282071634/1101027691949473862/2023-04-27_3.10.52.png" width="300px" height="300px">|<img src="https://cdn.discordapp.com/attachments/1095204811282071634/1101027186946887720/2023-04-27_3.08.49.png" width="300px" height="300px">|
+|질문페이지|상세페이지|검색페이지|
+|<img src="https://cdn.discordapp.com/attachments/1095204811282071634/1101026283091148840/2023-04-27_3.05.11.png" width="300px" height="300px">|<img src="https://cdn.discordapp.com/attachments/1095204811282071634/1101026777356308560/2023-04-27_3.07.13.png" width="300px" height="300px">|<img src="https://cdn.discordapp.com/attachments/1095204811282071634/1101026197082755072/2023-04-27_3.04.54.png" width="300px" height="300px">|
+|질문작성|질문수정|답변수정|
+|<img src="https://cdn.discordapp.com/attachments/1095204811282071634/1101026895715389450/2023-04-27_3.07.39.png" width="300px" height="300px">|<img src="https://cdn.discordapp.com/attachments/1095204811282071634/1101027572004958238/2023-04-27_3.10.23.png" width="300px" height="300px">|<img src="https://cdn.discordapp.com/attachments/1095204811282071634/1101027638576959571/2023-04-27_3.10.39.png" width="300px" height="300px">|
+
+
 
 
 ## 툴 소개
